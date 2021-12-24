@@ -3,7 +3,7 @@
 
 class Cell{
 public:
-    Cell(int px, int py, std::string color);
+    Cell(int px, int py, int color);
     ~Cell();
     void move(int px, int py);
 private:
@@ -11,11 +11,11 @@ private:
     void paint();
     unsigned int x;
     unsigned int y;
-    std::string color;
+    int color;
     WINDOW* win;
 };
 
-Cell::Cell(int px, int py, std::string c){
+Cell::Cell(int px, int py, int c){
     x = px;
     y = py;
     color = c;
@@ -35,5 +35,19 @@ void Cell::move(int px, int py){
 void Cell::paint(){
     this->erase();
     mvwin(this->win, this->y, this->x);
+    init_pair(1, COLOR_WHITE, this->color);
+    wattron(win, COLOR_PAIR(1));
+    mvwaddch(this->win, this->y, this->x * 2, ' ');
+    mvwaddch(this->win, this->y, this->x * 2 + 1, ' ');
+    wattroff(win, COLOR_PAIR(1));
+    wrefresh(win);
+}
 
+void Cell::erase(){
+    init_pair(1, COLOR_WHITE, COLOR_BLACK);
+    wattron(win, COLOR_PAIR(1));
+    mvwaddch(this->win, this->y, this->x * 2, ' ');
+    mvwaddch(this->win, this->y, this->x * 2 + 1, ' ');
+    wattroff(win, COLOR_PAIR(1));
+    wrefresh(win);
 }

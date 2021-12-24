@@ -9,7 +9,7 @@
 //Refactor bare pointers to smart pointers later
 class Tetrimino{
 public:
-    Tetrimino(Environment* env, std::string color, std::vector<int>& Xs, std::vector<int>& Ys);
+    Tetrimino(Environment* env, int color, std::vector<int>& Xs, std::vector<int>& Ys);
     Tetrimino(const Tetrimino& rhs);
     ~Tetrimino();
     bool virtual moveLeft() = 0;
@@ -19,7 +19,7 @@ public:
     bool virtual rotateLeft() = 0;
     bool virtual rotateRight() = 0;
     bool isActive();
-    void setActive(bool set);
+    void setActive(bool active);
 private:
     Environment* environment;
     bool active;
@@ -31,7 +31,7 @@ private:
     The object that is responsible for generating Tetriminos knows where they will be placed.
     So this constructor can assume they are correct for any subtype.
     */
-Tetrimino::Tetrimino(Environment* env, std::string color, std::vector<int>& Xs, std::vector<int>& Ys){
+Tetrimino::Tetrimino(Environment* env, int color, std::vector<int>& Xs, std::vector<int>& Ys){
     this->environment = env;
     this->active = false;
 

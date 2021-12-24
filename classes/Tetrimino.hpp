@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 
+#include "Cell.hpp"
 #include "Environment.hpp"
 
 //Refactor bare pointers to smart pointers later
@@ -21,11 +22,9 @@ public:
     void setActive(bool set);
 private:
     Environment* environment;
-    std::vector<unsigned int> posY;
-    std::vector<unsigned int> posX;
     bool active;
-    std::vector<WINDOW*> cells;
-    std::string color;
+    std::vector<Cell> cells;
+    
 };
 
     /*  
@@ -34,7 +33,6 @@ private:
     */
 Tetrimino::Tetrimino(Environment* env, std::string color, std::vector<int>& Xs, std::vector<int>& Ys){
     this->environment = env;
-    this->color = color;
     this->active = false;
 
 }

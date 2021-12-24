@@ -3,9 +3,23 @@
 
 using namespace std;
 
-int main(){
+int runApp();
+int main(int argc, char* argv[]){
 
-    cout << "Hello World" << endl;
+    return runApp();
+}
+
+int runApp(){
+
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    refresh();
+    getch();
+
+    endwin();
 
     return 0;
 }

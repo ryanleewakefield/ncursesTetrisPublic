@@ -5,38 +5,41 @@
 
 class Cell{
 public:
-    Cell(int px, int py, int color);
+    Cell(unsigned int px, unsigned int py, int color);
     ~Cell();
-    void move(int px, int py);
+    unsigned int getx();
+    unsigned int gety();
+    void move(unsigned int px, unsigned int py);
     void paint();
     void erase();
 private:
-    
-    
     unsigned int x;
     unsigned int y;
     int color;
     WINDOW* win;
 };
 
-Cell::Cell(int px, int py, int c){
+Cell::Cell(unsigned int px, unsigned int py, int c){
     x = px;
     y = py;
     color = c;
     win = newwin(1,2, py, 2*px);
-    //this->paint();
 }
 Cell::~Cell(){
     delwin(this->win);
 }
-
-void Cell::move(int px, int py){
+unsigned int Cell::getx(){
+    return x;
+}
+unsigned int Cell::gety(){
+    return y;
+}
+void Cell::move(unsigned int px, unsigned int py){
     this->erase();
     this->x = px;
     this->y = py;
     this->paint();
 }
-
 void Cell::paint(){
     mvwin(this->win, this->y, this->x*2);
     init_pair(1, COLOR_WHITE, this->color);
@@ -46,7 +49,6 @@ void Cell::paint(){
     wattroff(win, COLOR_PAIR(1));
     wrefresh(win);
 }
-
 void Cell::erase(){
     init_pair(1, COLOR_WHITE, COLOR_BLACK);
     wattron(win, COLOR_PAIR(2));

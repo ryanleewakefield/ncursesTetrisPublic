@@ -11,10 +11,11 @@ using namespace std;
 void writeToLine(WINDOW* win, int line, string data);
 int runApp();
 int testCell();
+int testEnvironment();
 
 int main(int argc, char* argv[]){
 
-    return testCell();
+    return testEnvironment();
 }
 
 int runApp(){
@@ -43,13 +44,41 @@ int testCell(){
     int height = 43;
     int width = 80;
     //Create Cell that appear near center of screen
-    Cell* cell;
-    cell = new Cell(10, 20, COLOR_YELLOW);
-    cell->paint();
+    Cell* cell1 = new Cell(5, 5, COLOR_YELLOW);
+    cell1->paint();
+    Cell* cell2 = new Cell(35, 5, COLOR_YELLOW);
+    cell2->paint();
+    Cell* cell3 = new Cell(5, 35, COLOR_YELLOW);
+    cell3->paint();
+    Cell* cell4 = new Cell(35, 35, COLOR_YELLOW);
+    cell4->paint();
     getch();
-    cell->move(15, 25);
+    cell1->move(0, 1);
     getch();
-    delete cell;
+    delete cell1;
+    delete cell2;
+    delete cell3;
+    delete cell4;
+    endwin();
+
+    return 0;
+}
+
+int testEnvironment(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    getch();
     endwin();
 
     return 0;

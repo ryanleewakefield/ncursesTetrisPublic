@@ -1,3 +1,6 @@
+#ifndef __TETRIMINO_HPP__
+#define __TETRIMINO_HPP__
+
 #include <ncurses.h>
 #include <string>
 #include <vector>
@@ -56,3 +59,5 @@ class RightS : Tetrimino{
 class Square : Tetrimino{
 
 };
+
+#endif

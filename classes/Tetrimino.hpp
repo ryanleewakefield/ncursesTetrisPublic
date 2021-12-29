@@ -13,8 +13,8 @@
 class Tetrimino{
 public:
     Tetrimino(Environment* env, int color, std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys);
-    Tetrimino(const Tetrimino& rhs);
-    ~Tetrimino();
+    Tetrimino(const Tetrimino& rhs) = delete;
+    ~Tetrimino() = default;
     void show();
     bool  moveLeft();
     bool  moveRight();
@@ -24,9 +24,10 @@ public:
     bool virtual rotateRight() = 0;
     bool isActive();
     void setActive(bool active);
-private:
+protected:
     Environment* environment;
     bool active;
+    unsigned int orientation;
     std::vector<Cell> cells;
     bool doMove(int incX, int incY);
     
@@ -39,14 +40,16 @@ private:
 Tetrimino::Tetrimino(Environment* env, int color, std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys){
     this->environment = env;
     this->active = false;
+    this->orientation = 0;
     this->cells = { Cell(Xs[0], Ys[0], color),
                     Cell(Xs[1], Ys[1], color),
                     Cell(Xs[2], Ys[2], color),
-                    Cell(Xs[3], Ys[0], color)};
+                    Cell(Xs[3], Ys[3], color)};
+
 }
 
 void Tetrimino::show(){
-    for(unsigned i = 0; i < cells.size(); i++){
+    for(unsigned int i = 0; i < cells.size(); i++){
         cells[i].paint();
     }
 }
@@ -63,8 +66,15 @@ bool Tetrimino::doMove(int incX, int incY){
     
     bool okayToMove = environment->legalMove(newXs, newYs);
     if(okayToMove){
+        //All erasing, moving, and painting must be done in batches
+        for(unsigned int i = 0; i < newXs.size(); i++){
+            cells[i].erase();
+        }
         for(unsigned int i = 0; i < newXs.size(); i++){
             cells[i].move(newXs[i], newYs[i]);
+        }
+        for(unsigned int i = 0; i < newXs.size(); i++){
+            cells[i].paint();
         }
     }
     return okayToMove;
@@ -89,10 +99,49 @@ void Tetrimino::setActive(bool active){
     this->active = active;
 }
 
-class LongPiece : Tetrimino{
-
+/* LongPiece Header and Implementation*/
+class LongPiece : public Tetrimino{
+public:
+    LongPiece(Environment* env, int color, std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys)
+    : Tetrimino(env, color, Xs, Ys) {}
+    bool rotateLeft() override;
+    bool rotateRight() override;
+private:
+    bool rotateLeftOrientationZero();
+    bool rotateLeftOrientationOne();
+    bool rotateLeftOrientationTwo();
+    bool rotateLeftOrientationThree();
+    bool rotateRightOrientationZero();
+    bool rotateRightOrientationOne();
+    bool rotateRightOrientationTwo();
+    bool rotateRightOrientationThree();
 };
 
+bool LongPiece::rotateLeft(){
+    switch(this->orientation){
+        case 0: return rotateLeftOrientationZero();
+        case 1: return rotateLeftOrientationOne();
+        case 2: return rotateLeftOrientationTwo();
+        case 3: return rotateLeftOrientationThree();
+        default: return false;// This should never occur
+    }
+}
+bool LongPiece::rotateLeftOrientationZero(){
+
+}
+bool LongPiece::rotateLeftOrientationOne(){
+
+}
+bool LongPiece::rotateLeftOrientationTwo(){
+
+}
+bool LongPiece::rotateLeftOrientationThree(){
+
+}
+
+bool LongPiece::rotateRight(){
+
+}
 class RightL : Tetrimino{
 
 };
@@ -106,6 +155,10 @@ class RightS : Tetrimino{
 };
 
 class LeftS : Tetrimino{
+
+};
+
+class TPiece : Tetrimino{
 
 };
 

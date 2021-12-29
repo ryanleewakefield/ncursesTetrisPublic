@@ -7,6 +7,7 @@
 class Environment{
 public:
     static Environment* getInstance();
+    bool isOccupied(unsigned int x, unsigned int y);
     bool legalMove(std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys);
     void addTetrimino(std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys);
     ~Environment();
@@ -33,8 +34,8 @@ Environment* Environment::getInstance(){
     return uniqueInstance;
 }
 Environment::Environment(){
-    std::vector<bool> spaces(total_spaces, false);
-    boundaryElement = newwin(26,50,7,13);
+    this->spaces = std::vector<bool>(total_spaces);
+    this->boundaryElement = newwin(26,50,7,13);
     paintBoundary();
 }
 Environment::~Environment(){
@@ -55,15 +56,29 @@ void Environment::paintBoundary(){
 }
 bool Environment::legalMove(std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys){
     bool okay = true;
+    int index = -1;
     for(unsigned int i = 0; i < Xs.size(); i++){
-        okay = okay && (minX <= Xs[i] && Xs[i] <= maxX) && 
-                (minY <= Ys[i] && Ys[i] <= maxY) &&
-                !spaces[xyToIndex(Xs[i], Ys[i])];
+        index = xyToIndex(Xs[i], Ys[i]);
+        if(index != -1){
+            okay = okay && !spaces[index];
+        }
+        else{
+            return false;// Since an index of -1 means the move 
+                         // would be out of bounds
+        }
     }
     return okay;
 }
 
+// This function needs to do bounds checking
+// This function returns a valid Index upon valid x and y
+// Otherwise this function return -1
 int Environment::xyToIndex(unsigned int x, unsigned int y){
-    return 24 * y + x;
+    if( (minX <= x && x <= maxX) && (minY <= y && y <= maxY)){
+        return 24 * y + x;
+    }
+    else{
+        return -1;
+    }
 }
 #endif

@@ -1,8 +1,7 @@
-#include <ncurses.h>
-
 #ifndef __CELL_HPP__
 #define __CELL_HPP__
 
+#include <ncurses.h>
 class Cell{
 public:
     Cell(unsigned int px, unsigned int py, int color, char letter);

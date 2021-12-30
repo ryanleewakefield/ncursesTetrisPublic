@@ -5,6 +5,7 @@
 #include "../classes/Cell.hpp"
 #include "../classes/Environment.hpp"
 #include "../classes/Tetrimino.hpp"
+#include "../classes/LongPiece.hpp"
 
 using namespace std;
 

@@ -5,7 +5,7 @@
 
 class Cell{
 public:
-    Cell(unsigned int px, unsigned int py, int color);
+    Cell(unsigned int px, unsigned int py, int color, char letter);
     Cell(const Cell& rhs);
     ~Cell();
     unsigned int getx();
@@ -17,19 +17,22 @@ private:
     unsigned int x;
     unsigned int y;
     int color;
+    char letter;
     WINDOW* win;
 };
 
-Cell::Cell(unsigned int px, unsigned int py, int c){
+Cell::Cell(unsigned int px, unsigned int py, int c, char l){
     x = px;
     y = py;
     color = c;
+    letter = l;
     win = newwin(1,2, py, 2*px);
 }
 Cell::Cell(const Cell& rhs){
     this->x = rhs.x;
     this->y = rhs.y;
     this->color = rhs.color;
+    this->letter = rhs.letter;
     this->win = newwin(1,2, this->y, 2 * this->x);
 }
 Cell::~Cell(){
@@ -55,7 +58,7 @@ void Cell::paint(){
     // waddch(win, ' ');
     // wmove(win, 0, 1);
     // waddch(win, 'A');
-    mvwaddch(win, 0, 0, ' ');
+    mvwaddch(win, 0, 0, letter);
     mvwaddch(win, 0, 1, ' ');
     wattroff(win, COLOR_PAIR(this->color));
     wrefresh(win);

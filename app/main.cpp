@@ -13,12 +13,14 @@ int runApp();
 int testCell();
 int testEnvironment();
 int testTetriminoSubClasses();
+int testLeftRotationLongPiece();
 void createCellsInPlainFunctionStack();
 void createVectorOfCells();
 int main(int argc, char* argv[]){
 
     //return testCell();
-    return testTetriminoSubClasses();
+    //return testTetriminoSubClasses();
+    return testLeftRotationLongPiece();
 }
 
 int runApp(){
@@ -50,10 +52,10 @@ int testCell(){
     
     createCellsInPlainFunctionStack();
 
-    vector<Cell> cells = {Cell(30, 20, COLOR_YELLOW),
-                        Cell(30, 21, COLOR_YELLOW),
-                        Cell(30, 22, COLOR_YELLOW),
-                        Cell(30, 23, COLOR_YELLOW)};
+    vector<Cell> cells = {Cell(30, 20, COLOR_YELLOW, 'A'),
+                        Cell(30, 21, COLOR_YELLOW, 'B'),
+                        Cell(30, 22, COLOR_YELLOW, 'C'),
+                        Cell(30, 23, COLOR_YELLOW, 'D')};
 
     for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].paint();
@@ -83,22 +85,22 @@ int testCell(){
 }
 
 void createCellsInPlainFunctionStack(){
-    Cell cell1(20, 20, COLOR_YELLOW);
+    Cell cell1(20, 20, COLOR_YELLOW, 'A');
     cell1.paint();
-    Cell cell2(20, 21, COLOR_YELLOW);
+    Cell cell2(20, 21, COLOR_YELLOW, 'B');
     cell2.paint();
-    Cell cell3(20, 22, COLOR_YELLOW);
+    Cell cell3(20, 22, COLOR_YELLOW, 'C');
     cell3.paint();
-    Cell cell4(20, 23, COLOR_YELLOW);
+    Cell cell4(20, 23, COLOR_YELLOW, 'D');
     cell4.paint();
     getch();
 }
 
 void createVectorOfCells(){
-    vector<Cell> cells = {Cell(30, 20, COLOR_YELLOW),
-                        Cell(30, 21, COLOR_YELLOW),
-                        Cell(30, 22, COLOR_YELLOW),
-                        Cell(30, 23, COLOR_YELLOW)};
+    vector<Cell> cells = {Cell(30, 20, COLOR_YELLOW, 'A'),
+                            Cell(30, 21, COLOR_YELLOW, 'B'),
+                            Cell(30, 22, COLOR_YELLOW, 'C'),
+                            Cell(30, 23, COLOR_YELLOW, 'D')};
 
     for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].paint();
@@ -158,6 +160,52 @@ int testTetriminoSubClasses(){
     tetrimino->rotateLeft();
     getch();
     delete tetrimino;
+    endwin();
+
+    return 0;
+}
+int testLeftRotationLongPiece(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    cellMark1->paint();
+    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    cellMark2->paint();
+    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    cellMark3->paint();
+    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    cellMark4->paint();
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {20,20,20,20};
+    vector<unsigned int> initialY = {10,11,12,13};
+    getch();
+    tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->show();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    delete tetrimino;
+    delete cellMark1;
+    delete cellMark2;
+    delete cellMark3;
+    delete cellMark4;
     endwin();
 
     return 0;

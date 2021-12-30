@@ -40,11 +40,14 @@ protected:
 Tetrimino::Tetrimino(Environment* env, int color, std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys){
     this->environment = env;
     this->active = false;
+    // If the orientation is not provided by the factory,
+    // then each piece needs to be in its appropriate orientation
+    // from the factory
     this->orientation = 0;
-    this->cells = { Cell(Xs[0], Ys[0], color),
-                    Cell(Xs[1], Ys[1], color),
-                    Cell(Xs[2], Ys[2], color),
-                    Cell(Xs[3], Ys[3], color)};
+    this->cells = { Cell(Xs[0], Ys[0], color, 'A'),
+                    Cell(Xs[1], Ys[1], color, 'B'),
+                    Cell(Xs[2], Ys[2], color, 'C'),
+                    Cell(Xs[3], Ys[3], color, 'D')};
 
 }
 
@@ -107,7 +110,7 @@ public:
     bool rotateLeft() override;
     bool rotateRight() override;
 private:
-    void doRotate(int incX, int incY, unsigned int newOrientation);
+    void doRotateLeft(int incX, int incY, unsigned int newOrientation);
     bool rotateLeftOrientationZero();
     bool rotateLeftOrientationOne();
     bool rotateLeftOrientationTwo();
@@ -281,7 +284,8 @@ bool LongPiece::rotateLeftOrientationZero(){
         if(newOrientation < 0){
             newOrientation = newOrientation + 4;
         }
-        doRotate(incX, incY, newOrientation);
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
     }
     return willRotateHappen;
 }
@@ -323,6 +327,9 @@ bool LongPiece::rotateLeftOrientationOne(){
     int sX = dX + 1;
     int sY = dY - 3;
 
+    bool willRotateHappen = false;
+    int incX = 0;
+    int incY = 0;
     if(environment->isOccupied(eX, eY)){
         if( ! (
                 environment->isOccupied(mX, mY) ||
@@ -332,6 +339,9 @@ bool LongPiece::rotateLeftOrientationOne(){
                 environment->isOccupied(rX, rY) ||
                 environment->isOccupied(sX, sY))){
                     //do d(1,0)
+                    incX = 1;
+                    incY = 0;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -346,6 +356,9 @@ bool LongPiece::rotateLeftOrientationOne(){
                 environment->isOccupied(qX, qY) ||
                 environment->isOccupied(oX, oY))){
                     //do d(0,1)
+                    incX = 0;
+                    incY = 1;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -359,6 +372,9 @@ bool LongPiece::rotateLeftOrientationOne(){
                 environment->isOccupied(qX, qY) ||
                 environment->isOccupied(oX, oY))){
                     //do d(1,1)
+                    incX = 1;
+                    incY = 1;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -370,6 +386,9 @@ bool LongPiece::rotateLeftOrientationOne(){
                 environment->isOccupied(jX, jY) ||
                 environment->isOccupied(kX, kY))){
                     //do d(2,3)
+                    incX = 2;
+                    incY = 3;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -378,6 +397,9 @@ bool LongPiece::rotateLeftOrientationOne(){
     else if(environment->isOccupied(mX, mY)){
         if(! environment->isOccupied(rX, rY)){
             //do d(2,1)
+            incX = 2;
+            incY = 1;
+            willRotateHappen = true;
         }
         else{
             //do nothing
@@ -388,6 +410,9 @@ bool LongPiece::rotateLeftOrientationOne(){
             environment->isOccupied(rX, rY))){
             if(! environment->isOccupied(iX, iY)){
                 //do d(2,2)
+                incX = 2;
+                incY = 2;
+                willRotateHappen = true;
             }
             else{
                 //do nothing
@@ -395,9 +420,20 @@ bool LongPiece::rotateLeftOrientationOne(){
         }
         else{
             //do d(1,1)
+                incX = 1;
+                incY = 1;
+                willRotateHappen = true;
         }
     }
-
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation - 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 }
 
 //This should be similar to OrientationZero
@@ -439,6 +475,9 @@ bool LongPiece::rotateLeftOrientationTwo(){
     int sX = dX + 3;
     int sY = dY + 1;
 
+    bool willRotateHappen = false;
+    int incX = 0;
+    int incY = 0;
     if(environment->isOccupied(eX, eY)){
         if( ! (
                 environment->isOccupied(mX, mY) ||
@@ -448,6 +487,9 @@ bool LongPiece::rotateLeftOrientationTwo(){
                 environment->isOccupied(rX, rY) ||
                 environment->isOccupied(sX, sY))){
                     //do d(0,1)
+                    incX = 0;
+                    incY = 1;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -462,6 +504,9 @@ bool LongPiece::rotateLeftOrientationTwo(){
                 environment->isOccupied(qX, qY) ||
                 environment->isOccupied(oX, oY))){
                     //do d(-1,0)
+                    incX = -1;
+                    incY = 0;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -475,6 +520,9 @@ bool LongPiece::rotateLeftOrientationTwo(){
                 environment->isOccupied(qX, qY) ||
                 environment->isOccupied(oX, oY))){
                     //do d(-1,1)
+                    incX = -1;
+                    incY = 1;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -486,6 +534,9 @@ bool LongPiece::rotateLeftOrientationTwo(){
                 environment->isOccupied(jX, jY) ||
                 environment->isOccupied(kX, kY))){
                     //do d(-3,2)
+                    incX = -3;
+                    incY = 2;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -494,6 +545,9 @@ bool LongPiece::rotateLeftOrientationTwo(){
     else if(environment->isOccupied(mX, mY)){
         if(! environment->isOccupied(rX, rY)){
             //do d(-1,2)
+            incX = -1;
+            incY = 2;
+            willRotateHappen = true;
         }
         else{
             //do nothing
@@ -504,6 +558,9 @@ bool LongPiece::rotateLeftOrientationTwo(){
             environment->isOccupied(rX, rY))){
             if(! environment->isOccupied(iX, iY)){
                 //do d(-2,1)
+                incX = -2;
+                incY = 1;
+                willRotateHappen = true;
             }
             else{
                 //do nothing
@@ -511,9 +568,20 @@ bool LongPiece::rotateLeftOrientationTwo(){
         }
         else{
             //do d(-1,1)
+            incX = -1;
+            incY = 1;
+            willRotateHappen = true;
         }
-    }   
-    
+    } 
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation - 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 }
 bool LongPiece::rotateLeftOrientationThree(){
     int aX = cells[0].getx();
@@ -553,6 +621,9 @@ bool LongPiece::rotateLeftOrientationThree(){
     int sX = aX + 1;
     int sY = aY - 3;
 
+    bool willRotateHappen = false;
+    int incX = 0;
+    int incY = 0;
     if(environment->isOccupied(eX, eY)){
         if( ! (
                 environment->isOccupied(mX, mY) ||
@@ -562,6 +633,9 @@ bool LongPiece::rotateLeftOrientationThree(){
                 environment->isOccupied(rX, rY) ||
                 environment->isOccupied(sX, sY))){
                     //do a(1,0)
+                    incX = 1;
+                    incY = 0;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -576,6 +650,9 @@ bool LongPiece::rotateLeftOrientationThree(){
                 environment->isOccupied(qX, qY) ||
                 environment->isOccupied(oX, oY))){
                     //do a(0,1)
+                    incX = 0;
+                    incY = 1;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -589,6 +666,9 @@ bool LongPiece::rotateLeftOrientationThree(){
                 environment->isOccupied(qX, qY) ||
                 environment->isOccupied(oX, oY))){
                     //do a(1,1)
+                    incX = 1;
+                    incY = 1;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -600,6 +680,9 @@ bool LongPiece::rotateLeftOrientationThree(){
                 environment->isOccupied(jX, jY) ||
                 environment->isOccupied(kX, kY))){
                     //do a(2,3)
+                    incX = 2;
+                    incY = 3;
+                    willRotateHappen = true;
                 }
                 else{
                     //do nothing
@@ -608,6 +691,9 @@ bool LongPiece::rotateLeftOrientationThree(){
     else if(environment->isOccupied(mX, mY)){
         if(! environment->isOccupied(rX, rY)){
             //do a(2,1)
+            incX = 2;
+            incY = 1;
+            willRotateHappen = true;
         }
         else{
             //do nothing
@@ -618,6 +704,9 @@ bool LongPiece::rotateLeftOrientationThree(){
             environment->isOccupied(rX, rY))){
             if(! environment->isOccupied(iX, iY)){
                 //do a(2,2)
+                incX = 2;
+                incY = 2;
+                willRotateHappen = true;
             }
             else{
                 //do nothing
@@ -625,38 +714,47 @@ bool LongPiece::rotateLeftOrientationThree(){
         }
         else{
             //do a(1,1)
+            incX = 1;
+            incY = 1;
+            willRotateHappen = true;
         }
     }
-
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation - 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 }
 
 bool LongPiece::rotateRight(){
 
 }
 
-void LongPiece::doRotate(int incX, int incY, unsigned int newOrientation){
-    /*
-        a
-        b
-        c
-        d
+void LongPiece::doRotateLeft(int incX, int incY, unsigned int newOrientation){
+    /* Zero    One      Two      Three
+        a                d         
+        b     d c b a    c       a b c d
+        c                b
+        d                a
     */
     if(newOrientation == 0){
-        unsigned int new_aX = cells[0].getx() + incX;
-        unsigned int new_aY = cells[0].gety() + incY;
+        unsigned int new_dX = cells[3].getx() + incX;
+        unsigned int new_dY = cells[3].gety() + incY;
         for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].erase();
         }
         for(unsigned int i = 0; i < cells.size(); i++){
-            cells[i].move(new_aX, new_aY + i);
+            //cells[i].move(new_aX, new_aY - i);
+            cells[cells.size() - 1 - i].move(new_dX, new_dY - i);
         }
         for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].paint();
         }
     }
-    /*
-        d c b a
-    */
     else if(newOrientation == 1){
         unsigned int new_dX = cells[3].getx() + incX;
         unsigned int new_dY = cells[3].gety() + incY;
@@ -664,34 +762,26 @@ void LongPiece::doRotate(int incX, int incY, unsigned int newOrientation){
             cells[i].erase();
         }
         for(unsigned int i = 0; i < cells.size(); i++){
+            //cells[i].move(new_dX + i, new_dY);
             cells[cells.size() - 1 - i].move(new_dX + i, new_dY);
         }
         for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].paint();
         }
     }
-    /*
-        d
-        c
-        b
-        a
-    */
      else if(newOrientation == 2){
-        unsigned int new_dX = cells[3].getx() + incX;
-        unsigned int new_dY = cells[3].gety() + incY;
+        unsigned int new_aX = cells[0].getx() + incX;
+        unsigned int new_aY = cells[0].gety() + incY;
         for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].erase();
         }
         for(unsigned int i = 0; i < cells.size(); i++){
-            cells[cells.size() - 1 - i].move(new_dX, new_dY + i);
+            cells[i].move(new_aX, new_aY - i);
         }
         for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].paint();
         }
     }
-    /*
-        a b c d
-    */
      else if(newOrientation == 3){
         unsigned int new_aX = cells[0].getx() + incX;
         unsigned int new_aY = cells[0].gety() + incY;
@@ -700,6 +790,7 @@ void LongPiece::doRotate(int incX, int incY, unsigned int newOrientation){
         }
         for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].move(new_aX + i, new_aY);
+            
         }
         for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].paint();

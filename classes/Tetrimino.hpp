@@ -127,13 +127,239 @@ bool LongPiece::rotateLeft(){
     }
 }
 bool LongPiece::rotateLeftOrientationZero(){
+    int aX = cells[0].getx();
+    int aY = cells[0].gety();
+    
+    //Left Side
+    int eX = aX - 1;
+    int eY = aY;
+    int iX = aX - 2;
+    int iY = aY + 1;
+    int fX = aX - 1;
+    int fY = aY + 1;
+    int kX = aX - 3;
+    int kY = aY + 2;
+    int jX = aX - 2;
+    int jY = aY + 2;
+    int gX = aX - 1;
+    int gY = aY + 2;
+    int hX = aX - 1;
+    int hY = aY + 3;
+
+    //Right Side
+    int lX = aX + 1;
+    int lY = aY;
+    int mX = aX + 1;
+    int mY = aY + 1;
+    int pX = aX + 2;
+    int pY = aY;
+    int rX = aX + 2;
+    int rY = aY + 2;
+    int nX = aX + 1;
+    int nY = aY + 2;
+    int qX = aX + 2;
+    int qY = aY + 1;
+    int oX = aX + 1;
+    int oY = aY + 3;
+    int sX = aX + 3;
+    int sY = aY + 1;
+
+    if(environment->isOccupied(eX, eY)){
+        if( ! (
+                environment->isOccupied(mX, mY) ||
+                environment->isOccupied(nX, nY) ||
+                environment->isOccupied(oX, oY) ||
+                environment->isOccupied(qX, qY) ||
+                environment->isOccupied(rX, rY) ||
+                environment->isOccupied(sX, sY))){
+                    //do a(0,1)
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(fX, fY)){
+        if( ! ( environment->isOccupied(lX, lY) ||
+                environment->isOccupied(mX, mY) ||
+                environment->isOccupied(pX, pY) ||
+                environment->isOccupied(rX, rY) ||
+                environment->isOccupied(nX, nY) ||
+                environment->isOccupied(qX, qY) ||
+                environment->isOccupied(oX, oY))){
+                    //do a(-1,0)
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(gX, gY) ||
+            environment->isOccupied(hX, hY)){
+        if( ! ( environment->isOccupied(mX, mY) ||
+                environment->isOccupied(rX, rY) ||
+                environment->isOccupied(nX, nY) ||
+                environment->isOccupied(qX, qY) ||
+                environment->isOccupied(oX, oY))){
+                    //do a(-1,1)
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(oX, oY) ||
+            environment->isOccupied(nX, nY)){
+        if( ! (environment->isOccupied(iX, iY) ||
+                environment->isOccupied(jX, jY) ||
+                environment->isOccupied(kX, kY))){
+                    //do a(-3,2)
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(mX, mY)){
+        if(! environment->isOccupied(rX, rY)){
+            //do a(-1,2)
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        if((environment->isOccupied(qX, qY) ||
+            environment->isOccupied(rX, rY))){
+            if(! environment->isOccupied(iX, iY)){
+                //do a(-2,1)
+            }
+            else{
+                //do nothing
+            }
+        }
+        else{
+            //do a(-1,1)
+        }
+    }
+    
 
 }
 bool LongPiece::rotateLeftOrientationOne(){
+    
 
 }
-bool LongPiece::rotateLeftOrientationTwo(){
 
+//This should be similar to OrientationZero
+bool LongPiece::rotateLeftOrientationTwo(){
+    int aX = cells[0].getx();
+    int aY = cells[0].gety();
+    
+    //Left Side
+    int eX = aX - 1;
+    int eY = aY;
+    int iX = aX - 2;
+    int iY = aY + 1;
+    int fX = aX - 1;
+    int fY = aY + 1;
+    int kX = aX - 3;
+    int kY = aY + 2;
+    int jX = aX - 2;
+    int jY = aY + 2;
+    int gX = aX - 1;
+    int gY = aY + 2;
+    int hX = aX - 1;
+    int hY = aY + 3;
+
+    //Right Side
+    int lX = aX + 1;
+    int lY = aY;
+    int mX = aX + 1;
+    int mY = aY + 1;
+    int pX = aX + 2;
+    int pY = aY;
+    int rX = aX + 2;
+    int rY = aY + 2;
+    int nX = aX + 1;
+    int nY = aY + 2;
+    int qX = aX + 2;
+    int qY = aY + 1;
+    int oX = aX + 1;
+    int oY = aY + 3;
+    int sX = aX + 3;
+    int sY = aY + 1;
+
+    if(environment->isOccupied(eX, eY)){
+        if( ! (
+                environment->isOccupied(mX, mY) ||
+                environment->isOccupied(nX, nY) ||
+                environment->isOccupied(oX, oY) ||
+                environment->isOccupied(qX, qY) ||
+                environment->isOccupied(rX, rY) ||
+                environment->isOccupied(sX, sY))){
+                    //do a(0,1)
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(fX, fY)){
+        if( ! ( environment->isOccupied(lX, lY) ||
+                environment->isOccupied(mX, mY) ||
+                environment->isOccupied(pX, pY) ||
+                environment->isOccupied(rX, rY) ||
+                environment->isOccupied(nX, nY) ||
+                environment->isOccupied(qX, qY) ||
+                environment->isOccupied(oX, oY))){
+                    //do a(-1,0)
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(gX, gY) ||
+            environment->isOccupied(hX, hY)){
+        if( ! ( environment->isOccupied(mX, mY) ||
+                environment->isOccupied(rX, rY) ||
+                environment->isOccupied(nX, nY) ||
+                environment->isOccupied(qX, qY) ||
+                environment->isOccupied(oX, oY))){
+                    //do a(-1,1)
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(oX, oY) ||
+            environment->isOccupied(nX, nY)){
+        if( ! (environment->isOccupied(iX, iY) ||
+                environment->isOccupied(jX, jY) ||
+                environment->isOccupied(kX, kY))){
+                    //do a(-3,2)
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(mX, mY)){
+        if(! environment->isOccupied(rX, rY)){
+            //do a(-1,2)
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        if((environment->isOccupied(qX, qY) ||
+            environment->isOccupied(rX, rY))){
+            if(! environment->isOccupied(iX, iY)){
+                //do a(-2,1)
+            }
+            else{
+                //do nothing
+            }
+        }
+        else{
+            //do a(-1,1)
+        }
+    }   
+    
 }
 bool LongPiece::rotateLeftOrientationThree(){
 
@@ -146,6 +372,132 @@ class RightL : Tetrimino{
 
 };
 
+bool LongPiece::rotateRightOrientationOne(){
+    int aX = cells[0].getx();
+    int aY = cells[0].gety();
+    
+    //Left Side
+    int eX = aX;
+    int eY = aY - 1;
+    
+    int iX = aX + 1;
+    int iY = aY - 2;
+    
+    int fX = aX + 1;
+    int fY = aY - 1;
+    
+    int kX = aX + 2;
+    int kY = aY - 3;
+    
+    int jX = aX + 2;
+    int jY = aY - 2;
+    
+    int gX = aX + 2;
+    int gY = aY - 1;
+    
+    int hX = aX + 3;
+    int hY = aY + 1;
+
+    //Right Side
+    int lX = aX;
+    int lY = aY + 1;
+    
+    int mX = aX + 1;
+    int mY = aY + 1;
+    
+    int pX = aX;
+    int pY = aY + 2;
+    
+    int rX = aX + 2;
+    int rY = aY + 2;
+    
+    int nX = aX + 2;
+    int nY = aY + 1;
+    
+    int qX = aX + 1;
+    int qY = aY + 2;
+    
+    int oX = aX + 3;
+    int oY = aY + 1;
+    
+    int sX = aX + 1;
+    int sY = aY + 3;
+
+    if(environment->isOccupied(eX, eY)){
+        if( ! (
+                environment->isOccupied(mX, mY) ||
+                environment->isOccupied(nX, nY) ||
+                environment->isOccupied(oX, oY) ||
+                environment->isOccupied(qX, qY) ||
+                environment->isOccupied(rX, rY) ||
+                environment->isOccupied(sX, sY))){
+                    //do a23
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(fX, fY)){
+        if( ! ( environment->isOccupied(lX, lY) ||
+                environment->isOccupied(mX, mY) ||
+                environment->isOccupied(pX, pY) ||
+                environment->isOccupied(rX, rY) ||
+                environment->isOccupied(nX, nY) ||
+                environment->isOccupied(qX, qY) ||
+                environment->isOccupied(oX, oY))){
+                    //do a12
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(gX, gY) ||
+            environment->isOccupied(hX, hY)){
+        if( ! ( environment->isOccupied(mX, mY) ||
+                environment->isOccupied(rX, rY) ||
+                environment->isOccupied(nX, nY) ||
+                environment->isOccupied(qX, qY) ||
+                environment->isOccupied(oX, oY))){
+                    //do a22
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(oX, oY) ||
+            environment->isOccupied(nX, nY)){
+        if( ! (environment->isOccupied(iX, iY) ||
+                environment->isOccupied(jX, jY) ||
+                environment->isOccupied(kX, kY))){
+                    //do a30
+                }
+                else{
+                    //do nothing
+                }
+    }
+    else if(environment->isOccupied(mX, mY)){
+        if(! environment->isOccupied(rX, rY)){
+            //do a32
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        if(! (environment->isOccupied(qX, qY) ||
+            environment->isOccupied(rX, rY))){
+                //do a22
+        }
+        else{
+            if(! environment->isOccupied(iX, iY)){
+                //do a21
+            }
+            else{
+                //do nothing
+            }
+        }
+    }
+}
 class LeftL : Tetrimino{
 
 };

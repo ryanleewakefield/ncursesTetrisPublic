@@ -155,6 +155,8 @@ int testTetriminoSubClasses(){
     getch();
     tetrimino->moveDown();
     getch();
+    tetrimino->rotateLeft();
+    getch();
     delete tetrimino;
     endwin();
 

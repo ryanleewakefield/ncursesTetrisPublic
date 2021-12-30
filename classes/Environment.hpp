@@ -81,4 +81,16 @@ int Environment::xyToIndex(unsigned int x, unsigned int y){
         return -1;
     }
 }
+
+bool Environment::isOccupied(unsigned int x, unsigned int y){
+    int index = this->xyToIndex(x,y);
+    if(index != -1){
+        return this->spaces[index];
+    }
+    // In the case of index == -1,
+    // the out-of-bounds space should be
+    // reported as occupied, as this
+    // will follow any logic down the line
+    return true;
+}
 #endif

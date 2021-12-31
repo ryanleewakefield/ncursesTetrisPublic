@@ -23,7 +23,7 @@ private:
     bool rotateLeftOrientationOne();
     bool rotateLeftOrientationTwo();
     bool rotateLeftOrientationThree();
-    bool doRotateRight(int incX, int incY, unsigned int newOrientation);
+    void doRotateRight(int incX, int incY, unsigned int newOrientation);
     bool rotateRightOrientationZero();
     bool rotateRightOrientationOne();
     bool rotateRightOrientationTwo();
@@ -1413,7 +1413,7 @@ bool LongPiece::rotateRightOrientationThree(){
     }
     return willRotateHappen;
 }
-bool LongPiece::doRotateRight(int incX, int incY, unsigned int newOrientation){
+void LongPiece::doRotateRight(int incX, int incY, unsigned int newOrientation){
     /* Zero    One      Two      Three
         a                d         
         b     d c b a    c       a b c d

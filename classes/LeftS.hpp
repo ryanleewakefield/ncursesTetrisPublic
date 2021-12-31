@@ -10,7 +10,7 @@
 #include "Environment.hpp"
 #include "Tetrimino.hpp"
 
-class LeftS : Tetrimino{
+class LeftS : public Tetrimino{
 
 };
 #endif

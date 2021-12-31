@@ -362,8 +362,6 @@ bool LongPiece::rotateLeftOrientationOne(){
     }
     return willRotateHappen;
 }
-
-
 bool LongPiece::rotateLeftOrientationTwo(){
     int dX = cells[3].getx();
     int dY = cells[3].gety();
@@ -671,7 +669,6 @@ bool LongPiece::rotateLeftOrientationThree(){
     }
     return willRotateHappen;
 }
-
 void LongPiece::doRotateLeft(int incX, int incY, unsigned int newOrientation){
     /* Zero    One      Two      Three
         a                d         
@@ -735,6 +732,8 @@ void LongPiece::doRotateLeft(int incX, int incY, unsigned int newOrientation){
         }
     }
 }
+
+
 bool LongPiece::rotateRight(){
     switch(this->orientation){
         case 0: return rotateRightOrientationZero();
@@ -1476,5 +1475,4 @@ void LongPiece::doRotateRight(int incX, int incY, unsigned int newOrientation){
         }
     }
 }
-
 #endif

@@ -548,6 +548,8 @@ void LeftL::doRotateLeft(int incX, int incY, unsigned int newOrientation){
             cells[i].paint();
         }
 }
+
+
 bool LeftL::rotateRight(){
     switch(this->orientation){
         case 0: return rotateRightOrientationZero();

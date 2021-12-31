@@ -6,6 +6,12 @@
 #include "../classes/Environment.hpp"
 #include "../classes/Tetrimino.hpp"
 #include "../classes/LongPiece.hpp"
+#include "../classes/LeftL.hpp"
+#include "../classes/RightL.hpp"
+#include "../classes/LeftS.hpp"
+#include "../classes/RightS.hpp"
+#include "../classes/TPiece.hpp"
+#include "../classes/Square.hpp"
 
 using namespace std;
 
@@ -16,14 +22,19 @@ int testEnvironment();
 int testTetriminoSubClasses();
 int testLeftRotationLongPiece();
 int testRightRotationLongPiece();
+int testLeftRotationLeftL();
+int testRightRotationLeftL();
 void createCellsInPlainFunctionStack();
 void createVectorOfCells();
+
 int main(int argc, char* argv[]){
 
     //return testCell();
     //return testTetriminoSubClasses();
     //return testLeftRotationLongPiece();
-    return testRightRotationLongPiece();
+    //return testRightRotationLongPiece();
+    return testLeftRotationLeftL();
+    //return testRightRotationLeftL();
 }
 
 int runApp(){
@@ -240,6 +251,98 @@ int testRightRotationLongPiece(){
     vector<unsigned int> initialY = {10,11,12,13};
     getch();
     tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->show();
+    getch();
+    tetrimino->rotateRight();
+    getch();
+    tetrimino->rotateRight();
+    getch();
+    tetrimino->rotateRight();
+    getch();
+    tetrimino->rotateRight();
+    getch();
+    delete tetrimino;
+    delete cellMark1;
+    delete cellMark2;
+    delete cellMark3;
+    delete cellMark4;
+    endwin();
+
+    return 0;
+}
+int testLeftRotationLeftL(){
+initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    cellMark1->paint();
+    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    cellMark2->paint();
+    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    cellMark3->paint();
+    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    cellMark4->paint();
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {20,20,20,21};
+    vector<unsigned int> initialY = {10,11,12,12};
+    getch();
+    tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->show();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    delete tetrimino;
+    delete cellMark1;
+    delete cellMark2;
+    delete cellMark3;
+    delete cellMark4;
+    endwin();
+
+    return 0;
+}
+int testRightRotationLeftL(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    cellMark1->paint();
+    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    cellMark2->paint();
+    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    cellMark3->paint();
+    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    cellMark4->paint();
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {20,20,20,21};
+    vector<unsigned int> initialY = {10,11,12,12};
+    getch();
+    tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
     tetrimino->show();
     getch();
     tetrimino->rotateRight();

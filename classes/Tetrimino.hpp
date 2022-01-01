@@ -24,13 +24,16 @@ public:
     bool virtual rotateRight() = 0;
     bool isActive();
     void setActive(bool active);
+    
 protected:
     Environment* environment;
     bool active;
     unsigned int orientation;
     std::vector<Cell> cells;
     bool doMove(int incX, int incY);
-    
+
+    //This should get called in destructor
+    std::unique_ptr<Cell> passCellToEnvironment();
 };
 
     /*  

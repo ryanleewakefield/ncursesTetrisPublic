@@ -1,15 +1,18 @@
-#include <ncurses.h>
-#include <vector>
 #ifndef __ENVIRONMENT_HPP__
 #define __ENVIRONMENT_HPP__
 
+#include <ncurses.h>
+#include <vector>
+#include <memory>
+#include "Cell.hpp"
 // A shared smart pointer would work well with this class
 class Environment{
 public:
     static Environment* getInstance();
     bool isOccupied(unsigned int x, unsigned int y);
     bool legalMove(std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys);
-    void addTetrimino(std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys);
+    bool occupySpace(unsigned int x, unsigned int y);
+    bool addCell(Cell cell);
     ~Environment();
 private:
     static Environment* uniqueInstance;
@@ -20,6 +23,7 @@ private:
     const static unsigned int maxY = 32;
     WINDOW* boundaryElement;
     std::vector<bool> spaces;
+    std::vector<std::unique_ptr<Cell>> cells;
     Environment();
     void paintBoundary();
     int xyToIndex(unsigned int x, unsigned y);
@@ -35,6 +39,7 @@ Environment* Environment::getInstance(){
 }
 Environment::Environment(){
     this->spaces = std::vector<bool>(total_spaces);
+    this->cells = std::vector<std::unique_ptr<Cell>>(total_spaces);
     this->boundaryElement = newwin(26,50,7,13);
     paintBoundary();
 }
@@ -92,5 +97,21 @@ bool Environment::isOccupied(unsigned int x, unsigned int y){
     // reported as occupied, as this
     // will follow any logic down the line
     return true;
+}
+
+bool Environment::occupySpace(unsigned int x, unsigned int y){
+    int index;
+    if(this->isOccupied(x,y)) {
+        return false;
+    }
+    else if((index = this->xyToIndex(x,y)) == -1){
+        return false;
+    }
+    else{
+        spaces[index] = true;
+        return true;
+    }
+    //This below should never occur
+    return false;
 }
 #endif

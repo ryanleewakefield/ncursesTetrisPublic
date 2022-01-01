@@ -105,7 +105,7 @@ void Tetrimino::setActive(bool active){
 }
 void Tetrimino::passCellsToEnvironment(){
     for(unsigned int i = 0; i < cells.size(); i++){
-        environment->addCell(make_unique<Cell>(cells[i]));
+        environment->addCell(std::make_unique<Cell>(cells[i]));
     }
 }
 #endif

@@ -31,13 +31,14 @@ int testLeftRotationRightL();
 int testRightRotationRightL();
 
 int testPassingCellsToEnvironment();
+
 void createCellsInPlainFunctionStack();
 void createVectorOfCells();
 
 int main(int argc, char* argv[]){
 
     //return testCell();
-    return testEnvironment();
+    //return testEnvironment();
     //return testTetriminoSubClasses();
     //return testLeftRotationLongPiece();
     //return testRightRotationLongPiece();
@@ -495,7 +496,7 @@ int testPassingCellsToEnvironment(){
     tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
     tetrimino->show();
     getch();
-    
+    tetrimino->passCellsToEnvironment();
     getch();
     delete tetrimino;
     delete cellMark1;

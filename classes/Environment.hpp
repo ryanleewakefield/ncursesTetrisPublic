@@ -114,4 +114,11 @@ bool Environment::occupySpace(unsigned int x, unsigned int y){
     //This below should never occur
     return false;
 }
+void Environment::addCell(std::unique_ptr<Cell> cellptr){
+    int x = cellptr->getx();
+    int y = cellptr->gety();
+    if(this->occupySpace(x,y)){
+        cells[this->xyToIndex(x,y)] = move(cellptr);
+    }
+}
 #endif

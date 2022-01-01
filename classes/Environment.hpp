@@ -12,7 +12,7 @@ public:
     bool isOccupied(unsigned int x, unsigned int y);
     bool legalMove(std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys);
     bool occupySpace(unsigned int x, unsigned int y);
-    bool addCell(Cell cell);
+    void addCell(std::unique_ptr<Cell> cellptr);
     ~Environment();
 private:
     static Environment* uniqueInstance;

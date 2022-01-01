@@ -24,7 +24,8 @@ public:
     bool virtual rotateRight() = 0;
     bool isActive();
     void setActive(bool active);
-    
+    //This should get called in destructor, possibly?
+    void passCellsToEnvironment();
 protected:
     Environment* environment;
     bool active;
@@ -32,8 +33,7 @@ protected:
     std::vector<Cell> cells;
     bool doMove(int incX, int incY);
 
-    //This should get called in destructor
-    std::unique_ptr<Cell> passCellToEnvironment();
+    
 };
 
     /*  
@@ -102,5 +102,10 @@ bool Tetrimino::isActive(){
 }
 void Tetrimino::setActive(bool active){
     this->active = active;
+}
+void Tetrimino::passCellsToEnvironment(){
+    for(unsigned int i = 0; i < cells.size(); i++){
+        environment->addCell(make_unique<Cell>(cells[i]));
+    }
 }
 #endif

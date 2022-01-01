@@ -467,7 +467,44 @@ int testRightRotationRightL(){
     return 0;
 }
 int testPassingCellsToEnvironment(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    cellMark1->paint();
+    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    cellMark2->paint();
+    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    cellMark3->paint();
+    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    cellMark4->paint();
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {20,20,20,19};
+    vector<unsigned int> initialY = {10,11,12,12};
+    getch();
+    tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->show();
+    getch();
     
+    getch();
+    delete tetrimino;
+    delete cellMark1;
+    delete cellMark2;
+    delete cellMark3;
+    delete cellMark4;
+    endwin();
+
+    return 0;
 }
 void writeToLine(WINDOW* win, int line, string data){
 	wmove(win, line, 0);

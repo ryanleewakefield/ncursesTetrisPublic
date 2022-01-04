@@ -91,19 +91,488 @@ bool TPiece::rotateLeftOrientationZero(){
     bool willRotateHappen = false;
     int incX = 0;
     int incY = 0;
+    if(environment->isOccupied(hX, hY)){
+        if(! (environment->isOccupied(iX, iY) ||
+            environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY))){
+                incX = 1;
+                incY = 0;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(iX, iY)){
+        if(! (environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY) ||
+            environment->isOccupied(rX, rY) ||
+            environment->isOccupied(sX, sY))){
+                incX = 1;
+                incY = 1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(nX, nY)){
+        if(! (environment->isOccupied(gX, gY) ||
+            environment->isOccupied(kX, kY) ||
+            environment->isOccupied(lX, lY))){
+                incX = -1;
+                incY = -1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(oX, oY)){
+        if(! environment->isOccupied(eX, eY)){
+            incX = -1;
+            incY = 0;
+            willRotateHappen = true;
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        incX = 0;
+        incY = 0;
+        willRotateHappen = true;
+    }
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation - 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 
 }
 bool TPiece::rotateLeftOrientationOne(){
+    int cX = cells[2].getx();
+    int cY = cells[2].gety();
 
+    int eY = cX + 2;
+    int eX = cY;
+
+    int fY = cX - 2;
+    int fX = cY;
+
+    int gY = cX + 2;
+    int gX = cY - 1;
+
+    int hY = cX + 1;
+    int hX = cY - 1;
+
+    int iY = cX - 1;
+    int iX = cY - 1;
+
+    int jY = cX - 2;
+    int jX = cY - 1;
+
+    int kY = cX + 1;
+    int kX = cY - 2;
+
+    int lY = cX;
+    int lX = cY - 2;
+
+    int mY = cX - 1;
+    int mX = cY - 2;
+
+    int nY = cX + 1;
+    int nX = cY + 1;
+
+    int oY = cX;
+    int oX = cY + 1;
+
+    int pY = cX - 1;
+    int pX = cY + 1;
+
+    int qY = cX + 1;
+    int qX = cY + 2;
+
+    int rY = cX;
+    int rX = cY + 2;
+
+    int sY = cX - 1;
+    int sX = cY + 2;
+
+    bool willRotateHappen = false;
+    int incX = 0;
+    int incY = 0;
+    if(environment->isOccupied(hX, hY)){
+        if(! (environment->isOccupied(iX, iY) ||
+            environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY))){
+                incX = 1;
+                incY = 0;
+
+                incX = 0;
+                incY = -1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(iX, iY)){
+        if(! (environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY) ||
+            environment->isOccupied(rX, rY) ||
+            environment->isOccupied(sX, sY))){
+                incX = 1;
+                incY = 1;
+
+                incX = 1;
+                incY = -1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(nX, nY)){
+        if(! (environment->isOccupied(gX, gY) ||
+            environment->isOccupied(kX, kY) ||
+            environment->isOccupied(lX, lY))){
+                incX = -1;
+                incY = -1;
+
+                incX = -1;
+                incY = 1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(oX, oY)){
+        if(! environment->isOccupied(eX, eY)){
+            incX = -1;
+            incY = 0;
+
+            incX = 0;
+            incY = 1;
+            willRotateHappen = true;
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        incX = 0;
+        incY = 0;
+        willRotateHappen = true;
+    }
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation - 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 }
 bool TPiece::rotateLeftOrientationTwo(){
+    int cX = cells[2].getx();
+    int cY = cells[2].gety();
 
+    int eX = cX + 2;
+    int eY = cY;
+
+    int fX = cX - 2;
+    int fY = cY;
+
+    int gX = cX + 2;
+    int gY = cY + 1;
+
+    int hX = cX + 1;
+    int hY = cY + 1;
+
+    int iX = cX - 1;
+    int iY = cY + 1;
+
+    int jX = cX - 2;
+    int jY = cY + 1;
+
+    int kX = cX + 1;
+    int kY = cY + 2;
+
+    int lX = cX;
+    int lY = cY + 2;
+
+    int mX = cX - 1;
+    int mY = cY + 2;
+
+    int nX = cX + 1;
+    int nY = cY - 1;
+
+    int oX = cX;
+    int oY = cY - 1;
+
+    int pX = cX - 1;
+    int pY = cY - 1;
+
+    int qX = cX + 1;
+    int qY = cY - 2;
+
+    int rX = cX;
+    int rY = cY - 2;
+
+    int sX = cX - 1;
+    int sY = cY - 2;
+
+    bool willRotateHappen = false;
+    int incX = 0;
+    int incY = 0;
+    if(environment->isOccupied(hX, hY)){
+        if(! (environment->isOccupied(iX, iY) ||
+            environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY))){
+                incX = 1;
+                incY = 0;
+
+                incX = -1;
+                incY = 0;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(iX, iY)){
+        if(! (environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY) ||
+            environment->isOccupied(rX, rY) ||
+            environment->isOccupied(sX, sY))){
+                incX = 1;
+                incY = 1;
+
+                incX = -1;
+                incY = -1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(nX, nY)){
+        if(! (environment->isOccupied(gX, gY) ||
+            environment->isOccupied(kX, kY) ||
+            environment->isOccupied(lX, lY))){
+                incX = -1;
+                incY = -1;
+
+                incX = 1;
+                incY = 1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(oX, oY)){
+        if(! environment->isOccupied(eX, eY)){
+            incX = -1;
+            incY = 0;
+
+            incX = 1;
+            incY = 0;
+            willRotateHappen = true;
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        incX = 0;
+        incY = 0;
+        willRotateHappen = true;
+    }
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation - 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 }
 bool TPiece::rotateLeftOrientationThree(){
+    int cX = cells[2].getx();
+    int cY = cells[2].gety();
 
+    int eY = cX - 2;
+    int eX = cY;
+
+    int fY = cX + 2;
+    int fX = cY;
+
+    int gY = cX - 2;
+    int gX = cY + 1;
+
+    int hY = cX - 1;
+    int hX = cY + 1;
+
+    int iY = cX + 1;
+    int iX = cY + 1;
+
+    int jY = cX + 2;
+    int jX = cY + 1;
+
+    int kY = cX - 1;
+    int kX = cY + 2;
+
+    int lY = cX;
+    int lX = cY + 2;
+
+    int mY = cX + 1;
+    int mX = cY + 2;
+
+    int nY = cX - 1;
+    int nX = cY - 1;
+
+    int oY = cX;
+    int oX = cY - 1;
+
+    int pY = cX + 1;
+    int pX = cY - 1;
+
+    int qY = cX - 1;
+    int qX = cY - 2;
+
+    int rY = cX;
+    int rX = cY - 2;
+
+    int sY = cX + 1;
+    int sX = cY - 2;
+
+    bool willRotateHappen = false;
+    int incX = 0;
+    int incY = 0;
+    if(environment->isOccupied(hX, hY)){
+        if(! (environment->isOccupied(iX, iY) ||
+            environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY))){
+                incX = 1;
+                incY = 0;
+
+                incX = 0;
+                incY = 1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(iX, iY)){
+        if(! (environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY) ||
+            environment->isOccupied(rX, rY) ||
+            environment->isOccupied(sX, sY))){
+                incX = 1;
+                incY = 1;
+
+                incX = -1;
+                incY = 1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(nX, nY)){
+        if(! (environment->isOccupied(gX, gY) ||
+            environment->isOccupied(kX, kY) ||
+            environment->isOccupied(lX, lY))){
+                incX = -1;
+                incY = -1;
+
+                incX = 1;
+                incY = -1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(oX, oY)){
+        if(! environment->isOccupied(eX, eY)){
+            incX = -1;
+            incY = 0;
+
+            incX = 0;
+            incY = -1;
+            willRotateHappen = true;
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        incX = 0;
+        incY = 0;
+        willRotateHappen = true;
+    }
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation - 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 }
 void TPiece::doRotateLeft(int incX, int incY, unsigned int newOrientation){
-    
+    unsigned int new_cX = cells[2].getx() + incX;
+    unsigned int new_cY = cells[2].gety() + incY;
+    for(unsigned int i = 0; i < cells.size(); i++){
+        cells[i].erase();
+    }
+    if(newOrientation == 0){    
+        cells[0].move(new_cX - 1, new_cY);
+        cells[1].move(new_cX, new_cY - 1);
+        cells[2].move(new_cX, new_cY);
+        cells[3].move(new_cX + 1, new_cY);   
+    }
+    else if(newOrientation == 1){
+        cells[0].move(new_cX, new_cY - 1);
+        cells[1].move(new_cX + 1, new_cY);
+        cells[2].move(new_cX, new_cY);
+        cells[3].move(new_cX, new_cY + 1);   
+    }
+    else if(newOrientation == 2){
+        cells[0].move(new_cX + 1, new_cY);
+        cells[1].move(new_cX, new_cY + 1);
+        cells[2].move(new_cX, new_cY);
+        cells[3].move(new_cX - 1, new_cY);   
+    }
+    else if(newOrientation == 3){
+        cells[0].move(new_cX, new_cY + 1);
+        cells[1].move(new_cX - 1, new_cY);
+        cells[2].move(new_cX, new_cY);
+        cells[3].move(new_cX, new_cY - 1);   
+     }
+    for(unsigned int i = 0; i < cells.size(); i++){
+            cells[i].paint();
+        }
 }
 bool TPiece::rotateRight(){
     switch(this->orientation){
@@ -115,18 +584,537 @@ bool TPiece::rotateRight(){
     }
 }
 bool TPiece::rotateRightOrientationZero(){
+    int cX = cells[2].getx();
+    int cY = cells[2].gety();
 
+    int eX = cX - 2;
+    int eY = cY;
+
+    int fX = cX + 2;
+    int fY = cY;
+
+    int gX = cX - 2;
+    int gY = cY - 1;
+
+    int hX = cX - 1;
+    int hY = cY - 1;
+
+    int iX = cX + 1;
+    int iY = cY - 1;
+
+    int jX = cX + 2;
+    int jY = cY - 1;
+
+    int kX = cX - 1;
+    int kY = cY - 2;
+
+    int lX = cX;
+    int lY = cY - 2;
+
+    int mX = cX + 1;
+    int mY = cY - 2;
+
+    int nX = cX - 1;
+    int nY = cY + 1;
+
+    int oX = cX;
+    int oY = cY + 1;
+
+    int pX = cX + 1;
+    int pY = cY + 1;
+
+    int qX = cX - 1;
+    int qY = cY + 2;
+
+    int rX = cX;
+    int rY = cY + 2;
+
+    int sX = cX + 1;
+    int sY = cY + 2;
+
+    bool willRotateHappen = false;
+    int incX = 0;
+    int incY = 0;
+    if(environment->isOccupied(iX, iY)){
+        if(! (environment->isOccupied(hX, hY) ||
+            environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY))){
+                incX = -1;
+                incY = 0;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(hX, hY)){
+        if(! (environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY) ||
+            environment->isOccupied(qX, qY) ||
+            environment->isOccupied(sX, sY))){
+                incX = -1;
+                incY = 1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(pX, pY)){
+        if(! (environment->isOccupied(jX, jY) ||
+            environment->isOccupied(mX, mY) ||
+            environment->isOccupied(lX, lY))){
+                incX = 1;
+                incY = -1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(oX, oY)){
+        if(! environment->isOccupied(fX, fY)){
+            incX = 1;
+            incY = 0;
+            willRotateHappen = true;
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        incX = 0;
+        incY = 0;
+        willRotateHappen = true;
+    }
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation + 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 }
 bool TPiece::rotateRightOrientationOne(){
+    int cX = cells[2].getx();
+    int cY = cells[2].gety();
 
+    int eY = cX + 2;
+    int eX = cY;
+
+    int fY = cX - 2;
+    int fX = cY;
+
+    int gY = cX + 2;
+    int gX = cY - 1;
+
+    int hY = cX + 1;
+    int hX = cY - 1;
+
+    int iY = cX - 1;
+    int iX = cY - 1;
+
+    int jY = cX - 2;
+    int jX = cY - 1;
+
+    int kY = cX + 1;
+    int kX = cY - 2;
+
+    int lY = cX;
+    int lX = cY - 2;
+
+    int mY = cX - 1;
+    int mX = cY - 2;
+
+    int nY = cX + 1;
+    int nX = cY + 1;
+
+    int oY = cX;
+    int oX = cY + 1;
+
+    int pY = cX - 1;
+    int pX = cY + 1;
+
+    int qY = cX + 1;
+    int qX = cY + 2;
+
+    int rY = cX;
+    int rX = cY + 2;
+
+    int sY = cX - 1;
+    int sX = cY + 2;
+
+    bool willRotateHappen = false;
+    int incX = 0;
+    int incY = 0;
+    if(environment->isOccupied(iX, iY)){
+        if(! (environment->isOccupied(hX, hY) ||
+            environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY))){
+                incX = -1;
+                incY = 0;
+
+                incX = 0;
+                incY = 1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(hX, hY)){
+        if(! (environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY) ||
+            environment->isOccupied(qX, qY) ||
+            environment->isOccupied(sX, sY))){
+                incX = -1;
+                incY = 1;
+
+                incX = 1;
+                incY = 1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(pX, pY)){
+        if(! (environment->isOccupied(jX, jY) ||
+            environment->isOccupied(mX, mY) ||
+            environment->isOccupied(lX, lY))){
+                incX = 1;
+                incY = -1;
+
+                incX = -1;
+                incY = -1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(oX, oY)){
+        if(! environment->isOccupied(fX, fY)){
+            incX = 1;
+            incY = 0;
+
+            incX = 0;
+            incY = -1;
+            willRotateHappen = true;
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        incX = 0;
+        incY = 0;
+        willRotateHappen = true;
+    }
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation + 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 }
 bool TPiece::rotateRightOrientationTwo(){
+    int cX = cells[2].getx();
+    int cY = cells[2].gety();
 
+    int eX = cX + 2;
+    int eY = cY;
+
+    int fX = cX - 2;
+    int fY = cY;
+
+    int gX = cX + 2;
+    int gY = cY + 1;
+
+    int hX = cX + 1;
+    int hY = cY + 1;
+
+    int iX = cX - 1;
+    int iY = cY + 1;
+
+    int jX = cX - 2;
+    int jY = cY + 1;
+
+    int kX = cX + 1;
+    int kY = cY + 2;
+
+    int lX = cX;
+    int lY = cY + 2;
+
+    int mX = cX - 1;
+    int mY = cY + 2;
+
+    int nX = cX + 1;
+    int nY = cY - 1;
+
+    int oX = cX;
+    int oY = cY - 1;
+
+    int pX = cX - 1;
+    int pY = cY - 1;
+
+    int qX = cX + 1;
+    int qY = cY - 2;
+
+    int rX = cX;
+    int rY = cY - 2;
+
+    int sX = cX + 1;
+    int sY = cY - 2;
+
+    bool willRotateHappen = false;
+    int incX = 0;
+    int incY = 0;
+    if(environment->isOccupied(iX, iY)){
+        if(! (environment->isOccupied(hX, hY) ||
+            environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY))){
+                incX = -1;
+                incY = 0;
+
+                incX = 1;
+                incY = 0;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(hX, hY)){
+        if(! (environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY) ||
+            environment->isOccupied(qX, qY) ||
+            environment->isOccupied(sX, sY))){
+                incX = -1;
+                incY = 1;
+
+                incX = 1;
+                incY = -1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(pX, pY)){
+        if(! (environment->isOccupied(jX, jY) ||
+            environment->isOccupied(mX, mY) ||
+            environment->isOccupied(lX, lY))){
+                incX = 1;
+                incY = -1;
+
+                incX = -1;
+                incY = 1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(oX, oY)){
+        if(! environment->isOccupied(fX, fY)){
+            incX = 1;
+            incY = 0;
+
+            incX = -1;
+            incY = 0;
+            willRotateHappen = true;
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        incX = 0;
+        incY = 0;
+        willRotateHappen = true;
+    }
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation + 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 }
 bool TPiece::rotateRightOrientationThree(){
+    int cX = cells[2].getx();
+    int cY = cells[2].gety();
 
+    int eY = cX - 2;
+    int eX = cY;
+
+    int fY = cX + 2;
+    int fX = cY;
+
+    int gY = cX - 2;
+    int gX = cY + 1;
+
+    int hY = cX - 1;
+    int hX = cY + 1;
+
+    int iY = cX + 1;
+    int iX = cY + 1;
+
+    int jY = cX + 2;
+    int jX = cY + 1;
+
+    int kY = cX - 1;
+    int kX = cY + 2;
+
+    int lY = cX;
+    int lX = cY + 2;
+
+    int mY = cX + 1;
+    int mX = cY + 2;
+
+    int nY = cX - 1;
+    int nX = cY - 1;
+
+    int oY = cX;
+    int oX = cY - 1;
+
+    int pY = cX + 1;
+    int pX = cY - 1;
+
+    int qY = cX - 1;
+    int qX = cY - 2;
+
+    int rY = cX;
+    int rX = cY - 2;
+
+    int sY = cX + 1;
+    int sX = cY - 2;
+
+    bool willRotateHappen = false;
+    int incX = 0;
+    int incY = 0;
+    if(environment->isOccupied(iX, iY)){
+        if(! (environment->isOccupied(hX, hY) ||
+            environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY))){
+                incX = -1;
+                incY = 0;
+
+                incX = 0;
+                incY = -1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(hX, hY)){
+        if(! (environment->isOccupied(nX, nY) ||
+            environment->isOccupied(oX, oY) ||
+            environment->isOccupied(pX, pY) ||
+            environment->isOccupied(qX, qY) ||
+            environment->isOccupied(sX, sY))){
+                incX = -1;
+                incY = 1;
+
+                incX = -1;
+                incY = -1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(pX, pY)){
+        if(! (environment->isOccupied(jX, jY) ||
+            environment->isOccupied(mX, mY) ||
+            environment->isOccupied(lX, lY))){
+                incX = 1;
+                incY = -1;
+
+                incX = 1;
+                incY = 1;
+                willRotateHappen = true;
+            }
+        else{
+            //do nothing
+        }
+    }
+    else if(environment->isOccupied(oX, oY)){
+        if(! environment->isOccupied(fX, fY)){
+            incX = 1;
+            incY = 0;
+
+            incX = 0;
+            incY = 1;
+            willRotateHappen = true;
+        }
+        else{
+            //do nothing
+        }
+    }
+    else{
+        incX = 0;
+        incY = 0;
+        willRotateHappen = true;
+    }
+    if(willRotateHappen){
+        unsigned newOrientation = (this->orientation + 1) % 4;
+        if(newOrientation < 0){
+            newOrientation = newOrientation + 4;
+        }
+        this->orientation = newOrientation;
+        doRotateLeft(incX, incY, newOrientation);
+    }
+    return willRotateHappen;
 }
 void TPiece::doRotateRight(int incX, int incY, unsigned int newOrientation){
-
+    unsigned int new_cX = cells[2].getx() + incX;
+    unsigned int new_cY = cells[2].gety() + incY;
+    for(unsigned int i = 0; i < cells.size(); i++){
+        cells[i].erase();
+    }
+    if(newOrientation == 0){    
+        cells[0].move(new_cX - 1, new_cY);
+        cells[1].move(new_cX, new_cY - 1);
+        cells[2].move(new_cX, new_cY);
+        cells[3].move(new_cX + 1, new_cY);   
+    }
+    else if(newOrientation == 1){
+        cells[0].move(new_cX, new_cY - 1);
+        cells[1].move(new_cX + 1, new_cY);
+        cells[2].move(new_cX, new_cY);
+        cells[3].move(new_cX, new_cY + 1);   
+    }
+    else if(newOrientation == 2){
+        cells[0].move(new_cX + 1, new_cY);
+        cells[1].move(new_cX, new_cY + 1);
+        cells[2].move(new_cX, new_cY);
+        cells[3].move(new_cX - 1, new_cY);   
+    }
+    else if(newOrientation == 3){
+        cells[0].move(new_cX, new_cY + 1);
+        cells[1].move(new_cX - 1, new_cY);
+        cells[2].move(new_cX, new_cY);
+        cells[3].move(new_cX, new_cY - 1);   
+     }
+    for(unsigned int i = 0; i < cells.size(); i++){
+            cells[i].paint();
+        }
 }
 #endif

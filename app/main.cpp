@@ -60,10 +60,10 @@ int main(int argc, char* argv[]){
     //return testRightRotationLeftS();
 
     // return testLeftRotationRightS();
-    return testRightRotationRightS();
+    // return testRightRotationRightS();
 
-    // return testLeftRotationTPiece();
-    // return testRightRotationTPiece();
+    //return testLeftRotationTPiece();
+    return testRightRotationTPiece();
 }
 
 int runApp(){
@@ -711,10 +711,96 @@ int testRightRotationRightS(){
 }
 
 int testLeftRotationTPiece(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
 
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    cellMark1->paint();
+    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    cellMark2->paint();
+    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    cellMark3->paint();
+    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    cellMark4->paint();
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {19,20,20,21};
+    vector<unsigned int> initialY = {10,9,10,10};
+    getch();
+    tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->show();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    tetrimino->rotateLeft();
+    getch();
+    delete tetrimino;
+    delete cellMark1;
+    delete cellMark2;
+    delete cellMark3;
+    delete cellMark4;
+    endwin();
+
+    return 0;
 }
 int testRightRotationTPiece(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
 
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    cellMark1->paint();
+    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    cellMark2->paint();
+    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    cellMark3->paint();
+    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    cellMark4->paint();
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {19,20,20,21};
+    vector<unsigned int> initialY = {10,9,10,10};
+    getch();
+    tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
+    tetrimino->show();
+    getch();
+    tetrimino->rotateRight();
+    getch();
+    tetrimino->rotateRight();
+    getch();
+    tetrimino->rotateRight();
+    getch();
+    tetrimino->rotateRight();
+    getch();
+    delete tetrimino;
+    delete cellMark1;
+    delete cellMark2;
+    delete cellMark3;
+    delete cellMark4;
+    endwin();
+
+    return 0;
 }
 void writeToLine(WINDOW* win, int line, string data){
 	wmove(win, line, 0);

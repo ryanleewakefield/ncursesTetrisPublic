@@ -9,11 +9,11 @@
 class Environment{
 public:
     static Environment* getInstance();
+    static bool freeInstance();
     bool isOccupied(unsigned int x, unsigned int y);
     bool legalMove(std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys);
     bool occupySpace(unsigned int x, unsigned int y);
     void addCell(std::unique_ptr<Cell> cellptr);
-    ~Environment();
 private:
     static Environment* uniqueInstance;
     const static unsigned int total_spaces = 576;
@@ -25,6 +25,8 @@ private:
     std::vector<bool> spaces;
     std::vector<std::unique_ptr<Cell>> cells;
     Environment();
+    Environment(const Environment& rhs);
+    ~Environment();
     void paintBoundary();
     int xyToIndex(unsigned int x, unsigned y);
 
@@ -36,6 +38,15 @@ Environment* Environment::getInstance(){
         uniqueInstance = new Environment();
     }
     return uniqueInstance;
+}
+bool Environment::freeInstance(){
+    if(uniqueInstance != nullptr){
+        delete uniqueInstance;
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 Environment::Environment(){
     this->spaces = std::vector<bool>(total_spaces);

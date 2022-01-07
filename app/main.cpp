@@ -82,7 +82,7 @@ int main(int argc, char* argv[]){
     // return testRightRotationTPiece();
 
     // testKeyboardListener();
-    // testUserController();
+    testUserController();
 }
 
 int runApp(){
@@ -880,11 +880,28 @@ int testUserController(){
     tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
     tetrimino->show();
     
+    KeyboardListener* KeyboardListener = KeyboardListener::getInstance();
+
+    ScreenWriterController swc;
+    ScreenWriter sw;
+    swc.setControllable(&sw);
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+    KeyboardListener::getInstance()->registerController(&swc);
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+    KeyboardListener::getInstance()->startListening();
+
     bool stopCycleThread = false;
     mutex tetriminoMutex;
     thread cycleThread {cycleTetrimino, tetrimino, &tetriminoMutex, &stopCycleThread};
 
-    getch();
     stopCycleThread = true;
     cycleThread.join();
 

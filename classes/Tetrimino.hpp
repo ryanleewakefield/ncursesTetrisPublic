@@ -5,12 +5,14 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <mutex>
 
 #include "Cell.hpp"
 #include "Environment.hpp"
-
+#include "IControllable.hpp"
+typedef  mutex* mutexPtr;
 //Refactor bare pointers to smart pointers later
-class Tetrimino{
+class Tetrimino : public ITetriminoControl{
 public:
     Tetrimino(Environment* env, int color, std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys);
     Tetrimino(const Tetrimino& rhs) = delete;
@@ -26,20 +28,53 @@ public:
     void setActive(bool active);
     //This should get called in destructor, possibly?
     void passCellsToEnvironment();
+
+    //ITetriminoControl
+    mutexPtr virtual getMutex();
+    bool virtual actionOne();
+    bool virtual actionTwo();
+    bool virtual actionThree();
+    bool virtual actionFour();
+    bool virtual actionFive();
+    bool virtual actionSix();
 protected:
     Environment* environment;
     bool active;
     unsigned int orientation;
+    mutex mux;
     std::vector<Cell> cells;
     bool doMove(int incX, int incY);
 
     
 };
-
-    /*  
+/*
+    Implementation of ITetriminoControl Interface
+*/
+mutexPtr Tetrimino::getMutex(){
+    return &(this->mux);
+}
+bool Tetrimino::actionOne(){
+    this->moveUp();
+}
+bool Tetrimino::actionTwo(){
+    this->moveDown();
+}
+bool Tetrimino::actionThree(){
+    this->moveLeft();
+}
+bool Tetrimino::actionFour(){
+    this->moveRight();
+}
+bool Tetrimino::actionFive(){
+    this->rotateLeft();
+}
+bool Tetrimino::actionSix(){
+    this->rotateRight();
+}
+/*  
     The object that is responsible for generating Tetriminos knows where they will be placed.
     So this constructor can assume they are correct for any subtype.
-    */
+*/
 Tetrimino::Tetrimino(Environment* env, int color, std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys){
     this->environment = env;
     this->active = false;

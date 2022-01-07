@@ -3,6 +3,8 @@
 
 #include "IControllable.hpp"
 #include "ButtonSignal.hpp"
+#include <mutex>
+#include <thread>
 
 class UserController{
 public:
@@ -31,7 +33,6 @@ class AppController : public UserController{
 public:
     bool virtual processInputSignal(ButtonSignal bst);
 };
-
 bool AppController::processInputSignal(ButtonSignal bst){
     switch(bst){
         case QuitButton: controllable->actionOne(); break;
@@ -45,7 +46,6 @@ public:
 protected:
     IControllableTwo* controllable;
 };
-
 bool ScreenWriterController::processInputSignal(ButtonSignal bst){
     switch(bst){
         case UpButton: controllable->actionOne(); break;
@@ -54,5 +54,47 @@ bool ScreenWriterController::processInputSignal(ButtonSignal bst){
 }
 void ScreenWriterController::setControllable(IControllableTwo* controllable){
     this->controllable = controllable;
+}
+
+class TetriminoController : public UserController{
+public:
+    bool virtual processInputSignal(ButtonSignal bst);
+    void virtual setControllable(ITetriminoControl* controllable);
+protected:
+    ITetriminoControl* controllable;
+};
+bool TetriminoController::processInputSignal(ButtonSignal bst){
+    switch(bst){
+        case UpButton :{
+            unique_lock<mutex> lck {*(controllable->getMutex())};
+            controllable->actionOne();
+            break;
+        }
+        case DownButton :{
+            unique_lock<mutex> lck {*(controllable->getMutex())};
+            controllable->actionTwo();
+            break;
+        }
+        case LeftButton :{
+            unique_lock<mutex> lck {*(controllable->getMutex())};
+            controllable->actionThree();
+            break;
+        }
+        case RightButton :{
+            unique_lock<mutex> lck {*(controllable->getMutex())};
+            controllable->actionFour();
+            break;
+        }
+        case BButton :{
+            unique_lock<mutex> lck {*(controllable->getMutex())};
+            controllable->actionFive();
+            break;
+        }
+        case AButton :{
+            unique_lock<mutex> lck {*(controllable->getMutex())};
+            controllable->actionSix();
+            break;
+        }
+    }
 }
 #endif

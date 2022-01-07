@@ -3,14 +3,20 @@
 
 class IControllable{
 public:
-    bool virtual controllerUp() = 0;
-    bool virtual controllerDown() = 0;
+    // bool virtual controllerUp() = 0;
+    // bool virtual controllerDown() = 0;
     // bool virtual controllerRight() = 0;
     // bool virtual controllerLeft() = 0;
     // bool virtual controllerAButton() = 0;
     // bool virtual controllerBButton() = 0;
     // bool virtual controllerStartButton() = 0;
     // bool virtual controllerSelectButton() = 0;
+    bool virtual actionOne() = 0;
 };
 
+class IControllableTwo : public IControllable{
+public:
+    bool virtual actionOne() = 0;
+    bool virtual actionTwo() = 0;
+};
 #endif

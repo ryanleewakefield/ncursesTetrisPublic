@@ -6,22 +6,22 @@
 #include <string>
 #include "IControllable.hpp"
 
-class ScreenWriter : public IControllable{
+class ScreenWriter : public IControllableTwo{
 public:
     ScreenWriter() = default;
     ScreenWriter(const ScreenWriter& rhs);
     void writeLineAtTop();
     void writeLineAtBottom();
-    bool virtual controllerUp();
-    bool virtual controllerDown();
+    bool virtual actionOne();
+    bool virtual actionTwo();
 private:
     void writeToLine(WINDOW* win, int line, std::string data);
 };
-bool ScreenWriter::controllerUp(){
+bool ScreenWriter::actionOne(){
     this->writeLineAtTop();
     return true;
 }
-bool ScreenWriter::controllerDown(){
+bool ScreenWriter::actionTwo(){
     this->writeLineAtBottom();
     return true;
 }

@@ -10,7 +10,7 @@ public:
     UserController(const UserController& rhs);
     ~UserController();
     bool virtual processInputSignal(ButtonSignal bst) = 0;
-    void setControllable(IControllable* controllable);
+    void virtual setControllable(IControllable* controllable);
 protected:
     IControllable* controllable;
 };
@@ -27,15 +27,32 @@ void UserController::setControllable(IControllable* controllable){
     this->controllable = controllable;
 }
 
-class ScreenWriterController : public UserController{
+class AppController : public UserController{
 public:
     bool virtual processInputSignal(ButtonSignal bst);
 };
 
+bool AppController::processInputSignal(ButtonSignal bst){
+    switch(bst){
+        case QuitButton: controllable->actionOne(); break;
+    }
+}
+
+class ScreenWriterController : public UserController{
+public:
+    bool virtual processInputSignal(ButtonSignal bst);
+    void virtual setControllable(IControllableTwo * controllable);
+protected:
+    IControllableTwo* controllable;
+};
+
 bool ScreenWriterController::processInputSignal(ButtonSignal bst){
     switch(bst){
-        case UpButton: controllable->controllerUp(); break;
-        case DownButton: controllable->controllerDown(); break;
+        case UpButton: controllable->actionOne(); break;
+        case DownButton: controllable->actionTwo(); break;
     }
+}
+void ScreenWriterController::setControllable(IControllableTwo* controllable){
+    this->controllable = controllable;
 }
 #endif

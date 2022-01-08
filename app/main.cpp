@@ -20,6 +20,7 @@
 #include "../classes/KeyboardListener.hpp"
 #include "../classes/ScreenWriter.hpp"
 #include "../classes/AppLogic.hpp"
+#include "../classes/AutoController.hpp"
 
 using namespace std;
 
@@ -880,7 +881,7 @@ int testUserController(){
     tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
     tetrimino->show();
     getch();
-    // Environment::getInstance()->paintBoundary();
+    
     KeyboardListener* KeyboardListener = KeyboardListener::getInstance();
 
 
@@ -894,9 +895,19 @@ int testUserController(){
 
     KeyboardListener::getInstance()->registerController(&ac);
     KeyboardListener::getInstance()->registerController(&tc);
+
+    // TetriminoCycle tetCycle;
+    // tetCycle.setController(&tc);
+    
+    // tetCycle.setDelay(500);
+    // tetCycle.startAutoThread();
+
     KeyboardListener::getInstance()->startListening();
     
+
+    // tetCycle.waitOnAutoThread();
     KeyboardListener::getInstance()->waitOnListener();
+    
     delete tetrimino;
     
     endwin();

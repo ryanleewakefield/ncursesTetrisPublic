@@ -16,12 +16,12 @@ public:
     AutoController(const AutoController& rhs) = delete;
     ~AutoController();
     bool virtual processEventSignal(EventSignal est) = 0;
-    void virtual setController(UserController* controller) = 0;
-    bool startAutoThread();
+    void virtual setController(UserController* controller);
+    bool virtual startAutoThread() = 0;
     bool waitOnAutoThread();
     bool stopAutoThread();
 protected:
-    virtual int runThread(bool* stop) = 0;
+    static int runThread(bool* stop);
     UserController* controller;
     std::thread* autoThread;
     bool running;
@@ -35,10 +35,13 @@ AutoController::AutoController(){
 AutoController::~AutoController(){
 
 }
+void AutoController::setController(UserController* controller){
+    this->controller = controller;
+}
 bool AutoController::startAutoThread(){
     if(running == false){
         stop = false;
-        autoThread =  new std::thread(runThread, &(this->stop));
+        autoThread =  new std::thread(AutoController::runThread, &stop);
         running = true;
         return true;
     }
@@ -59,20 +62,42 @@ bool AutoController::stopAutoThread(){
         return false;
     }
 }
+int AutoController::runThread(bool* stop){
+    //do nothing
+    // Need to find a way to make this static method
+    // a pure virtual function i.e. ensure that a subclass
+    // writes a function for this.
+}
 
+/*
+    **************************************************************
+    **************************************************************
+*/
 class TetriminoCycle : public AutoController{
 public:
     bool virtual processEventSignal(EventSignal est);
     void virtual setController(TetriminoController* controller);
+    bool virtual startAutoThread() override;
     void setDelay(int delay);
 private:
-    virtual int runThread(TetriminoController* controllable, bool* stop, int* delay) = 0;
+    static int runThread(TetriminoController* controllable, bool* stop, int* delay);
     TetriminoController* controller;
     int delay;
 };
 bool TetriminoCycle::processEventSignal(EventSignal est){
     switch(est){
         case APP_QUIT: this->stopAutoThread(); return true;
+    }
+}
+bool TetriminoCycle::startAutoThread(){
+    if(running == false){
+        stop = false;
+        autoThread =  new std::thread(TetriminoCycle::runThread, controller, &stop, &delay);
+        running = true;
+        return true;
+    }
+    else{
+        return false;
     }
 }
 void TetriminoCycle::setController(TetriminoController* controller){

@@ -70,7 +70,7 @@ KeyboardListener::KeyboardListener(){
     // windows can echo the character input from the keyboard.
     entryPoint = newwin(1,1,0,0);
     keypad(entryPoint, true);
-    wtimeout(entryPoint, ONE_FRAME);
+    wtimeout(entryPoint, BLOCKING_READ);
 }
 KeyboardListener::~KeyboardListener(){
     delwin(entryPoint);
@@ -113,6 +113,12 @@ bool KeyboardListener::waitOnListener(){
 bool KeyboardListener::stopListening(){
     if(running == true){
         stop = true;
+        //This should unblock the wgetch(entryPoint) call
+        // Later on, choose a better character to send
+        // It will just get lost anyway to the Listener
+        // i.e. it won't be mapped to an application signal or
+        // event.
+        ungetch('p');
         running = false;
         return true;
     }

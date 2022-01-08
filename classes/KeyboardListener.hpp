@@ -53,6 +53,8 @@ int KeyboardListener::runThread(bool* stop, WINDOW* ep){
             case 's': KeyboardListener::getInstance()->notify(DownButton); break;
             case 'a': KeyboardListener::getInstance()->notify(LeftButton); break;
             case 'd': KeyboardListener::getInstance()->notify(RightButton); break;
+            case 'j': KeyboardListener::getInstance()->notify(BButton); break;
+            case 'k': KeyboardListener::getInstance()->notify(AButton); break;
             case 'q': KeyboardListener::getInstance()->notify(QuitButton); break;
         }
     }
@@ -61,7 +63,12 @@ KeyboardListener::KeyboardListener(){
     listeningThread = nullptr;
     running = false;
     stop = true;
-    entryPoint = newwin(0,0,0,0);
+    // For whatever reason, doing newwin(0,0,0,0) 
+    // blanks out all other windows. Probably because
+    // when characters are read from that window, there's
+    // technically nowhere for the characters to come from, since
+    // windows can echo the character input from the keyboard.
+    entryPoint = newwin(1,1,0,0);
     keypad(entryPoint, true);
     wtimeout(entryPoint, ONE_FRAME);
 }

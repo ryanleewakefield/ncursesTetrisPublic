@@ -66,35 +66,38 @@ protected:
 bool TetriminoController::processInputSignal(ButtonSignal bst){
     switch(bst){
         case UpButton :{
-            unique_lock<mutex> lck {*(controllable->getMutex())};
+            std::unique_lock<std::mutex> lck {*(controllable->getMutex())};
             controllable->actionOne();
             break;
         }
         case DownButton :{
-            unique_lock<mutex> lck {*(controllable->getMutex())};
+            std::unique_lock<std::mutex> lck {*(controllable->getMutex())};
             controllable->actionTwo();
             break;
         }
         case LeftButton :{
-            unique_lock<mutex> lck {*(controllable->getMutex())};
+            std::unique_lock<std::mutex> lck {*(controllable->getMutex())};
             controllable->actionThree();
             break;
         }
         case RightButton :{
-            unique_lock<mutex> lck {*(controllable->getMutex())};
+            std::unique_lock<std::mutex> lck {*(controllable->getMutex())};
             controllable->actionFour();
             break;
         }
         case BButton :{
-            unique_lock<mutex> lck {*(controllable->getMutex())};
+            std::unique_lock<std::mutex> lck {*(controllable->getMutex())};
             controllable->actionFive();
             break;
         }
         case AButton :{
-            unique_lock<mutex> lck {*(controllable->getMutex())};
+            std::unique_lock<std::mutex> lck {*(controllable->getMutex())};
             controllable->actionSix();
             break;
         }
     }
+}
+void TetriminoController::setControllable(ITetriminoControl* controllable){
+    this->controllable = controllable;
 }
 #endif

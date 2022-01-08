@@ -10,7 +10,7 @@
 #include "Cell.hpp"
 #include "Environment.hpp"
 #include "IControllable.hpp"
-typedef  mutex* mutexPtr;
+typedef std::mutex* mutexPtr;
 //Refactor bare pointers to smart pointers later
 class Tetrimino : public ITetriminoControl{
 public:
@@ -41,11 +41,9 @@ protected:
     Environment* environment;
     bool active;
     unsigned int orientation;
-    mutex mux;
+    std::mutex mux;
     std::vector<Cell> cells;
     bool doMove(int incX, int incY);
-
-    
 };
 /*
     Implementation of ITetriminoControl Interface

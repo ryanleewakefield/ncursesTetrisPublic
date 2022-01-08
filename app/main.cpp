@@ -81,8 +81,8 @@ int main(int argc, char* argv[]){
     // return testLeftRotationTPiece();
     // return testRightRotationTPiece();
 
-    // testKeyboardListener();
-    testUserController();
+    // return testKeyboardListener();
+    return testUserController();
 }
 
 int runApp(){
@@ -800,7 +800,7 @@ int testRightRotationTPiece(){
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {19,20,20,21};
     vector<unsigned int> initialY = {10,9,10,10};
-    getch();
+    
     tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
     tetrimino->show();
     getch();
@@ -879,12 +879,10 @@ int testUserController(){
     
     tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
     tetrimino->show();
-    
+    getch();
+    // Environment::getInstance()->paintBoundary();
     KeyboardListener* KeyboardListener = KeyboardListener::getInstance();
 
-    ScreenWriterController swc;
-    ScreenWriter sw;
-    swc.setControllable(&sw);
 
     AppController ac;
     AppLogic al;
@@ -893,20 +891,12 @@ int testUserController(){
     TetriminoController tc;
     tc.setControllable(tetrimino);
 
-    KeyboardListener::getInstance()->registerController(&swc);
+
     KeyboardListener::getInstance()->registerController(&ac);
     KeyboardListener::getInstance()->registerController(&tc);
     KeyboardListener::getInstance()->startListening();
-
-    bool stopCycleThread = false;
-    mutex tetriminoMutex;
-    thread cycleThread {cycleTetrimino, tetrimino, &tetriminoMutex, &stopCycleThread};
-
-    stopCycleThread = true;
-    cycleThread.join();
-
-    getch();
-
+    
+    KeyboardListener::getInstance()->waitOnListener();
     delete tetrimino;
     
     endwin();

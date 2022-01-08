@@ -2,9 +2,9 @@
 #define __ICONTROLLABLE_HPP__
 
 #include <mutex>
-
+#include <thread>
 //Needed for intellsense nonsense
-typedef  mutex* mutexPtr;
+typedef std::mutex* mutexPtr;
 /*
     bool virtual controllerUp() = 0;
     bool virtual controllerDown() = 0;

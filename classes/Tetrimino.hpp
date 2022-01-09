@@ -80,11 +80,12 @@ Tetrimino::Tetrimino(Environment* env, int color, std::vector<unsigned int>& Xs,
     // then each piece needs to be in its appropriate orientation
     // from the factory
     this->orientation = 0;
-    this->cells = { Cell(Xs[0], Ys[0], color, 'A'),
-                    Cell(Xs[1], Ys[1], color, 'B'),
-                    Cell(Xs[2], Ys[2], color, 'C'),
-                    Cell(Xs[3], Ys[3], color, 'D')};
-
+    int xOff = Environment::getXOffset();
+    int yOff = Environment::getYOffset();
+    this->cells = { Cell(Xs[0], Ys[0], xOff, yOff, color, 'A'),
+                    Cell(Xs[1], Ys[1], xOff, yOff, color, 'B'),
+                    Cell(Xs[2], Ys[2], xOff, yOff, color, 'C'),
+                    Cell(Xs[3], Ys[3], xOff, yOff, color, 'D')};
 }
 
 void Tetrimino::show(){

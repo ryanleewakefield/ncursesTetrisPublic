@@ -56,10 +56,7 @@ void createVectorOfCells();
 int testKeyboardListener();
 int testUserController();
 
-
-bool cycleTetrimino(Tetrimino* tetrimino, mutex* mux, bool* stopSignal);
-
-bool controllerListener(UserController* userController, Tetrimino* tetrimino, mutex* mux, bool* stopSignal);
+int debugEnvironment();
 
 int main(int argc, char* argv[]){
 
@@ -83,7 +80,9 @@ int main(int argc, char* argv[]){
     // return testRightRotationTPiece();
 
     // return testKeyboardListener();
-    return testUserController();
+    // return testUserController();
+
+    return debugEnvironment();
 }
 
 int runApp(){
@@ -113,63 +112,23 @@ int testCell(){
     int width = 80;
     //Create Cell that appear near center of screen
     
-    createCellsInPlainFunctionStack();
 
-    vector<Cell> cells = {Cell(30, 20, COLOR_YELLOW, 'A'),
-                        Cell(30, 21, COLOR_YELLOW, 'B'),
-                        Cell(30, 22, COLOR_YELLOW, 'C'),
-                        Cell(30, 23, COLOR_YELLOW, 'D')};
+    vector<Cell> cells = {Cell(30, 20, 0,0, COLOR_YELLOW, 'A'),
+                        Cell(30, 21, 0,0, COLOR_YELLOW, 'B'),
+                        Cell(30, 22, 0,0, COLOR_YELLOW, 'C'),
+                        Cell(30, 23, 0,0, COLOR_YELLOW, 'D')};
 
     for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].paint();
         }
     getch();
-    //createVectorOfCells();
-
-    // Cell* cell1 = new Cell(20, 20, COLOR_YELLOW);
-    // cell1->paint();
-    // Cell* cell2 = new Cell(20, 21, COLOR_YELLOW);
-    // cell2->paint();
-    // Cell* cell3 = new Cell(20, 22, COLOR_YELLOW);
-    // cell3->paint();
-    // Cell* cell4 = new Cell(20, 23, COLOR_YELLOW);
-    // cell4->paint();
     
-    // getch();
-    // cell1->move(0, 1);
-    // getch();
-    // delete cell1;
-    // delete cell2;
-    // delete cell3;
-    // delete cell4;
     endwin();
 
     return 0;
 }
 
-void createCellsInPlainFunctionStack(){
-    Cell cell1(20, 20, COLOR_YELLOW, 'A');
-    cell1.paint();
-    Cell cell2(20, 21, COLOR_YELLOW, 'B');
-    cell2.paint();
-    Cell cell3(20, 22, COLOR_YELLOW, 'C');
-    cell3.paint();
-    Cell cell4(20, 23, COLOR_YELLOW, 'D');
-    cell4.paint();
-    getch();
-}
 
-void createVectorOfCells(){
-    vector<Cell> cells = {Cell(30, 20, COLOR_YELLOW, 'A'),
-                            Cell(30, 21, COLOR_YELLOW, 'B'),
-                            Cell(30, 22, COLOR_YELLOW, 'C'),
-                            Cell(30, 23, COLOR_YELLOW, 'D')};
-
-    for(unsigned int i = 0; i < cells.size(); i++){
-            cells[i].paint();
-        }
-    getch();
-}
 
 int testEnvironment(){
     initscr();
@@ -242,13 +201,13 @@ int testLeftRotationLongPiece(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {20,20,20,20};
@@ -288,13 +247,13 @@ int testRightRotationLongPiece(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {20,20,20,20};
@@ -334,13 +293,13 @@ initscr();
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {20,20,20,21};
@@ -380,13 +339,13 @@ int testRightRotationLeftL(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {20,20,20,21};
@@ -426,13 +385,13 @@ int testLeftRotationRightL(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {20,20,20,19};
@@ -472,13 +431,13 @@ int testRightRotationRightL(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {20,20,20,19};
@@ -518,13 +477,13 @@ int testPassingCellsToEnvironment(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {20,20,20,19};
@@ -558,13 +517,13 @@ int testLeftRotationLeftS(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {19,20,20,21};
@@ -604,13 +563,13 @@ int testRightRotationLeftS(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {19,20,20,21};
@@ -651,13 +610,13 @@ int testLeftRotationRightS(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {19,20,20,21};
@@ -697,16 +656,16 @@ int testRightRotationRightS(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
-     vector<unsigned int> initialX = {19,20,20,21};
+    vector<unsigned int> initialX = {19,20,20,21};
     vector<unsigned int> initialY = {10,10,11,11};
     getch();
     tetrimino = new RightS(mainEnv, COLOR_MAGENTA, initialX, initialY);
@@ -744,13 +703,13 @@ int testLeftRotationTPiece(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {19,20,20,21};
@@ -790,13 +749,13 @@ int testRightRotationTPiece(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,COLOR_YELLOW, '1');
+    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
     cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,COLOR_YELLOW, '2');
+    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
     cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,COLOR_YELLOW, '3');
+    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
     cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,COLOR_YELLOW, '4');
+    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
     cellMark4->paint();
     Tetrimino* tetrimino = nullptr;
     vector<unsigned int> initialX = {19,20,20,21};
@@ -915,53 +874,97 @@ int testUserController(){
     return 0;
 }
 
+int debugEnvironment(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    Tetrimino* tetrimino = nullptr;
 
 
-bool cycleTetrimino(Tetrimino* tetrimino, mutex* mux, bool* stopSignal){
-    int movesLeft = 4;
-    int movesRight = 4;
-    int movesUp = 4;
-    int movesDown = 4;
-    //writeToLine(stdscr, 24, "This thread works");
-    while(!(*stopSignal)){
-        this_thread::sleep_for(chrono::milliseconds(750));
-        unique_lock<mutex> lck {*mux};
-        if(movesDown != 0){
-            tetrimino->moveDown();
-            movesDown--;
-        }
-        else if(movesLeft != 0){
-            tetrimino->moveLeft();
-            movesLeft--;
-        }
-        else if(movesUp != 0){
-            tetrimino->moveUp();
-            movesUp--;
-        }
-        else if(movesRight != 0){
-            tetrimino->moveRight();
-            movesRight--;
-        }
-        else{
-            movesDown = 4;
-            movesLeft = 4;
-            movesUp = 4;
-            movesRight = 4;
-            tetrimino->moveDown();
-            movesDown--;
-        }
-    }
+    // //**************************************************
+    // //LongPiece
+    // vector<unsigned int> initialX = {20,20,20,20};
+    // vector<unsigned int> initialY = {10,11,12,13};
+    // tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+
+    // //**************************************************
+    // //LeftL
+    // vector<unsigned int> initialX = {20,20,20,21};
+    // vector<unsigned int> initialY = {10,11,12,12};
+    // tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+
+    // //**************************************************
+    // //RightL
+    // vector<unsigned int> initialX = {20,20,20,19};
+    // vector<unsigned int> initialY = {10,11,12,12};
+    // tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+
+    // //**************************************************
+    // //LeftS
+    // vector<unsigned int> initialX = {19,20,20,21};
+    // vector<unsigned int> initialY = {11,11,10,10};
+    // tetrimino = new LeftS(mainEnv, COLOR_MAGENTA, initialX, initialY);
+
+    // //**************************************************
+    // //RightS
+    // vector<unsigned int> initialX = {19,20,20,21};
+    // vector<unsigned int> initialY = {10,10,11,11};
+    // tetrimino = new RightS(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    
+    // //**************************************************
+    // //TPiece
+    // vector<unsigned int> initialX = {19,20,20,21};
+    // vector<unsigned int> initialY = {10,9,10,10};
+    // tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
+    
+    //**************************************************
+    //Sqaure
+    vector<unsigned int> initialX = {0,1,0,1};
+    vector<unsigned int> initialY = {0,0,1,1};
+    tetrimino = new Square(mainEnv, COLOR_MAGENTA, initialX, initialY); 
+    
+    tetrimino->show();
+    getch();
+    
+    KeyboardListener* KeyboardListener = KeyboardListener::getInstance();
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+    
+    delete tetrimino;
+    
+    endwin();
+
+    return 0;
+
+
 }
-bool controllerListener(UserController* userController, Tetrimino* tetrimino, mutex* mux, bool* stopSignal){
-    char c;
-    UserController* user;
-    while(!(*stopSignal)){
-        c = getch();
-        unique_lock<mutex> lck {*mux};
 
-        // userController->processInput(c);
-    }
-}
+
 void writeToLine(WINDOW* win, int line, string data){
 	wmove(win, line, 0);
 	wclrtoeol(win);

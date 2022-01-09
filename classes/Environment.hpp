@@ -14,13 +14,19 @@ public:
     bool legalMove(std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys);
     bool occupySpace(unsigned int x, unsigned int y);
     void addCell(std::unique_ptr<Cell> cellptr);
+    static int getXOffset();
+    static int getYOffset();
 private:
     static Environment* uniqueInstance;
     const static unsigned int total_spaces = 576;
-    const static unsigned int minX = 8;
-    const static unsigned int minY = 8;
-    const static unsigned int maxX = 32;
-    const static unsigned int maxY = 32;
+    const static unsigned int minX = 0;
+    const static unsigned int minY = 0;
+    const static unsigned int maxX = 23;
+    const static unsigned int maxY = 23;
+    const static unsigned int xOffsetStart = 7;
+    const static unsigned int yOffsetStart = 7;
+    const static unsigned int xOffsetEnd = 31;
+    const static unsigned int yOffsetEnd = 31;
     WINDOW* boundaryElement;
     std::vector<bool> spaces;
     std::vector<std::unique_ptr<Cell>> cells;
@@ -42,16 +48,20 @@ Environment* Environment::getInstance(){
 bool Environment::freeInstance(){
     if(uniqueInstance != nullptr){
         delete uniqueInstance;
+        uniqueInstance = nullptr;
         return true;
     }
     else{
         return false;
     }
 }
+int Environment::getXOffset(){return xOffsetStart;}
+int Environment::getYOffset(){return yOffsetStart;}
+
 Environment::Environment(){
     this->spaces = std::vector<bool>(total_spaces);
     this->cells = std::vector<std::unique_ptr<Cell>>(total_spaces);
-    this->boundaryElement = newwin(26,50,7,13);
+    this->boundaryElement = newwin(25,54,7,13);
     paintBoundary();
 }
 Environment::~Environment(){
@@ -60,12 +70,13 @@ Environment::~Environment(){
 void Environment::paintBoundary(){
     init_pair(1, COLOR_WHITE, COLOR_WHITE);
     wattron(boundaryElement, COLOR_PAIR(1));
-    for(int i = 0; i < 26; i++){
+    //Vertical Sides
+    for(int i = 0; i < (yOffsetEnd - yOffsetStart) + 1; i++){
         mvwaddch(boundaryElement, i, 0, ' ');
-        mvwaddch(boundaryElement, i, 49, ' ');
+        mvwaddch(boundaryElement, i, 2*(xOffsetEnd - xOffsetStart) + 1, ' ');
     }
-    for(int i = 0; i < 50; i++){
-        mvwaddch(boundaryElement, 25, i, ' ');
+    for(int i = 0; i < 2*(xOffsetEnd - xOffsetStart) + 1; i++){
+        mvwaddch(boundaryElement, (yOffsetEnd - yOffsetStart), i, ' ');
     }
     wattroff(boundaryElement, COLOR_PAIR(1));
     wrefresh(boundaryElement);
@@ -76,7 +87,8 @@ bool Environment::legalMove(std::vector<unsigned int>& Xs, std::vector<unsigned 
     for(unsigned int i = 0; i < Xs.size(); i++){
         index = xyToIndex(Xs[i], Ys[i]);
         if(index != -1){
-            okay = okay && !spaces[index];
+            bool isSpaceFree = !spaces[index];
+            okay = okay && isSpaceFree;
         }
         else{
             return false;// Since an index of -1 means the move 

@@ -3,6 +3,7 @@
 #include <string>
 #include <thread>
 #include <mutex>
+#include <memory>
 #include <chrono>
 
 #include "../classes/Cell.hpp"
@@ -58,6 +59,8 @@ int testUserController();
 
 int debugEnvironment();
 
+int debugLongPiece();
+
 int main(int argc, char* argv[]){
 
     //return testCell();
@@ -82,7 +85,9 @@ int main(int argc, char* argv[]){
     // return testKeyboardListener();
     // return testUserController();
 
-    return debugEnvironment();
+    // return debugEnvironment();
+
+    return debugLongPiece();
 }
 
 int runApp(){
@@ -216,14 +221,7 @@ int testLeftRotationLongPiece(){
     tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
     tetrimino->show();
     getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
+    
     delete tetrimino;
     delete cellMark1;
     delete cellMark2;
@@ -927,11 +925,11 @@ int debugEnvironment(){
     // vector<unsigned int> initialY = {10,9,10,10};
     // tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
     
-    //**************************************************
-    //Sqaure
-    vector<unsigned int> initialX = {0,1,0,1};
-    vector<unsigned int> initialY = {0,0,1,1};
-    tetrimino = new Square(mainEnv, COLOR_MAGENTA, initialX, initialY); 
+    // //**************************************************
+    // //Sqaure
+    // vector<unsigned int> initialX = {0,1,0,1};
+    // vector<unsigned int> initialY = {0,0,1,1};
+    // tetrimino = new Square(mainEnv, COLOR_MAGENTA, initialX, initialY); 
     
     tetrimino->show();
     getch();
@@ -963,7 +961,90 @@ int debugEnvironment(){
 
 
 }
+int debugLongPiece(){
+   initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
 
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(4,1,7,7,COLOR_GREEN, 'e')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(4,2,7,7,COLOR_GREEN, 'f')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(4,3,7,7,COLOR_GREEN, 'g')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(4,4,7,7,COLOR_GREEN, 'h')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(5,2,7,7,COLOR_GREEN, 'i')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(5,3,7,7,COLOR_GREEN, 'j')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(6,3,7,7,COLOR_GREEN, 'k')));
+
+
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(2,1,7,7,COLOR_GREEN, 'l')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(2,2,7,7,COLOR_GREEN, 'm')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(2,3,7,7,COLOR_GREEN, 'n')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(2,4,7,7,COLOR_GREEN, 'o')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(1,1,7,7,COLOR_GREEN, 'p')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(1,2,7,7,COLOR_GREEN, 'q')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(1,3,7,7,COLOR_GREEN, 'r')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(0,2,7,7,COLOR_GREEN, 's')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {3,3,3,3};
+    vector<unsigned int> initialY = {1,2,3,4};
+    
+    tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
 
 void writeToLine(WINDOW* win, int line, string data){
 	wmove(win, line, 0);

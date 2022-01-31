@@ -19,4 +19,6 @@ bool AppLogic::sendStopSignal(){
 bool AppLogic::actionOne(){
     return this->sendStopSignal();
 }
+
+//another comment
 #endif

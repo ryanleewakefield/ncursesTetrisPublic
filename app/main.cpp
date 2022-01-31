@@ -1112,7 +1112,7 @@ int debugLongPieceRightRotation(){
     tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
     tetrimino->show();
     
-
+    //Adding comment to check git
 
     AppController ac;
     AppLogic al;

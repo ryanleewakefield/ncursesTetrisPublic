@@ -28,7 +28,7 @@ public:
     void setActive(bool active);
     //This should get called in destructor, possibly?
     void passCellsToEnvironment();
-
+    void setOrientation(int ori);
     //ITetriminoControl
     mutexPtr virtual getMutex();
     bool virtual actionOne();
@@ -140,6 +140,11 @@ void Tetrimino::setActive(bool active){
 void Tetrimino::passCellsToEnvironment(){
     for(unsigned int i = 0; i < cells.size(); i++){
         environment->addCell(std::make_unique<Cell>(cells[i]));
+    }
+}
+void Tetrimino::setOrientation(int ori){
+    if( 0 <= ori && ori <= 3){
+        this->orientation = ori;
     }
 }
 #endif

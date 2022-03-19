@@ -113,7 +113,7 @@ bool LongPiece::rotateLeftOrientationZero(){
                     //do nothing
                 }
     }
-    // if # 2 - 
+    // if # 2 - passed
     else if(environment->isOccupied(fX, fY)){
         if( ! ( environment->isOccupied(lX, lY) ||
                 environment->isOccupied(mX, mY) ||
@@ -133,7 +133,7 @@ bool LongPiece::rotateLeftOrientationZero(){
                     //do nothing
                 }
     }
-    // if # 3 - 
+    // if # 3 - passed
     else if(environment->isOccupied(gX, gY) ||
             environment->isOccupied(hX, hY)){
         if( ! ( environment->isOccupied(mX, mY) ||
@@ -260,6 +260,8 @@ bool LongPiece::rotateLeftOrientationOne(){
     bool willRotateHappen = false;
     int incX = 0;
     int incY = 0;
+
+    // if # 1 - passed  - weird behavior with just e and p
     if(environment->isOccupied(eX, eY)){
         if( ! ( environment->isOccupied(lX, lY) ||
                 environment->isOccupied(mX, mY) ||
@@ -277,6 +279,7 @@ bool LongPiece::rotateLeftOrientationOne(){
                     //do nothing
                 }
     }
+    // if # 2 - Passed
     else if(environment->isOccupied(fX, fY)){
         if( ! ( environment->isOccupied(lX, lY) ||
                 environment->isOccupied(mX, mY) ||
@@ -294,6 +297,7 @@ bool LongPiece::rotateLeftOrientationOne(){
                     //do nothing
                 }
     }
+    // if # 3 - passed
     else if(environment->isOccupied(gX, gY)){
         if( ! ( environment->isOccupied(mX, mY) ||
                 environment->isOccupied(nX, nY) ||
@@ -318,6 +322,7 @@ bool LongPiece::rotateLeftOrientationOne(){
                     //do nothing
                 }
     }
+    // if # 4 - passed
     else if(environment->isOccupied(hX, hY)){
         if(! ( environment->isOccupied(nX, nY) ||
                 environment->isOccupied(oX, oY)) ){
@@ -327,9 +332,10 @@ bool LongPiece::rotateLeftOrientationOne(){
                             incY = 2;
                             willRotateHappen = true;
                         }
+                        //Bug!!! - fixed
                     else if(! (environment->isOccupied(qX, qY) ||
                             environment->isOccupied(rX, rY))){
-                                incX = 1;
+                                incX = 2;
                                 incY = 1;
                                 willRotateHappen = true;
                             }
@@ -341,6 +347,7 @@ bool LongPiece::rotateLeftOrientationOne(){
             //do nothing
         }
     }
+    // if # 5 - passed
     else if(environment->isOccupied(oX, oY) ||
             environment->isOccupied(nX, nY)){
         if( ! (environment->isOccupied(iX, iY) ||
@@ -355,6 +362,7 @@ bool LongPiece::rotateLeftOrientationOne(){
                     //do nothing
                 }
     }
+    // if # 6 - passed
     else{
         if(! (environment->isOccupied(iX, iY) ||
               environment->isOccupied(jX, jY))){
@@ -364,8 +372,8 @@ bool LongPiece::rotateLeftOrientationOne(){
         }
         else if(! (environment->isOccupied(qX, qY) ||
                     environment->isOccupied(rX, rY))){
-            //do d(1,1)
-                incX = 1;
+            //do d(2,1)
+                incX = 2;
                 incY = 1;
                 willRotateHappen = true;
         }
@@ -424,6 +432,7 @@ bool LongPiece::rotateLeftOrientationTwo(){
     bool willRotateHappen = false;
     int incX = 0;
     int incY = 0;
+    // if # 1 - passed
     if(environment->isOccupied(eX, eY)){
         if( ! ( environment->isOccupied(lX, lY) ||
                 environment->isOccupied(mX, mY) ||
@@ -433,7 +442,7 @@ bool LongPiece::rotateLeftOrientationTwo(){
                 environment->isOccupied(rX, rY) ||
                 environment->isOccupied(sX, sY))){
                     //do d(0,1)
-                    incX = 1;
+                    incX = 0;
                     incY = 1;
                     willRotateHappen = true;
                 }
@@ -441,6 +450,7 @@ bool LongPiece::rotateLeftOrientationTwo(){
                     //do nothing
                 }
     }
+    // if # 2 - passed
     else if(environment->isOccupied(fX, fY)){
         if( ! ( environment->isOccupied(lX, lY) ||
                 environment->isOccupied(mX, mY) ||
@@ -458,6 +468,7 @@ bool LongPiece::rotateLeftOrientationTwo(){
                     //do nothing
                 }
     }
+    // if # 3 - passed
     else if(environment->isOccupied(gX, gY)){
         if( ! ( environment->isOccupied(mX, mY) ||
                 environment->isOccupied(rX, rY) ||
@@ -480,6 +491,7 @@ bool LongPiece::rotateLeftOrientationTwo(){
             //do nothing
         }
     }
+    // if # 4 - passed
     else if(environment->isOccupied(hX, hY)){
         if( ! ( environment->isOccupied(nX, nY) ||
                 environment->isOccupied(oX, oY))){
@@ -504,6 +516,7 @@ bool LongPiece::rotateLeftOrientationTwo(){
                 }
                 
     }
+    // if # 5 - passed
     else if(environment->isOccupied(oX, oY) ||
             environment->isOccupied(nX, nY)){
         if( ! (environment->isOccupied(iX, iY) ||
@@ -518,6 +531,7 @@ bool LongPiece::rotateLeftOrientationTwo(){
                     //do nothing
                 }
     }
+    // if # 6 - passed
     else if(environment->isOccupied(iX, iY) ||
             environment->isOccupied(jX, jY)){
                 if(! environment->isOccupied(rX, rY)){
@@ -529,6 +543,7 @@ bool LongPiece::rotateLeftOrientationTwo(){
                     //do nothing
                 }
             }
+    // if # 7 - passed
     else{
         incX = -2;
         incY = 2;
@@ -585,6 +600,7 @@ bool LongPiece::rotateLeftOrientationThree(){
     bool willRotateHappen = false;
     int incX = 0;
     int incY = 0;
+    // if # 1 - Passed
     if(environment->isOccupied(eX, eY)){
         if( ! ( environment->isOccupied(lX, lY) ||
                 environment->isOccupied(mX, mY) ||
@@ -602,6 +618,7 @@ bool LongPiece::rotateLeftOrientationThree(){
                     //do nothing
                 }
     }
+    // if # 2 - Passed
     else if(environment->isOccupied(fX, fY)){
         if( ! ( environment->isOccupied(lX, lY) ||
                 environment->isOccupied(mX, mY) ||
@@ -619,6 +636,7 @@ bool LongPiece::rotateLeftOrientationThree(){
                     //do nothing
                 }
     }
+    // if # 3 - Passed
     else if(environment->isOccupied(gX, gY) ||
             environment->isOccupied(hX, hY)){
         if( ! ( environment->isOccupied(mX, mY) ||
@@ -635,6 +653,7 @@ bool LongPiece::rotateLeftOrientationThree(){
                     //do nothing
                 }
     }
+    // if # 4 - Passed
     else if(environment->isOccupied(oX, oY) ||
             environment->isOccupied(nX, nY)){
         if( ! (environment->isOccupied(iX, iY) ||
@@ -649,6 +668,7 @@ bool LongPiece::rotateLeftOrientationThree(){
                     //do nothing
                 }
     }
+    // if # 5 - Passed
     else if(environment->isOccupied(mX, mY)){
         if(! environment->isOccupied(rX, rY)){
             //do a(2,1)
@@ -661,6 +681,7 @@ bool LongPiece::rotateLeftOrientationThree(){
         }
     }
     else{
+        // if # 6 - Passed
         if((environment->isOccupied(qX, qY) ||
             environment->isOccupied(rX, rY))){
             if(! environment->isOccupied(iX, iY)){
@@ -673,6 +694,7 @@ bool LongPiece::rotateLeftOrientationThree(){
                 //do nothing
             }
         }
+        // if # 7 - Passed
         else{
             //do a(1,1)
             incX = 1;
@@ -1046,7 +1068,8 @@ bool LongPiece::rotateRightOrientationOne(){
                         }
                     else if(! (environment->isOccupied(qX, qY) ||
                             environment->isOccupied(rX, rY))){
-                                incX = 1;
+                                // maybe needs incX = 2
+                                incX = 2;
                                 incY = -1;
                                 willRotateHappen = true;
                             }
@@ -1081,8 +1104,8 @@ bool LongPiece::rotateRightOrientationOne(){
         }
         else if(! (environment->isOccupied(qX, qY) ||
                     environment->isOccupied(rX, rY))){
-            
-                incX = 1;
+                // maybe needs incX = 2
+                incX = 2;
                 incY = -1;
                 willRotateHappen = true;
         }
@@ -1162,8 +1185,8 @@ bool LongPiece::rotateRightOrientationTwo(){
                 environment->isOccupied(qX, qY) ||
                 environment->isOccupied(rX, rY) ||
                 environment->isOccupied(sX, sY))){
-                    
-                    incX = -1;
+                    //maybe needs incX = 0;
+                    incX = 0;
                     incY = 1;
                     willRotateHappen = true;
                 }

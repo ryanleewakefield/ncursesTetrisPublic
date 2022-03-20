@@ -50,13 +50,13 @@ bool LeftS::rotateLeftOrientationZero(){
     int hY = cY - 1;
 
     int lX = cX + 1;
-    int lY = cY;
+    int lY = cY + 1;
 
     int mX = cX - 1;
     int mY = cY + 2;
 
     int nX = cX;
-    int nY = cY + 1;
+    int nY = cY + 2;
 
     int oX = cX + 1;
     int oY = cY + 2;
@@ -261,13 +261,13 @@ bool LeftS::rotateRightOrientationZero(){
     int jY = cY - 2;
 
     int lX = cX + 1;
-    int lY = cY;
+    int lY = cY + 1;
 
     int mX = cX - 1;
     int mY = cY + 2;
 
     int nX = cX;
-    int nY = cY + 1;
+    int nY = cY + 2;
 
     int oX = cX + 1;
     int oY = cY + 2;
@@ -360,7 +360,7 @@ bool LeftS::rotateRightOrientationOne(){
     int mX = cX + 2;
     int mY = cY + 1;
 
-    int nX = cX + 1;
+    int nX = cX + 2;
     int nY = cY;
 
     int oX = cX + 2;

@@ -85,6 +85,7 @@ bool LeftL::rotateLeftOrientationZero(){
     bool willRotateHappen = false;
     int incX = 0;
     int incY = 0;
+    // if # 1 - Passed
     if(environment->isOccupied(eX, eY) ||
         environment->isOccupied(fX, fY)){
             if(! (environment->isOccupied(nX, nY) ||
@@ -97,6 +98,7 @@ bool LeftL::rotateLeftOrientationZero(){
                 //do nothing
             }
         }
+    // if # 2 - Passed
     else if(environment->isOccupied(gX, gY)){
         if(! (environment->isOccupied(kX, kY) ||
             environment->isOccupied(lX, lY))){
@@ -108,6 +110,7 @@ bool LeftL::rotateLeftOrientationZero(){
             //do nothing
         }
     }
+    // if # 3 - Passed
     else if(environment->isOccupied(lX, lY)){
         if( ! (environment->isOccupied(pX, pY) ||
                 environment->isOccupied(qX, qY) ||
@@ -120,6 +123,7 @@ bool LeftL::rotateLeftOrientationZero(){
             //do nothing
         }
     }
+    // if # 4 - Passed
     else if(environment->isOccupied(iX, iY) ||
             environment->isOccupied(jX, jY)){
         if(! (environment->isOccupied(nX, nY) ||
@@ -129,6 +133,7 @@ bool LeftL::rotateLeftOrientationZero(){
                     willRotateHappen = true;
                 }
             }
+    // if # 5 - Passed
     else{
         incX = 0;
         incY = 0;
@@ -145,49 +150,50 @@ bool LeftL::rotateLeftOrientationZero(){
     }
     return willRotateHappen;
 }
-//Matrix transformation of (x,y) to (y,-x)
+
+//Matrix transformation of (x,y) to (-y,x)
 bool LeftL::rotateLeftOrientationOne(){
     int cX = cells[2].getx();
     int cY = cells[2].gety();
 
-    int eY = cX + 1;
-    int eX = cY - 2;
+    int eY = cY - 1;
+    int eX = cX + 2;
 
-    int fY = cX + 1;
-    int fX = cY - 1;
+    int fY = cY - 1;
+    int fX = cX + 1;
 
-    int gY = cX + 1;
-    int gX = cY;
+    int gY = cY - 1;
+    int gX = cX;
      
-    int pY = cX + 1;
-    int pX = cY + 1;
+    int pY = cY - 1;
+    int pX = cX - 1;
 
-    int iY = cX + 2;
-    int iX = cY - 1;
+    int iY = cY - 2;
+    int iX = cX + 1;
 
-    int jY = cX + 2;
-    int jX = cY;
+    int jY = cY - 2;
+    int jX = cX;
 
-    int qY = cX;
-    int qX = cY + 1;
+    int qY = cY;
+    int qX = cX - 1;
 
-    int rY = cX - 1;
-    int rX = cY + 1;
+    int rY = cY + 1;
+    int rX = cX - 1;
 
-    int kY = cX - 1;
-    int kX = cY - 2;
+    int kY = cY + 1;
+    int kX = cX + 2;
     
-    int lY = cX - 1;
-    int lX = cY - 1;
+    int lY = cY + 1;
+    int lX = cX + 1;
 
-    int mY = cX - 2;
-    int mX = cY - 2;
+    int mY = cY + 2;
+    int mX = cX + 2;
 
-    int nY = cX - 2;
-    int nX = cY - 1;
+    int nY = cY + 2;
+    int nX = cX + 1;
 
-    int oY = cX - 2;
-    int oX = cY;
+    int oY = cY + 2;
+    int oX = cX;
 
     bool willRotateHappen = false;
     int incX = 0;
@@ -200,7 +206,7 @@ bool LeftL::rotateLeftOrientationOne(){
                  incY = 0;
 
                  incX = 0;
-                 incY = -2;
+                 incY = 2;
                  willRotateHappen = true;   
                 }
             else{
@@ -213,8 +219,8 @@ bool LeftL::rotateLeftOrientationOne(){
                 incX = 1;
                 incY = -1;
 
-                incX = -1;
-                incY = -1;
+                incX = 1;
+                incY = 1;
                 willRotateHappen = true;
             }
         else{
@@ -228,8 +234,8 @@ bool LeftL::rotateLeftOrientationOne(){
                 incX = 1;
                 incY = 1;
 
-                incX = 1;
-                incY = -1;
+                incX = -1;
+                incY = 1;
                 willRotateHappen = true;
             }
         else{
@@ -244,7 +250,7 @@ bool LeftL::rotateLeftOrientationOne(){
                     incY = 0;
 
                     incX = 0;
-                    incY = -2;
+                    incY = 2;
                     willRotateHappen = true;
                 }
             }
@@ -264,6 +270,8 @@ bool LeftL::rotateLeftOrientationOne(){
     }
     return willRotateHappen;
 }
+
+
 //Matrix transformation (x,y) to (-x,-y)
 bool LeftL::rotateLeftOrientationTwo(){
     int cX = cells[2].getx();
@@ -383,49 +391,50 @@ bool LeftL::rotateLeftOrientationTwo(){
     }
     return willRotateHappen;
 }
-//Matrix transformation of (x,y) to (-y,x)
+
+//Matrix transformation of (x,y) to (y,-x)
 bool LeftL::rotateLeftOrientationThree(){
     int cX = cells[2].getx();
     int cY = cells[2].gety();
 
-    int eY = cX - 1;
-    int eX = cY + 2;
+    int eY = cY + 1;
+    int eX = cX - 2;
 
-    int fY = cX - 1;
-    int fX = cY + 1;
+    int fY = cY + 1;
+    int fX = cX - 1;
 
-    int gY = cX - 1;
-    int gX = cY;
+    int gY = cY + 1;
+    int gX = cX;
      
-    int pY = cX - 1;
-    int pX = cY - 1;
+    int pY = cY + 1;
+    int pX = cX + 1;
 
-    int iY = cX - 2;
-    int iX = cY + 1;
+    int iY = cY + 2;
+    int iX = cX - 1;
 
-    int jY = cX - 2;
-    int jX = cY;
+    int jY = cY + 2;
+    int jX = cX;
 
-    int qY = cX;
-    int qX = cY - 1;
+    int qY = cY;
+    int qX = cX + 1;
 
-    int rY = cX + 1;
-    int rX = cY - 1;
+    int rY = cY - 1;
+    int rX = cX + 1;
 
-    int kY = cX + 1;
-    int kX = cY + 2;
+    int kY = cY - 1;
+    int kX = cX - 2;
     
-    int lY = cX + 1;
-    int lX = cY + 1;
+    int lY = cY - 1;
+    int lX = cX - 1;
 
-    int mY = cX + 2;
-    int mX = cY + 2;
+    int mY = cY - 2;
+    int mX = cX - 2;
 
-    int nY = cX + 2;
-    int nX = cY + 1;
+    int nY = cY - 2;
+    int nX = cX - 1;
 
-    int oY = cX + 2;
-    int oX = cY;
+    int oY = cY - 2;
+    int oX = cX;
 
     bool willRotateHappen = false;
     int incX = 0;
@@ -438,7 +447,7 @@ bool LeftL::rotateLeftOrientationThree(){
                  incY = 0;
 
                  incX = 0;
-                 incY = 2;
+                 incY = -2;
                  willRotateHappen = true;   
                 }
             else{
@@ -451,8 +460,8 @@ bool LeftL::rotateLeftOrientationThree(){
                 incX = 1;
                 incY = -1;
 
-                incX = 1;
-                incY = 1;
+                incX = -1;
+                incY = -1;
                 willRotateHappen = true;
             }
         else{
@@ -466,8 +475,8 @@ bool LeftL::rotateLeftOrientationThree(){
                 incX = 1;
                 incY = 1;
 
-                incX = -1;
-                incY = 1;
+                incX = 1;
+                incY = -1;
                 willRotateHappen = true;
             }
         else{
@@ -482,7 +491,7 @@ bool LeftL::rotateLeftOrientationThree(){
                     incY = 0;
 
                     incX = 0;
-                    incY = 2;
+                    incY = -2;
                     willRotateHappen = true;
                 }
             }
@@ -502,6 +511,7 @@ bool LeftL::rotateLeftOrientationThree(){
     }
     return willRotateHappen;
 }
+
 void LeftL::doRotateLeft(int incX, int incY, unsigned int newOrientation){
     /*
         Zero       One         Two         Three
@@ -607,11 +617,12 @@ bool LeftL::rotateRightOrientationZero(){
     int incY = 0;
 
     if(environment->isOccupied(kX, kY)){
-        if(! (environment->isOccupied(fX, fY) ||
+        if(! (environment->isOccupied(eX, eY) ||
+            environment->isOccupied(fX, fY) ||
             environment->isOccupied(gX, gY) ||
             environment->isOccupied(iX, iY) ||
             environment->isOccupied(jX, jY))){
-                incX = -1;
+                incX = -2;
                 incY = -1;
                 willRotateHappen = true;
         }
@@ -621,7 +632,8 @@ bool LeftL::rotateRightOrientationZero(){
     }
     else if(environment->isOccupied(lX, lY)){
         if(!( environment->isOccupied(eX, eY) ||
-            environment->isOccupied(fX, fY))){
+            environment->isOccupied(fX, fY) ||
+            environment->isOccupied(gX, gY))){
                 incX = -1;
                 incY = -2;
                 willRotateHappen = true;
@@ -646,7 +658,8 @@ bool LeftL::rotateRightOrientationZero(){
     else if(environment->isOccupied(mX, mY) ||
             environment->isOccupied(nX, nY) ||
             environment->isOccupied(oX, oY)){
-                if(! (environment->isOccupied(gX, gY) ||
+                if(! (environment->isOccupied(fX, fY) ||
+                    environment->isOccupied(gX, gY) ||
                     environment->isOccupied(pX, pY))){
                         incX = -1;
                         incY = 0;
@@ -676,59 +689,60 @@ bool LeftL::rotateRightOrientationOne(){
     int cX = cells[2].getx();
     int cY = cells[2].gety();
 
-    int eY = cX + 1;
-    int eX = cY - 2;
+    int eY = cY - 1;
+    int eX = cX + 2;
 
-    int fY = cX + 1;
-    int fX = cY - 1;
+    int fY = cY - 1;
+    int fX = cX + 1;
 
-    int gY = cX + 1;
-    int gX = cY;
+    int gY = cY - 1;
+    int gX = cX;
      
-    int pY = cX + 1;
-    int pX = cY + 1;
+    int pY = cY - 1;
+    int pX = cX - 1;
 
-    int iY = cX + 2;
-    int iX = cY - 1;
+    int iY = cY - 2;
+    int iX = cX + 1;
 
-    int jY = cX + 2;
-    int jX = cY;
+    int jY = cY - 2;
+    int jX = cX;
 
-    int qY = cX;
-    int qX = cY + 1;
+    int qY = cY;
+    int qX = cX - 1;
 
-    int rY = cX - 1;
-    int rX = cY + 1;
+    int rY = cY + 1;
+    int rX = cX - 1;
 
-    int kY = cX - 1;
-    int kX = cY - 2;
+    int kY = cY + 1;
+    int kX = cX + 2;
     
-    int lY = cX - 1;
-    int lX = cY - 1;
+    int lY = cY + 1;
+    int lX = cX + 1;
 
-    int mY = cX - 2;
-    int mX = cY - 2;
+    int mY = cY + 2;
+    int mX = cX + 2;
 
-    int nY = cX - 2;
-    int nX = cY - 1;
+    int nY = cY + 2;
+    int nX = cX + 1;
 
-    int oY = cX - 2;
-    int oX = cY;
+    int oY = cY + 2;
+    int oX = cX;
 
     bool willRotateHappen = false;
     int incX = 0;
     int incY = 0;
 
     if(environment->isOccupied(kX, kY)){
-        if(! (environment->isOccupied(fX, fY) ||
+        if(! (environment->isOccupied(eX, eY) ||
+            environment->isOccupied(fX, fY) ||
             environment->isOccupied(gX, gY) ||
             environment->isOccupied(iX, iY) ||
             environment->isOccupied(jX, jY))){
-                incX = -1;
+                incX = -2;
                 incY = -1;
 
-                incX = -1;
-                incY = 1;
+                incX = 1;
+                incY = -2;
                 willRotateHappen = true;
         }
         else{
@@ -737,12 +751,13 @@ bool LeftL::rotateRightOrientationOne(){
     }
     else if(environment->isOccupied(lX, lY)){
         if(!( environment->isOccupied(eX, eY) ||
-            environment->isOccupied(fX, fY))){
+            environment->isOccupied(fX, fY) ||
+            environment->isOccupied(gX, gY))){
                 incX = -1;
                 incY = -2;
 
-                incX = -2;
-                incY = 1;
+                incX = 2;
+                incY = -1;
                 willRotateHappen = true;
             }
         else{
@@ -756,7 +771,7 @@ bool LeftL::rotateRightOrientationOne(){
                     incX = 0;
                     incY = -1;
 
-                    incX = -1;
+                     incX = 1;
                     incY = 0;
                     willRotateHappen = true;
                 }
@@ -768,13 +783,14 @@ bool LeftL::rotateRightOrientationOne(){
     else if(environment->isOccupied(mX, mY) ||
             environment->isOccupied(nX, nY) ||
             environment->isOccupied(oX, oY)){
-                if(! (environment->isOccupied(gX, gY) ||
+                if(! (environment->isOccupied(fX, fY) ||
+                    environment->isOccupied(gX, gY) ||
                     environment->isOccupied(pX, pY))){
                         incX = -1;
                         incY = 0;
 
                         incX = 0;
-                        incY = 1;
+                        incY = -1;
                         willRotateHappen = true;
                     }
                 else{
@@ -845,14 +861,15 @@ bool LeftL::rotateRightOrientationTwo(){
     int incY = 0;
 
     if(environment->isOccupied(kX, kY)){
-        if(! (environment->isOccupied(fX, fY) ||
+        if(! (environment->isOccupied(eX, eY) ||
+            environment->isOccupied(fX, fY) ||
             environment->isOccupied(gX, gY) ||
             environment->isOccupied(iX, iY) ||
             environment->isOccupied(jX, jY))){
-                incX = -1;
+                incX = -2;
                 incY = -1;
 
-                incX = 1;
+                incX = 2;
                 incY = 1;
                 willRotateHappen = true;
         }
@@ -862,7 +879,8 @@ bool LeftL::rotateRightOrientationTwo(){
     }
     else if(environment->isOccupied(lX, lY)){
         if(!( environment->isOccupied(eX, eY) ||
-            environment->isOccupied(fX, fY))){
+            environment->isOccupied(fX, fY) ||
+            environment->isOccupied(gX, gY))){
                 incX = -1;
                 incY = -2;
 
@@ -893,7 +911,8 @@ bool LeftL::rotateRightOrientationTwo(){
     else if(environment->isOccupied(mX, mY) ||
             environment->isOccupied(nX, nY) ||
             environment->isOccupied(oX, oY)){
-                if(! (environment->isOccupied(gX, gY) ||
+                if(! (environment->isOccupied(fX, fY) ||
+                    environment->isOccupied(gX, gY) ||
                     environment->isOccupied(pX, pY))){
                         incX = -1;
                         incY = 0;
@@ -926,59 +945,60 @@ bool LeftL::rotateRightOrientationThree(){
     int cX = cells[2].getx();
     int cY = cells[2].gety();
 
-    int eY = cX - 1;
-    int eX = cY + 2;
+    int eY = cY + 1;
+    int eX = cX - 2;
 
-    int fY = cX - 1;
-    int fX = cY + 1;
+    int fY = cY + 1;
+    int fX = cX - 1;
 
-    int gY = cX - 1;
-    int gX = cY;
+    int gY = cY + 1;
+    int gX = cX;
      
-    int pY = cX - 1;
-    int pX = cY - 1;
+    int pY = cY + 1;
+    int pX = cX + 1;
 
-    int iY = cX - 2;
-    int iX = cY + 1;
+    int iY = cY + 2;
+    int iX = cX - 1;
 
-    int jY = cX - 2;
-    int jX = cY;
+    int jY = cY + 2;
+    int jX = cX;
 
-    int qY = cX;
-    int qX = cY - 1;
+    int qY = cY;
+    int qX = cX + 1;
 
-    int rY = cX + 1;
-    int rX = cY - 1;
+    int rY = cY - 1;
+    int rX = cX + 1;
 
-    int kY = cX + 1;
-    int kX = cY + 2;
+    int kY = cY - 1;
+    int kX = cX - 2;
     
-    int lY = cX + 1;
-    int lX = cY + 1;
+    int lY = cY - 1;
+    int lX = cX - 1;
 
-    int mY = cX + 2;
-    int mX = cY + 2;
+    int mY = cY - 2;
+    int mX = cX - 2;
 
-    int nY = cX + 2;
-    int nX = cY + 1;
+    int nY = cY - 2;
+    int nX = cX - 1;
 
-    int oY = cX + 2;
-    int oX = cY;
+    int oY = cY - 2;
+    int oX = cX;
 
     bool willRotateHappen = false;
     int incX = 0;
     int incY = 0;
 
     if(environment->isOccupied(kX, kY)){
-        if(! (environment->isOccupied(fX, fY) ||
+        if(! (environment->isOccupied(eX, eY) ||
+            environment->isOccupied(fX, fY) ||
             environment->isOccupied(gX, gY) ||
             environment->isOccupied(iX, iY) ||
             environment->isOccupied(jX, jY))){
-                incX = -1;
+                incX = -2;
                 incY = -1;
 
-                incX = 1;
-                incY = -1;
+                incX = -1;
+                incY = 2;
                 willRotateHappen = true;
         }
         else{
@@ -987,12 +1007,13 @@ bool LeftL::rotateRightOrientationThree(){
     }
     else if(environment->isOccupied(lX, lY)){
         if(!( environment->isOccupied(eX, eY) ||
-            environment->isOccupied(fX, fY))){
+            environment->isOccupied(fX, fY) ||
+            environment->isOccupied(gX, gY))){
                 incX = -1;
                 incY = -2;
 
-                incX = 2;
-                incY = -1;
+                incX = -2;
+                incY = 1;
                 willRotateHappen = true;
             }
         else{
@@ -1006,7 +1027,7 @@ bool LeftL::rotateRightOrientationThree(){
                     incX = 0;
                     incY = -1;
 
-                     incX = 1;
+                    incX = -1;
                     incY = 0;
                     willRotateHappen = true;
                 }
@@ -1018,13 +1039,14 @@ bool LeftL::rotateRightOrientationThree(){
     else if(environment->isOccupied(mX, mY) ||
             environment->isOccupied(nX, nY) ||
             environment->isOccupied(oX, oY)){
-                if(! (environment->isOccupied(gX, gY) ||
+                if(! (environment->isOccupied(fX, fY) ||
+                    environment->isOccupied(gX, gY) ||
                     environment->isOccupied(pX, pY))){
                         incX = -1;
                         incY = 0;
 
                         incX = 0;
-                        incY = -1;
+                        incY = 1;
                         willRotateHappen = true;
                     }
                 else{
@@ -1047,6 +1069,7 @@ bool LeftL::rotateRightOrientationThree(){
     }
     return willRotateHappen;
 }
+
 void LeftL::doRotateRight(int incX, int incY, unsigned int newOrientation){
     /*
         Zero        One         Two        Three

@@ -56,13 +56,13 @@ bool RightS::rotateLeftOrientationZero(){
     int jY = bY - 2;
 
     int lX = bX - 1;
-    int lY = bY;
+    int lY = bY + 1;
 
     int mX = bX + 1;
     int mY = bY + 2;
 
     int nX = bX;
-    int nY = bY + 1;
+    int nY = bY + 2;
 
     int oX = bX - 1;
     int oY = bY + 2;
@@ -135,34 +135,34 @@ bool RightS::rotateLeftOrientationOne(){
 
 
     int eX = bX;
-    int eY = bY - 1;
+    int eY = bY + 1;
 
-    int fX = bX - 1;
-    int fY = bY - 1;
+    int fX = bX + 1;
+    int fY = bY + 1;
     
-    int gX = bX - 1;
+    int gX = bX + 1;
     int gY = bY;
 
-    int hX = bX - 1;
-    int hY = bY + 1;
+    int hX = bX + 1;
+    int hY = bY - 1;
 
-    int iX = bX + -2;
-    int iY = bY - 1;
+    int iX = bX + 2;
+    int iY = bY + 1;
 
-    int lX = bX + 1;
-    int lY = bY + 1;
+    int lX = bX - 1;
+    int lY = bY - 1;
 
-    int mX = bX + 2;
-    int mY = bY - 1;
+    int mX = bX - 2;
+    int mY = bY + 1;
 
-    int nX = bX + 1;
+    int nX = bX - 2;
     int nY = bY;
 
-    int oX = bX + 2;
-    int oY = bY + 1;
+    int oX = bX - 2;
+    int oY = bY - 1;
 
-    int rX = bX + 3;
-    int rY = bY + 1;
+    int rX = bX - 3;
+    int rY = bY - 1;
     
 
     bool willRotateHappen = false;
@@ -174,7 +174,7 @@ bool RightS::rotateLeftOrientationOne(){
                 environment->isOccupied(nX, nY) ||
                 environment->isOccupied(oX, oY) ||
                 environment->isOccupied(rX, rY))){
-                    incX = 2;
+                    incX = -2;
                     incY = -1;
                     willRotateHappen = true;
                 }
@@ -186,7 +186,7 @@ bool RightS::rotateLeftOrientationOne(){
                 if(! (environment->isOccupied(fX, fY) ||
                     environment->isOccupied(gX, gY) ||
                     environment->isOccupied(iX, iY))){
-                        incX = -1;
+                        incX = 1;
                         incY = 0;
                         willRotateHappen = true;
                     }
@@ -197,7 +197,7 @@ bool RightS::rotateLeftOrientationOne(){
     else if(environment->isOccupied(fX, fY)){
                 if(! (environment->isOccupied(nX, nY)||
                     environment->isOccupied(oX,oY))){
-                    incX = 1;
+                    incX = -1;
                     incY = 0;
                     willRotateHappen = true;
                 }
@@ -267,13 +267,13 @@ bool RightS::rotateRightOrientationZero(){
     int hY = bY - 1;
 
     int lX = bX - 1;
-    int lY = bY;
+    int lY = bY + 1;
 
     int mX = bX + 1;
     int mY = bY + 2;
 
     int nX = bX;
-    int nY = bY + 1;
+    int nY = bY + 2;
 
     int oX = bX - 1;
     int oY = bY + 2;
@@ -311,7 +311,7 @@ bool RightS::rotateRightOrientationZero(){
                 if(! (environment->isOccupied(fX, fY) ||
                     environment->isOccupied(gX, gY) ||
                     environment->isOccupied(hX, hY))){
-                        incX = -1;
+                        incX = 1;
                         incY = 0;
                         willRotateHappen = true;
                     }
@@ -327,7 +327,7 @@ bool RightS::rotateRightOrientationZero(){
                     willRotateHappen = true;
                 }
                 else{
-                    incX = -1;
+                    incX = 1;
                     incY = 1;
                 }
             }
@@ -352,25 +352,34 @@ bool RightS::rotateRightOrientationOne(){
     int bY = cells[1].gety();
 
     int eX = bX;
-    int eY = bY - 1;
+    int eY = bY + 1;
 
-    int fX = bX - 1;
-    int fY = bY - 1;
+    int fX = bX + 1;
+    int fY = bY + 1;
     
-    int gX = bX - 1;
+    int gX = bX + 1;
     int gY = bY;
 
     int hX = bX - 1;
-    int hY = bY + 1;
+    int hY = bY - 1;
 
-    int lX = bX + 1;
-    int lY = bY + 1;
+    int iX = bX + 2;
+    int iY = bY + 1;
 
-    int mX = bX + 2;
-    int mY = bY - 1;
+    int lX = bX - 1;
+    int lY = bY - 1;
 
-    int nX = bX + 1;
+    int mX = bX - 1;
+    int mY = bY + 1;
+
+    int nX = bX - 1;
     int nY = bY;
+
+    int oX = bX - 2;
+    int oY = bY - 1;
+
+    int rX = bX - 3;
+    int rY = bY - 1;
 
     bool willRotateHappen = false;
     int incX = 0;
@@ -392,7 +401,7 @@ bool RightS::rotateRightOrientationOne(){
             environment->isOccupied(hX, hY)){
                 if(! (environment->isOccupied(mX, mY) ||
                     environment->isOccupied(nX, nY))){
-                        incX = 1;
+                        incX = -1;
                         incY = 0;
                         willRotateHappen = true;
                     }

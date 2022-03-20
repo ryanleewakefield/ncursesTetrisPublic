@@ -23,41 +23,12 @@
 #include "../classes/AppLogic.hpp"
 #include "../classes/AutoController.hpp"
 
+#include "../tests/testCell.cpp"
+
 using namespace std;
 
 void writeToLine(WINDOW* win, int line, string data);
 int runApp();
-int testCell();
-int testEnvironment();
-int testTetriminoSubClasses();
-
-int testLeftRotationLongPiece();
-int testRightRotationLongPiece();
-
-int testLeftRotationLeftL();
-int testRightRotationLeftL();
-
-int testLeftRotationRightL();
-int testRightRotationRightL();
-
-int testPassingCellsToEnvironment();
-
-int testLeftRotationLeftS();
-int testRightRotationLeftS();
-
-int testLeftRotationRightS();
-int testRightRotationRightS();
-
-int testLeftRotationTPiece();
-int testRightRotationTPiece();
-
-void createCellsInPlainFunctionStack();
-void createVectorOfCells();
-
-int testKeyboardListener();
-int testUserController();
-
-int debugEnvironment();
 
 int debugLongPieceLeftRotationOrientationZero();
 
@@ -75,9 +46,44 @@ int debugLongPieceRightRotationOrientationTwo();
 
 int debugLongPieceRightRotationOrientationThree();
 
+
+int debugLeftLLeftRotationOrientationZero();
+
+int debugLeftLLeftRotationOrientationOne();
+
+int debugLeftLLeftRotationOrientationTwo();
+
+int debugLeftLLeftRotationOrientationThree();
+
+
+int debugLeftLRightRotationOrientationZero();
+
+
+
+int debugRightLLeftRotationOrientationZero();
+
+int debugRightLLeftRotationOrientationOne();
+
+int debugRightLLeftRotationOrientationTwo();
+
+int debugRightLLeftRotationOrientationThree();
+
+
+int debugLeftSLeftRotationOrientationZero();
+
+int debugLeftSLeftRotationOrientationOne();
+
+
+int debugRightSLeftRotationOrientationZero();
+
+int debugRightSLeftRotationOrientationOne();
+
+
+int debugTPieceLeftRotationOrientationZero();
+
 int main(int argc, char* argv[]){
 
-    //return testCell();
+    // return testCell();
     //return testEnvironment();
     //return testTetriminoSubClasses();
     //return testLeftRotationLongPiece();
@@ -114,7 +120,41 @@ int main(int argc, char* argv[]){
 
     // return debugLongPieceRightRotationOrientationOne();
 
-    return debugLongPieceRightRotationOrientationTwo();
+    // return debugLongPieceRightRotationOrientationTwo();
+
+
+    // return debugLeftLLeftRotationOrientationZero();
+
+    // return debugLeftLLeftRotationOrientationOne();
+
+    // return debugLeftLLeftRotationOrientationTwo();
+
+    // return debugLeftLLeftRotationOrientationThree();
+
+
+    // return debugLeftLRightRotationOrientationZero();
+
+
+    // return debugRightLLeftRotationOrientationZero();
+
+    // return debugRightLLeftRotationOrientationOne();
+
+    // return debugRightLLeftRotationOrientationTwo();
+
+    // return debugRightLLeftRotationOrientationThree();
+
+
+    // return debugLeftSLeftRotationOrientationZero();
+
+    // return debugLeftSLeftRotationOrientationOne();
+
+
+    // return debugRightSLeftRotationOrientationZero();
+
+    // return debugRightSLeftRotationOrientationOne();
+
+
+    return debugTPieceLeftRotationOrientationZero();
 }
 
 int runApp(){
@@ -130,863 +170,6 @@ int runApp(){
     endwin();
 
     return 0;
-}
-
-int testCell(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-    //Create Cell that appear near center of screen
-    
-
-    vector<Cell> cells = {Cell(30, 20, 0,0, COLOR_YELLOW, 'A'),
-                        Cell(30, 21, 0,0, COLOR_YELLOW, 'B'),
-                        Cell(30, 22, 0,0, COLOR_YELLOW, 'C'),
-                        Cell(30, 23, 0,0, COLOR_YELLOW, 'D')};
-
-    for(unsigned int i = 0; i < cells.size(); i++){
-            cells[i].paint();
-        }
-    getch();
-    
-    endwin();
-
-    return 0;
-}
-
-
-
-int testEnvironment(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    int stop = 0;
-    getch();
-    endwin();
-
-    return 0;
-}
-
-int testTetriminoSubClasses(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {20,20,20,20};
-    vector<unsigned int> initialY = {20,21,22,23};
-    getch();
-    tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->moveLeft();
-    getch();
-    tetrimino->moveUp();
-    getch();
-    tetrimino->moveRight();
-    getch();
-    tetrimino->moveDown();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    delete tetrimino;
-    endwin();
-
-    return 0;
-}
-int testLeftRotationLongPiece(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {20,20,20,20};
-    vector<unsigned int> initialY = {10,11,12,13};
-    getch();
-    tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-int testRightRotationLongPiece(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {20,20,20,20};
-    vector<unsigned int> initialY = {10,11,12,13};
-    getch();
-    tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-int testLeftRotationLeftL(){
-initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {20,20,20,21};
-    vector<unsigned int> initialY = {10,11,12,12};
-    getch();
-    tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-int testRightRotationLeftL(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {20,20,20,21};
-    vector<unsigned int> initialY = {10,11,12,12};
-    getch();
-    tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-int testLeftRotationRightL(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {20,20,20,19};
-    vector<unsigned int> initialY = {10,11,12,12};
-    getch();
-    tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-int testRightRotationRightL(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {20,20,20,19};
-    vector<unsigned int> initialY = {10,11,12,12};
-    getch();
-    tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-int testPassingCellsToEnvironment(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {20,20,20,19};
-    vector<unsigned int> initialY = {10,11,12,12};
-    getch();
-    tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->passCellsToEnvironment();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-int testLeftRotationLeftS(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {19,20,20,21};
-    vector<unsigned int> initialY = {11,11,10,10};
-    getch();
-    tetrimino = new LeftS(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-int testRightRotationLeftS(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {19,20,20,21};
-    vector<unsigned int> initialY = {11,11,10,10};
-    getch();
-    tetrimino = new LeftS(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-
-int testLeftRotationRightS(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {19,20,20,21};
-    vector<unsigned int> initialY = {10,10,11,11};
-    getch();
-    tetrimino = new RightS(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-int testRightRotationRightS(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {19,20,20,21};
-    vector<unsigned int> initialY = {10,10,11,11};
-    getch();
-    tetrimino = new RightS(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-
-int testLeftRotationTPiece(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {19,20,20,21};
-    vector<unsigned int> initialY = {10,9,10,10};
-    getch();
-    tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    tetrimino->show();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    tetrimino->rotateLeft();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-int testRightRotationTPiece(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Cell* cellMark1 = new Cell(15,7,0,0, COLOR_YELLOW, '1');
-    cellMark1->paint();
-    Cell* cellMark2 = new Cell(15,8,0,0, COLOR_YELLOW, '2');
-    cellMark2->paint();
-    Cell* cellMark3 = new Cell(15,9,0,0, COLOR_YELLOW, '3');
-    cellMark3->paint();
-    Cell* cellMark4 = new Cell(15,10,0,0, COLOR_YELLOW, '4');
-    cellMark4->paint();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {19,20,20,21};
-    vector<unsigned int> initialY = {10,9,10,10};
-    
-    tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
-    tetrimino->show();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    tetrimino->rotateRight();
-    getch();
-    delete tetrimino;
-    delete cellMark1;
-    delete cellMark2;
-    delete cellMark3;
-    delete cellMark4;
-    endwin();
-
-    return 0;
-}
-
-int testKeyboardListener(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    //keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-    KeyboardListener* KeyboardListener = KeyboardListener::getInstance();
-
-    ScreenWriterController swc;
-    ScreenWriter sw;
-    swc.setControllable(&sw);
-
-    AppController ac;
-    AppLogic al;
-    ac.setControllable(&al);
-
-
-    KeyboardListener::getInstance()->registerController(&swc);
-    KeyboardListener::getInstance()->registerController(&ac);
-    KeyboardListener::getInstance()->startListening();
-    //React to stuff on keyboard listener thread for 30 seconds
-    //this_thread::sleep_for(chrono::seconds(30));
-    // KeyboardListener::getInstance()->stopListening();
-    KeyboardListener::getInstance()->waitOnListener();
-    endwin();
-
-    return 0;
-}
-
-/*
-    Have the UserController listening for button presses
-    while another module is controlling a Tetrimino.
-*/
-int testUserController(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {19,20,20,21};
-    vector<unsigned int> initialY = {10,9,10,10};
-    
-    tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
-    tetrimino->show();
-    getch();
-    
-    KeyboardListener* KeyboardListener = KeyboardListener::getInstance();
-
-
-    AppController ac;
-    AppLogic al;
-    ac.setControllable(&al);
-
-    TetriminoController tc;
-    tc.setControllable(tetrimino);
-
-
-    KeyboardListener::getInstance()->registerController(&ac);
-    KeyboardListener::getInstance()->registerController(&tc);
-
-    // TetriminoCycle tetCycle;
-    // tetCycle.setController(&tc);
-    
-    // tetCycle.setDelay(500);
-    // tetCycle.startAutoThread();
-
-    KeyboardListener::getInstance()->startListening();
-    
-
-    // tetCycle.waitOnAutoThread();
-    KeyboardListener::getInstance()->waitOnListener();
-    
-    delete tetrimino;
-    
-    endwin();
-
-    return 0;
-}
-
-int debugEnvironment(){
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    curs_set(0);
-    refresh();
-    int height = 43;
-    int width = 80;
-
-    // Get instance of Environment Singleton object
-    // boundaryElement should print to the screen
-    Environment* mainEnv = Environment::getInstance();
-    Tetrimino* tetrimino = nullptr;
-
-
-    // //**************************************************
-    // //LongPiece
-    // vector<unsigned int> initialX = {20,20,20,20};
-    // vector<unsigned int> initialY = {10,11,12,13};
-    // tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
-
-    // //**************************************************
-    // //LeftL
-    // vector<unsigned int> initialX = {20,20,20,21};
-    // vector<unsigned int> initialY = {10,11,12,12};
-    // tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
-
-    // //**************************************************
-    // //RightL
-    // vector<unsigned int> initialX = {20,20,20,19};
-    // vector<unsigned int> initialY = {10,11,12,12};
-    // tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
-
-    // //**************************************************
-    // //LeftS
-    // vector<unsigned int> initialX = {19,20,20,21};
-    // vector<unsigned int> initialY = {11,11,10,10};
-    // tetrimino = new LeftS(mainEnv, COLOR_MAGENTA, initialX, initialY);
-
-    // //**************************************************
-    // //RightS
-    // vector<unsigned int> initialX = {19,20,20,21};
-    // vector<unsigned int> initialY = {10,10,11,11};
-    // tetrimino = new RightS(mainEnv, COLOR_MAGENTA, initialX, initialY);
-    
-    // //**************************************************
-    // //TPiece
-    // vector<unsigned int> initialX = {19,20,20,21};
-    // vector<unsigned int> initialY = {10,9,10,10};
-    // tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
-    
-    // //**************************************************
-    // //Sqaure
-    // vector<unsigned int> initialX = {0,1,0,1};
-    // vector<unsigned int> initialY = {0,0,1,1};
-    // tetrimino = new Square(mainEnv, COLOR_MAGENTA, initialX, initialY); 
-    
-    tetrimino->show();
-    getch();
-    
-    KeyboardListener* KeyboardListener = KeyboardListener::getInstance();
-
-
-    AppController ac;
-    AppLogic al;
-    ac.setControllable(&al);
-
-    TetriminoController tc;
-    tc.setControllable(tetrimino);
-
-
-    KeyboardListener::getInstance()->registerController(&ac);
-    KeyboardListener::getInstance()->registerController(&tc);
-
-    
-    KeyboardListener::getInstance()->startListening();
-    
-    KeyboardListener::getInstance()->waitOnListener();
-    
-    delete tetrimino;
-    
-    endwin();
-
-    return 0;
-
-
 }
 
 /*
@@ -1602,6 +785,1180 @@ int debugLongPieceRightRotationOrientationTwo(){
 
     return 0; 
 }
+
+int debugLeftLLeftRotationOrientationZero(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,13,7,7,COLOR_GREEN, 'e')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'f')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,15,7,7,COLOR_GREEN, 'g')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'p')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(11,14,7,7,COLOR_GREEN, 'i')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(11,15,7,7,COLOR_GREEN, 'j')));
+    
+    
+    //Right Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,13,7,7,COLOR_GREEN, 'k')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'l')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,13,7,7,COLOR_GREEN, 'm')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(15,14,7,7,COLOR_GREEN, 'n')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(15,15,7,7,COLOR_GREEN, 'o')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,16,7,7,COLOR_GREEN, 'q')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {13,13,13,14};
+    vector<unsigned int> initialY = {13,14,15,15};
+
+    tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(0);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugLeftLLeftRotationOrientationThree(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,16,7,7,COLOR_GREEN, 'e')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'f')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,16,7,7,COLOR_GREEN, 'g')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'p')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,17,7,7,COLOR_GREEN, 'i')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,17,7,7,COLOR_GREEN, 'j')));
+    
+    
+    //Right Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,14,7,7,COLOR_GREEN, 'k')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'l')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,13,7,7,COLOR_GREEN, 'm')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,13,7,7,COLOR_GREEN, 'n')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,13,7,7,COLOR_GREEN, 'o')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,15,7,7,COLOR_GREEN, 'q')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {11,12,13,13};
+    vector<unsigned int> initialY = {15,15,15,14};
+
+    tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(3);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+int debugLeftLLeftRotationOrientationTwo(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,17,7,7,COLOR_GREEN, 'e')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'f')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,15,7,7,COLOR_GREEN, 'g')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'p')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,16,7,7,COLOR_GREEN, 'i')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,15,7,7,COLOR_GREEN, 'j')));
+    
+    
+    //Right Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,17,7,7,COLOR_GREEN, 'k')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'l')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,17,7,7,COLOR_GREEN, 'm')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,16,7,7,COLOR_GREEN, 'n')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,15,7,7,COLOR_GREEN, 'o')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,14,7,7,COLOR_GREEN, 'q')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {13,13,13,12};
+    vector<unsigned int> initialY = {17,16,15,15};
+
+    tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(2);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+int debugLeftLLeftRotationOrientationOne(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,14,7,7,COLOR_GREEN, 'e')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'f')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,14,7,7,COLOR_GREEN, 'g')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'p')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,13,7,7,COLOR_GREEN, 'i')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,13,7,7,COLOR_GREEN, 'j')));
+    
+    
+    //Right Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,16,7,7,COLOR_GREEN, 'k')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'l')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,17,7,7,COLOR_GREEN, 'm')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,17,7,7,COLOR_GREEN, 'n')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,17,7,7,COLOR_GREEN, 'o')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,15,7,7,COLOR_GREEN, 'q')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {15,14,13,13};
+    vector<unsigned int> initialY = {15,15,15,16};
+
+    tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(1);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugLeftLRightRotationOrientationZero(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,13,7,7,COLOR_GREEN, 'e')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'f')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,15,7,7,COLOR_GREEN, 'g')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'p')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,14,7,7,COLOR_GREEN, 'i')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,15,7,7,COLOR_GREEN, 'j')));
+    
+    
+    //Right Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,13,7,7,COLOR_GREEN, 'k')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'l')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,13,7,7,COLOR_GREEN, 'm')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,14,7,7,COLOR_GREEN, 'n')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,15,7,7,COLOR_GREEN, 'o')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,16,7,7,COLOR_GREEN, 'q')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {13,13,13,14};
+    vector<unsigned int> initialY = {13,14,15,15};
+
+    tetrimino = new LeftL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(0);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugRightLLeftRotationOrientationZero(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,13,7,7,COLOR_GREEN, 'e')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'f')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,15,7,7,COLOR_GREEN, 'g')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'p')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,14,7,7,COLOR_GREEN, 'i')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,15,7,7,COLOR_GREEN, 'j')));
+    
+    
+    //Right Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,13,7,7,COLOR_GREEN, 'k')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'l')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,13,7,7,COLOR_GREEN, 'm')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,14,7,7,COLOR_GREEN, 'n')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,15,7,7,COLOR_GREEN, 'o')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,16,7,7,COLOR_GREEN, 'q')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {13,13,13,12};
+    vector<unsigned int> initialY = {13,14,15,15};
+
+    tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(0);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugRightLLeftRotationOrientationOne(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,16,7,7,COLOR_GREEN, 'e')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'f')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,16,7,7,COLOR_GREEN, 'g')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'p')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,17,7,7,COLOR_GREEN, 'i')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,17,7,7,COLOR_GREEN, 'j')));
+    
+    
+    //Right Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,14,7,7,COLOR_GREEN, 'k')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'l')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,13,7,7,COLOR_GREEN, 'm')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,13,7,7,COLOR_GREEN, 'n')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,13,7,7,COLOR_GREEN, 'o')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,15,7,7,COLOR_GREEN, 'q')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {15,14,13,13};
+    vector<unsigned int> initialY = {15,15,15,14};
+
+    tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(1);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugRightLLeftRotationOrientationTwo(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,17,7,7,COLOR_GREEN, 'e')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'f')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,15,7,7,COLOR_GREEN, 'g')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'p')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,16,7,7,COLOR_GREEN, 'i')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,15,7,7,COLOR_GREEN, 'j')));
+    
+    
+    //Right Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,17,7,7,COLOR_GREEN, 'k')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'l')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,17,7,7,COLOR_GREEN, 'm')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,16,7,7,COLOR_GREEN, 'n')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(15,15,7,7,COLOR_GREEN, 'o')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,14,7,7,COLOR_GREEN, 'q')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {13,13,13,14};
+    vector<unsigned int> initialY = {17,16,15,15};
+
+    tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(2);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugRightLLeftRotationOrientationThree(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,14,7,7,COLOR_GREEN, 'e')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'f')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,14,7,7,COLOR_GREEN, 'g')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'p')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,13,7,7,COLOR_GREEN, 'i')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,13,7,7,COLOR_GREEN, 'j')));
+    
+    
+    //Right Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,16,7,7,COLOR_GREEN, 'k')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'l')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,17,7,7,COLOR_GREEN, 'm')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,17,7,7,COLOR_GREEN, 'n')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,17,7,7,COLOR_GREEN, 'o')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,15,7,7,COLOR_GREEN, 'q')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {11,12,13,13};
+    vector<unsigned int> initialY = {15,15,15,16};
+
+    tetrimino = new RightL(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(3);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugLeftSLeftRotationOrientationZero(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,15,7,7,COLOR_GREEN, 'e')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'f')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,14,7,7,COLOR_GREEN, 'g')));
+
+    //  cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'h')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,13,7,7,COLOR_GREEN, 'i')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,13,7,7,COLOR_GREEN, 'j')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,13,7,7,COLOR_GREEN, 'k')));
+    
+    
+    //Right Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'l')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,17,7,7,COLOR_GREEN, 'm')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,17,7,7,COLOR_GREEN, 'n')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,17,7,7,COLOR_GREEN, 'o')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,18,7,7,COLOR_GREEN, 'p')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,18,7,7,COLOR_GREEN, 'q')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,18,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {12,13,13,14};
+    vector<unsigned int> initialY = {16,16,15,15};
+
+    tetrimino = new LeftS(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(0);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugLeftSLeftRotationOrientationOne(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,16,7,7,COLOR_GREEN, 'e')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'f')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,15,7,7,COLOR_GREEN, 'g')));
+
+    //  cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'h')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(11,16,7,7,COLOR_GREEN, 'i')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(11,15,7,7,COLOR_GREEN, 'j')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(11,14,7,7,COLOR_GREEN, 'k')));
+    
+    
+    //Right Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'l')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(15,16,7,7,COLOR_GREEN, 'm')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(15,15,7,7,COLOR_GREEN, 'n')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(15,14,7,7,COLOR_GREEN, 'o')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(16,16,7,7,COLOR_GREEN, 'p')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(16,15,7,7,COLOR_GREEN, 'q')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(16,14,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    vector<unsigned int> initialX = {14,14,13,13};
+    vector<unsigned int> initialY = {16,15,15,14};
+
+    tetrimino = new LeftS(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(1);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugRightSLeftRotationOrientationZero(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,15,7,7,COLOR_GREEN, 'e')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'f')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,14,7,7,COLOR_GREEN, 'g')));
+
+    //  cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'h')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,13,7,7,COLOR_GREEN, 'i')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,13,7,7,COLOR_GREEN, 'j')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,13,7,7,COLOR_GREEN, 'k')));
+    
+    
+    //Right Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'l')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,17,7,7,COLOR_GREEN, 'm')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,17,7,7,COLOR_GREEN, 'n')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,17,7,7,COLOR_GREEN, 'o')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,18,7,7,COLOR_GREEN, 'p')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,18,7,7,COLOR_GREEN, 'q')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,18,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    //Must set center to B cell
+    vector<unsigned int> initialX = {12,13,13,14};
+    vector<unsigned int> initialY = {15,15,14,14};
+
+    tetrimino = new RightS(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(0);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugRightSLeftRotationOrientationOne(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,16,7,7,COLOR_GREEN, 'e')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,16,7,7,COLOR_GREEN, 'f')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(12,15,7,7,COLOR_GREEN, 'g')));
+
+     cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'h')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,16,7,7,COLOR_GREEN, 'i')));
+   
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,15,7,7,COLOR_GREEN, 'j')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(11,14,7,7,COLOR_GREEN, 'k')));
+    
+    
+    //Right Side
+    cellsForEnviroment.push_back(move(make_unique<Cell>(13,16,7,7,COLOR_GREEN, 'l')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'm')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,15,7,7,COLOR_GREEN, 'n')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'o')));
+
+    cellsForEnviroment.push_back(move(make_unique<Cell>(16,16,7,7,COLOR_GREEN, 'p')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(16,15,7,7,COLOR_GREEN, 'q')));
+    
+    cellsForEnviroment.push_back(move(make_unique<Cell>(16,14,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    //Must set center to B cell
+    vector<unsigned int> initialX = {13,13,12,12};
+    vector<unsigned int> initialY = {14,15,15,16};
+
+    tetrimino = new RightS(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(1);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
+int debugTPieceLeftRotationOrientationZero(){
+    initscr();
+    start_color();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+    refresh();
+    int height = 43;
+    int width = 80;
+
+    // Get instance of Environment Singleton object
+    // boundaryElement should print to the screen
+    Environment* mainEnv = Environment::getInstance();
+    vector<unique_ptr<Cell>> cellsForEnviroment;
+
+    //Left Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,15,7,7,COLOR_GREEN, 'e')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,14,7,7,COLOR_GREEN, 'f')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,14,7,7,COLOR_GREEN, 'g')));
+
+    //  cellsForEnviroment.push_back(move(make_unique<Cell>(14,14,7,7,COLOR_GREEN, 'h')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,13,7,7,COLOR_GREEN, 'i')));
+   
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,13,7,7,COLOR_GREEN, 'j')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,13,7,7,COLOR_GREEN, 'k')));
+    
+    
+    //Right Side
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,16,7,7,COLOR_GREEN, 'l')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,17,7,7,COLOR_GREEN, 'm')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,17,7,7,COLOR_GREEN, 'n')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,17,7,7,COLOR_GREEN, 'o')));
+
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(12,18,7,7,COLOR_GREEN, 'p')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(13,18,7,7,COLOR_GREEN, 'q')));
+    
+    // cellsForEnviroment.push_back(move(make_unique<Cell>(14,18,7,7,COLOR_GREEN, 'r')));
+
+
+    for(unsigned int i = 0; i < cellsForEnviroment.size(); i++){
+        cellsForEnviroment[i]->paint();
+        Environment::getInstance()->addCell(move(cellsForEnviroment[i]));
+    }
+    Tetrimino* tetrimino = nullptr;
+    //Must set center to B cell
+    vector<unsigned int> initialX = {13,12,13,14};
+    vector<unsigned int> initialY = {14,15,15,15};
+
+    tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setOrientation(0);
+    tetrimino->show();
+    
+
+
+    AppController ac;
+    AppLogic al;
+    ac.setControllable(&al);
+
+    TetriminoController tc;
+    tc.setControllable(tetrimino);
+
+
+    KeyboardListener::getInstance()->registerController(&ac);
+    KeyboardListener::getInstance()->registerController(&tc);
+
+    
+    KeyboardListener::getInstance()->startListening();
+    
+    KeyboardListener::getInstance()->waitOnListener();
+
+    delete tetrimino;
+    
+    endwin();
+
+    return 0; 
+}
+
 void writeToLine(WINDOW* win, int line, string data){
 	wmove(win, line, 0);
 	wclrtoeol(win);

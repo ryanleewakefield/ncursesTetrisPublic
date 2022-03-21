@@ -26,7 +26,11 @@ public:
     bool virtual rotateRight() = 0;
     bool isActive();
     void setActive(bool active);
-    //This should get called in destructor, possibly?
+    /*
+    *   Copies cells held by Tetrimino to Environment.
+    *   Ideally, this method should get called when the
+    *   gravity fails to move a Tetrimino downward.
+    */
     void passCellsToEnvironment();
     void setOrientation(int ori);
     //ITetriminoControl

@@ -23,40 +23,8 @@
 #include "../classes/AppLogic.hpp"
 #include "../classes/AutoController.hpp"
 
-#include "../tests/testCell.cpp"
-#include "../tests/testGravityAndPassingCellsToEnvironment.cpp"
-
 using namespace std;
 
-void writeToLine(WINDOW* win, int line, string data);
-int runApp();
-
-int main(int argc, char* argv[]){
-
-    return testGravityAndPassingCellsToEnvironment();
+int testGravityAndPassingCellsToEnvironment(){
     
-}
-
-int runApp(){
-
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
-    refresh();
-    getch();
-
-    endwin();
-
-    return 0;
-}
-
-
-void writeToLine(WINDOW* win, int line, string data){
-	wmove(win, line, 0);
-	wclrtoeol(win);
-	wrefresh(win);
-	waddstr(win, data.c_str());
-	wrefresh(win);
 }

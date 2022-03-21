@@ -160,50 +160,51 @@ bool TPiece::rotateLeftOrientationOne(){
     int cX = cells[2].getx();
     int cY = cells[2].gety();
 
-    int eY = cX + 2;
-    int eX = cY;
-
-    int fY = cX - 2;
-    int fX = cY;
-
-    int gY = cX + 2;
-    int gX = cY - 1;
-
-    int hY = cX + 1;
-    int hX = cY - 1;
-
-    int iY = cX - 1;
-    int iX = cY - 1;
-
-    int jY = cX - 2;
-    int jX = cY - 1;
-
-    int kY = cX + 1;
-    int kX = cY - 2;
-
-    int lY = cX;
-    int lX = cY - 2;
-
-    int mY = cX - 1;
-    int mX = cY - 2;
-
-    int nY = cX + 1;
-    int nX = cY + 1;
-
-    int oY = cX;
-    int oX = cY + 1;
-
-    int pY = cX - 1;
-    int pX = cY + 1;
-
-    int qY = cX + 1;
-    int qX = cY + 2;
-
-    int rY = cX;
-    int rX = cY + 2;
-
-    int sY = cX - 1;
-    int sX = cY + 2;
+    int eX = cX;
+    int eY = cY - 2;
+    
+    int fX = cX;
+    int fY = cY + 2;
+    
+    int gX = cX + 1;
+    int gY = cY - 2;
+    
+    int hX = cX + 1;
+    int hY = cY - 1;
+    
+    int iX = cX + 1;
+    int iY = cY + 1;
+    
+    int jX = cX + 1;
+    int jY = cY + 2;
+    
+    int kX = cX + 2;
+    int kY = cY - 1;
+    
+    int lX = cX + 2;
+    int lY = cY;
+    
+    int mX = cX + 2;
+    int mY = cY + 1;
+    
+    int nX = cX - 1;
+    int nY = cY - 1;
+    
+    int oX = cX - 1;
+    int oY = cY;
+    
+    int pX = cX - 1;
+    int pY = cY + 1;
+    
+    int qX = cX - 2;
+    int qY = cY - 1;
+    
+    int rX = cX - 2;
+    int rY = cY;
+    
+    int sX = cX - 2;
+    int sY = cY + 1;
+    
 
     bool willRotateHappen = false;
     int incX = 0;
@@ -217,7 +218,7 @@ bool TPiece::rotateLeftOrientationOne(){
                 incY = 0;
 
                 incX = 0;
-                incY = -1;
+                incY = 1;
                 willRotateHappen = true;
             }
         else{
@@ -233,8 +234,8 @@ bool TPiece::rotateLeftOrientationOne(){
                 incX = 1;
                 incY = 1;
 
-                incX = 1;
-                incY = -1;
+                incX = -1;
+                incY = 1;
                 willRotateHappen = true;
             }
         else{
@@ -248,8 +249,8 @@ bool TPiece::rotateLeftOrientationOne(){
                 incX = -1;
                 incY = -1;
 
-                incX = -1;
-                incY = 1;
+                incX = 1;
+                incY = -1;
                 willRotateHappen = true;
             }
         else{
@@ -262,7 +263,7 @@ bool TPiece::rotateLeftOrientationOne(){
             incY = 0;
 
             incX = 0;
-            incY = 1;
+            incY = -1;
             willRotateHappen = true;
         }
         else{
@@ -416,50 +417,50 @@ bool TPiece::rotateLeftOrientationThree(){
     int cX = cells[2].getx();
     int cY = cells[2].gety();
 
-    int eY = cX - 2;
-    int eX = cY;
-
-    int fY = cX + 2;
-    int fX = cY;
-
-    int gY = cX - 2;
-    int gX = cY + 1;
-
-    int hY = cX - 1;
-    int hX = cY + 1;
-
-    int iY = cX + 1;
-    int iX = cY + 1;
-
-    int jY = cX + 2;
-    int jX = cY + 1;
-
-    int kY = cX - 1;
-    int kX = cY + 2;
-
-    int lY = cX;
-    int lX = cY + 2;
-
-    int mY = cX + 1;
-    int mX = cY + 2;
-
-    int nY = cX - 1;
-    int nX = cY - 1;
-
-    int oY = cX;
-    int oX = cY - 1;
-
-    int pY = cX + 1;
-    int pX = cY - 1;
-
-    int qY = cX - 1;
-    int qX = cY - 2;
-
-    int rY = cX;
-    int rX = cY - 2;
-
-    int sY = cX + 1;
-    int sX = cY - 2;
+    int eX = cX;
+    int eY = cY + 2;
+    
+    int fX = cX;
+    int fY = cY - 2;
+    
+    int gX = cX - 1;
+    int gY = cY + 2;
+    
+    int hX = cX - 1;
+    int hY = cY + 1;
+    
+    int iX = cX - 1;
+    int iY = cY - 1;
+    
+    int jX = cX - 1;
+    int jY = cY - 2;
+    
+    int kX = cX - 2;
+    int kY = cY + 1;
+    
+    int lX = cX - 2;
+    int lY = cY;
+    
+    int mX = cX - 2;
+    int mY = cY - 1;
+    
+    int nX = cX + 1;
+    int nY = cY + 1;
+    
+    int oX = cX + 1;
+    int oY = cY;
+    
+    int pX = cX + 1;
+    int pY = cY - 1;
+    
+    int qX = cX + 2;
+    int qY = cY + 1;
+    
+    int rX = cX + 2;
+    int rY = cY;
+    
+    int sX = cX + 2;
+    int sY = cY - 1;
 
     bool willRotateHappen = false;
     int incX = 0;
@@ -473,7 +474,7 @@ bool TPiece::rotateLeftOrientationThree(){
                 incY = 0;
 
                 incX = 0;
-                incY = 1;
+                incY = -1;
                 willRotateHappen = true;
             }
         else{
@@ -489,8 +490,8 @@ bool TPiece::rotateLeftOrientationThree(){
                 incX = 1;
                 incY = 1;
 
-                incX = -1;
-                incY = 1;
+                incX = 1;
+                incY = -1;
                 willRotateHappen = true;
             }
         else{
@@ -504,8 +505,8 @@ bool TPiece::rotateLeftOrientationThree(){
                 incX = -1;
                 incY = -1;
 
-                incX = 1;
-                incY = -1;
+                incX = -1;
+                incY = 1;
                 willRotateHappen = true;
             }
         else{
@@ -518,7 +519,7 @@ bool TPiece::rotateLeftOrientationThree(){
             incY = 0;
 
             incX = 0;
-            incY = -1;
+            incY = 1;
             willRotateHappen = true;
         }
         else{
@@ -703,50 +704,50 @@ bool TPiece::rotateRightOrientationOne(){
     int cX = cells[2].getx();
     int cY = cells[2].gety();
 
-    int eY = cX + 2;
-    int eX = cY;
-
-    int fY = cX - 2;
-    int fX = cY;
-
-    int gY = cX + 2;
-    int gX = cY - 1;
-
-    int hY = cX + 1;
-    int hX = cY - 1;
-
-    int iY = cX - 1;
-    int iX = cY - 1;
-
-    int jY = cX - 2;
-    int jX = cY - 1;
-
-    int kY = cX + 1;
-    int kX = cY - 2;
-
-    int lY = cX;
-    int lX = cY - 2;
-
-    int mY = cX - 1;
-    int mX = cY - 2;
-
-    int nY = cX + 1;
-    int nX = cY + 1;
-
-    int oY = cX;
-    int oX = cY + 1;
-
-    int pY = cX - 1;
-    int pX = cY + 1;
-
-    int qY = cX + 1;
-    int qX = cY + 2;
-
-    int rY = cX;
-    int rX = cY + 2;
-
-    int sY = cX - 1;
-    int sX = cY + 2;
+    int eX = cX;
+    int eY = cY - 2;
+    
+    int fX = cX;
+    int fY = cY + 2;
+    
+    int gX = cX + 1;
+    int gY = cY - 2;
+    
+    int hX = cX + 1;
+    int hY = cY - 1;
+    
+    int iX = cX + 1;
+    int iY = cY + 1;
+    
+    int jX = cX + 1;
+    int jY = cY + 2;
+    
+    int kX = cX + 2;
+    int kY = cY - 1;
+    
+    int lX = cX + 2;
+    int lY = cY;
+    
+    int mX = cX + 2;
+    int mY = cY + 1;
+    
+    int nX = cX - 1;
+    int nY = cY - 1;
+    
+    int oX = cX - 1;
+    int oY = cY;
+    
+    int pX = cX - 1;
+    int pY = cY + 1;
+    
+    int qX = cX - 2;
+    int qY = cY - 1;
+    
+    int rX = cX - 2;
+    int rY = cY;
+    
+    int sX = cX - 2;
+    int sY = cY + 1;
 
     bool willRotateHappen = false;
     int incX = 0;
@@ -760,7 +761,7 @@ bool TPiece::rotateRightOrientationOne(){
                 incY = 0;
 
                 incX = 0;
-                incY = 1;
+                incY = -1;
                 willRotateHappen = true;
             }
         else{
@@ -776,8 +777,8 @@ bool TPiece::rotateRightOrientationOne(){
                 incX = -1;
                 incY = 1;
 
-                incX = 1;
-                incY = 1;
+                incX = -1;
+                incY = -1;
                 willRotateHappen = true;
             }
         else{
@@ -791,8 +792,8 @@ bool TPiece::rotateRightOrientationOne(){
                 incX = 1;
                 incY = -1;
 
-                incX = -1;
-                incY = -1;
+                incX = 1;
+                incY = 1;
                 willRotateHappen = true;
             }
         else{
@@ -805,7 +806,7 @@ bool TPiece::rotateRightOrientationOne(){
             incY = 0;
 
             incX = 0;
-            incY = -1;
+            incY = 1;
             willRotateHappen = true;
         }
         else{
@@ -873,7 +874,7 @@ bool TPiece::rotateRightOrientationTwo(){
     int rX = cX;
     int rY = cY - 2;
 
-    int sX = cX + 1;
+    int sX = cX - 1;
     int sY = cY - 2;
 
     bool willRotateHappen = false;
@@ -959,50 +960,50 @@ bool TPiece::rotateRightOrientationThree(){
     int cX = cells[2].getx();
     int cY = cells[2].gety();
 
-    int eY = cX - 2;
-    int eX = cY;
-
-    int fY = cX + 2;
-    int fX = cY;
-
-    int gY = cX - 2;
-    int gX = cY + 1;
-
-    int hY = cX - 1;
-    int hX = cY + 1;
-
-    int iY = cX + 1;
-    int iX = cY + 1;
-
-    int jY = cX + 2;
-    int jX = cY + 1;
-
-    int kY = cX - 1;
-    int kX = cY + 2;
-
-    int lY = cX;
-    int lX = cY + 2;
-
-    int mY = cX + 1;
-    int mX = cY + 2;
-
-    int nY = cX - 1;
-    int nX = cY - 1;
-
-    int oY = cX;
-    int oX = cY - 1;
-
-    int pY = cX + 1;
-    int pX = cY - 1;
-
-    int qY = cX - 1;
-    int qX = cY - 2;
-
-    int rY = cX;
-    int rX = cY - 2;
-
-    int sY = cX + 1;
-    int sX = cY - 2;
+    int eX = cX;
+    int eY = cY + 2;
+    
+    int fX = cX;
+    int fY = cY - 2;
+    
+    int gX = cX - 1;
+    int gY = cY + 2;
+    
+    int hX = cX - 1;
+    int hY = cY + 1;
+    
+    int iX = cX - 1;
+    int iY = cY - 1;
+    
+    int jX = cX - 1;
+    int jY = cY - 2;
+    
+    int kX = cX - 2;
+    int kY = cY + 1;
+    
+    int lX = cX - 2;
+    int lY = cY;
+    
+    int mX = cX - 2;
+    int mY = cY - 1;
+    
+    int nX = cX + 1;
+    int nY = cY + 1;
+    
+    int oX = cX + 1;
+    int oY = cY;
+    
+    int pX = cX + 1;
+    int pY = cY - 1;
+    
+    int qX = cX + 2;
+    int qY = cY + 1;
+    
+    int rX = cX + 2;
+    int rY = cY;
+    
+    int sX = cX + 2;
+    int sY = cY - 1;
 
     bool willRotateHappen = false;
     int incX = 0;
@@ -1016,7 +1017,7 @@ bool TPiece::rotateRightOrientationThree(){
                 incY = 0;
 
                 incX = 0;
-                incY = -1;
+                incY = 1;
                 willRotateHappen = true;
             }
         else{
@@ -1032,8 +1033,8 @@ bool TPiece::rotateRightOrientationThree(){
                 incX = -1;
                 incY = 1;
 
-                incX = -1;
-                incY = -1;
+                incX = 1;
+                incY = 1;
                 willRotateHappen = true;
             }
         else{
@@ -1047,8 +1048,8 @@ bool TPiece::rotateRightOrientationThree(){
                 incX = 1;
                 incY = -1;
 
-                incX = 1;
-                incY = 1;
+                incX = -1;
+                incY = -1;
                 willRotateHappen = true;
             }
         else{
@@ -1061,7 +1062,7 @@ bool TPiece::rotateRightOrientationThree(){
             incY = 0;
 
             incX = 0;
-            incY = 1;
+            incY = -1;
             willRotateHappen = true;
         }
         else{

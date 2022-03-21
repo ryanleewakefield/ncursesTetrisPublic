@@ -21,7 +21,7 @@
 #include "../classes/KeyboardListener.hpp"
 #include "../classes/ScreenWriter.hpp"
 #include "../classes/AppLogic.hpp"
-#include "../classes/AutoController.hpp"
+#include "../classes/GameDaemon.hpp"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
-#ifndef __AUTOCONTROLLER_HPP__
-#define __AUTOCONTROLLER_HPP__
+#ifndef __GAMEDAEMON_HPP__
+#define __GAMEDAEMON_HPP__
 
 #include <thread>
 #include <chrono>
@@ -10,11 +10,11 @@
 #include "EventSignal.hpp"
 #include "ButtonSignal.hpp"
 
-class AutoController{
+class GameDaemon{
 public:
-    AutoController();
-    AutoController(const AutoController& rhs) = delete;
-    ~AutoController();
+    GameDaemon();
+    GameDaemon(const GameDaemon& rhs) = delete;
+    ~GameDaemon();
     bool virtual processEventSignal(EventSignal est) = 0;
     void virtual setController(UserController* controller);
     bool virtual startAutoThread() = 0;
@@ -27,21 +27,21 @@ protected:
     bool running;
     bool stop;
 };
-AutoController::AutoController(){
+GameDaemon::GameDaemon(){
     autoThread = nullptr;
     running = false;
     stop = false;
 }
-AutoController::~AutoController(){
+GameDaemon::~GameDaemon(){
 
 }
-void AutoController::setController(UserController* controller){
+void GameDaemon::setController(UserController* controller){
     this->controller = controller;
 }
-bool AutoController::startAutoThread(){
+bool GameDaemon::startAutoThread(){
     if(running == false){
         stop = false;
-        autoThread =  new std::thread(AutoController::runThread, &stop);
+        autoThread =  new std::thread(GameDaemon::runThread, &stop);
         running = true;
         return true;
     }
@@ -49,10 +49,10 @@ bool AutoController::startAutoThread(){
         return false;
     }
 }
-bool AutoController::waitOnAutoThread(){
+bool GameDaemon::waitOnAutoThread(){
     autoThread->join();
 }
-bool AutoController::stopAutoThread(){
+bool GameDaemon::stopAutoThread(){
     if(running == true){
         stop = true;
         running = false;
@@ -62,7 +62,7 @@ bool AutoController::stopAutoThread(){
         return false;
     }
 }
-int AutoController::runThread(bool* stop){
+int GameDaemon::runThread(bool* stop){
     //do nothing
     // Need to find a way to make this static method
     // a pure virtual function i.e. ensure that a subclass
@@ -73,7 +73,7 @@ int AutoController::runThread(bool* stop){
     **************************************************************
     **************************************************************
 */
-class TetriminoCycle : public AutoController{
+class TetriminoCycle : public GameDaemon{
 public:
     bool virtual processEventSignal(EventSignal est);
     void virtual setController(TetriminoController* controller);

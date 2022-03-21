@@ -855,11 +855,11 @@ int testUserController(){
     KeyboardListener::getInstance()->registerController(&ac);
     KeyboardListener::getInstance()->registerController(&tc);
 
-    // TetriminoCycle tetCycle;
-    // tetCycle.setController(&tc);
+    TetriminoCycle tetCycle;
+    tetCycle.setController(&tc);
     
-    // tetCycle.setDelay(500);
-    // tetCycle.startAutoThread();
+    tetCycle.setDelay(500);
+    tetCycle.startAutoThread();
 
     KeyboardListener::getInstance()->startListening();
     

@@ -3,6 +3,8 @@
 
 #include <mutex>
 #include <thread>
+
+#include "EventSignal.hpp"
 //Needed for intellsense nonsense
 typedef std::mutex* mutexPtr;
 /*
@@ -36,5 +38,6 @@ public:
     bool virtual actionFour() = 0;
     bool virtual actionFive() = 0;
     bool virtual actionSix() = 0;
+    bool virtual sendEvent(EventSignal est) = 0;
 };
 #endif

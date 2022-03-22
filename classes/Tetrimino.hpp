@@ -41,6 +41,7 @@ public:
     bool virtual actionFour();
     bool virtual actionFive();
     bool virtual actionSix();
+    bool virtual sendEvent(EventSignal est);
 protected:
     Environment* environment;
     bool active;
@@ -56,22 +57,33 @@ mutexPtr Tetrimino::getMutex(){
     return &(this->mux);
 }
 bool Tetrimino::actionOne(){
-    this->moveUp();
+    return this->moveUp();
 }
 bool Tetrimino::actionTwo(){
-    this->moveDown();
+    return this->moveDown();
 }
 bool Tetrimino::actionThree(){
-    this->moveLeft();
+    return this->moveLeft();
 }
 bool Tetrimino::actionFour(){
-    this->moveRight();
+    return this->moveRight();
 }
 bool Tetrimino::actionFive(){
-    this->rotateLeft();
+    return this->rotateLeft();
 }
 bool Tetrimino::actionSix(){
-    this->rotateRight();
+    return this->rotateRight();
+}
+bool Tetrimino::sendEvent(EventSignal est){
+    switch(est){
+        case GRAVITY_THREAD_STOPPED:{
+            if(this->active){
+                this->passCellsToEnvironment();
+                this->active = false;
+                return true;
+            }
+        }
+    }
 }
 /*  
     The object that is responsible for generating Tetriminos knows where they will be placed.

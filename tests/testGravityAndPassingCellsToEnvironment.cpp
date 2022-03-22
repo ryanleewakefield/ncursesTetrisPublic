@@ -40,8 +40,8 @@ int testGravityAndPassingCellsToEnvironment(){
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
     Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {19,20,20,21};
-    vector<unsigned int> initialY = {10,9,10,10};
+    vector<unsigned int> initialX = {9,10,10,11};
+    vector<unsigned int> initialY = {5,4,5,5};
     
     tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
     tetrimino->show();
@@ -61,12 +61,12 @@ int testGravityAndPassingCellsToEnvironment(){
     KeyboardListener::getInstance()->registerController(&ac);
     KeyboardListener::getInstance()->registerController(&tc);
 
-    TetriminoCycle tetCycle;
+    GravityCycle tetCycle;
     tetCycle.setController(&tc);
     
     al.registerGameDaemon(&tetCycle);
 
-    tetCycle.setDelay(50);
+    tetCycle.setDelay(500);
     tetCycle.startAutoThread();
 
     KeyboardListener::getInstance()->startListening();

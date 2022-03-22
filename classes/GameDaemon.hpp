@@ -107,7 +107,7 @@ void TetriminoCycle::setDelay(int delay){
     this->delay = delay;
 }
 int TetriminoCycle::runThread(TetriminoController* controller, bool* stop, int* delay){
-    while(!(*stop)){
+    
         int movesLeft = 4;
     int movesRight = 4;
     int movesUp = 4;
@@ -140,6 +140,49 @@ int TetriminoCycle::runThread(TetriminoController* controller, bool* stop, int* 
             movesDown--;
         }
     }
+    
+}
+class GravityCycle : public GameDaemon{
+public:
+    bool virtual processEventSignal(EventSignal est);
+    void virtual setController(TetriminoController* controller);
+    bool virtual startAutoThread() override;
+    void setDelay(int delay);
+private:
+    static int runThread(TetriminoController* controllable, bool* stop, int* delay);
+    TetriminoController* controller;
+    int delay;
+};
+bool GravityCycle::processEventSignal(EventSignal est){
+    switch(est){
+        case APP_QUIT: this->stopAutoThread(); return true;
     }
+}
+bool GravityCycle::startAutoThread(){
+    if(running == false){
+        stop = false;
+        autoThread =  new std::thread(GravityCycle::runThread, controller, &stop, &delay);
+        running = true;
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+void GravityCycle::setController(TetriminoController* controller){
+    this->controller = controller;
+}
+void GravityCycle::setDelay(int delay){
+    this->delay = delay;
+}
+int GravityCycle::runThread(TetriminoController* controller, bool* stop, int* delay){
+    while(!(*stop)){
+        std::this_thread::sleep_for(std::chrono::milliseconds(*delay));
+        bool fail = !controller->processInputSignal(DownButton);
+        if(fail){
+            controller->processEventSignal(GRAVITY_THREAD_STOPPED);
+            break;
+        }
+    }  
 }
 #endif

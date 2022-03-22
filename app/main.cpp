@@ -24,6 +24,7 @@
 #include "../classes/GameDaemon.hpp"
 
 #include "../tests/testCell.cpp"
+#include "../tests/testUserController.cpp"
 #include "../tests/testGravityAndPassingCellsToEnvironment.cpp"
 
 using namespace std;
@@ -32,6 +33,8 @@ void writeToLine(WINDOW* win, int line, string data);
 int runApp();
 
 int main(int argc, char* argv[]){
+
+    // return testUserController();
 
     return testGravityAndPassingCellsToEnvironment();
     

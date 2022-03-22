@@ -3,6 +3,7 @@
 
 enum EventSignal{
     APP_QUIT,
+    GRAVITY_THREAD_STOPPED,
     
 };
 

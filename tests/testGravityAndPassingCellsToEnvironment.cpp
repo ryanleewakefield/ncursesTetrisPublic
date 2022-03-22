@@ -43,9 +43,7 @@ int testGravityAndPassingCellsToEnvironment(){
     vector<unsigned int> initialX = {9,10,10,11};
     vector<unsigned int> initialY = {5,4,5,5};
     
-    tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
-    tetrimino->show();
-    getch();
+    
     
     KeyboardListener* KeyboardListener = KeyboardListener::getInstance();
 
@@ -55,27 +53,32 @@ int testGravityAndPassingCellsToEnvironment(){
     ac.setControllable(&al);
 
     TetriminoController tc;
-    tc.setControllable(tetrimino);
-
-
+    
     KeyboardListener::getInstance()->registerController(&ac);
-    KeyboardListener::getInstance()->registerController(&tc);
+    // KeyboardListener::getInstance()->registerController(&tc);
+
+    
 
     GravityCycle tetCycle;
     tetCycle.setController(&tc);
     
     al.registerGameDaemon(&tetCycle);
-
-    tetCycle.setDelay(500);
-    tetCycle.startAutoThread();
-
     KeyboardListener::getInstance()->startListening();
-    
+    //for(int i = 0; i < 5; i++){
+        tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
+        tetrimino->show();
+        //getch();
+        tc.setControllable(tetrimino);
+        
+        tetCycle.setDelay(500);
+        tetCycle.startAutoThread();
 
-    tetCycle.waitOnAutoThread();
+
+        tetCycle.waitOnAutoThread();
+    //}
     KeyboardListener::getInstance()->waitOnListener();
     
-    delete tetrimino;
+    // delete tetrimino;
     
     endwin();
 

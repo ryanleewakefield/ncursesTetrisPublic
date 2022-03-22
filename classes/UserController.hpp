@@ -19,7 +19,7 @@ protected:
     IControllable* controllable;
 };
 
-UserController::UserController() = default;
+UserController::UserController(){ controllable = nullptr;}
 
 UserController::UserController(const UserController& rhs){
     this->controllable = rhs.controllable;

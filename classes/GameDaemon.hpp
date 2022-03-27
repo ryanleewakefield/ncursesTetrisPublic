@@ -9,6 +9,7 @@
 #include "UserController.hpp"
 #include "EventSignal.hpp"
 #include "ButtonSignal.hpp"
+#include "../classes/TetriminoController.hpp"
 
 class GameDaemon{
 public:
@@ -20,6 +21,7 @@ public:
     bool virtual startAutoThread() = 0;
     bool waitOnAutoThread();
     bool stopAutoThread();
+    bool cleanUpThread();
 protected:
     static int runThread(bool* stop);
     UserController* controller;
@@ -56,11 +58,16 @@ bool GameDaemon::stopAutoThread(){
     if(running == true){
         stop = true;
         running = false;
+        
         return true;
     }
     else{
         return false;
     }
+}
+bool GameDaemon::cleanUpThread(){
+    delete autoThread; 
+    autoThread = nullptr;
 }
 int GameDaemon::runThread(bool* stop){
     //do nothing
@@ -87,6 +94,19 @@ private:
 bool TetriminoCycle::processEventSignal(EventSignal est){
     switch(est){
         case APP_QUIT: this->stopAutoThread(); return true;
+        case START_THREAD:{
+            if(!running){
+                this->startAutoThread();
+                
+            }
+        }break;
+        case STOP_THREAD:{
+            if(running){
+            this->stopAutoThread();
+            this->waitOnAutoThread();
+            this->cleanUpThread();
+            }
+        }break;
     }
 }
 bool TetriminoCycle::startAutoThread(){
@@ -107,8 +127,7 @@ void TetriminoCycle::setDelay(int delay){
     this->delay = delay;
 }
 int TetriminoCycle::runThread(TetriminoController* controller, bool* stop, int* delay){
-    
-        int movesLeft = 4;
+    int movesLeft = 4;
     int movesRight = 4;
     int movesUp = 4;
     int movesDown = 4;
@@ -181,7 +200,7 @@ int GravityCycle::runThread(TetriminoController* controller, bool* stop, int* de
         bool fail = !controller->processInputSignal(DownButton);
         if(fail){
             controller->processEventSignal(GRAVITY_THREAD_STOPPED);
-            break;
+            *stop = true;
         }
     }  
 }

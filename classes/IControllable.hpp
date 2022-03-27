@@ -28,7 +28,12 @@ public:
     bool virtual actionOne() = 0;
     bool virtual actionTwo() = 0;
 };
-
+class IControllableThree : public IControllable{
+public:
+    bool virtual actionOne() = 0;
+    bool virtual actionTwo() = 0;
+    bool virtual actionThree() = 0;
+};
 class ITetriminoControl : public IControllable{
 public:
     mutexPtr virtual getMutex() = 0;

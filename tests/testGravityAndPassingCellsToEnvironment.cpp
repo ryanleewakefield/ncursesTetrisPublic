@@ -22,6 +22,8 @@
 #include "../classes/ScreenWriter.hpp"
 #include "../classes/AppLogic.hpp"
 #include "../classes/GameDaemon.hpp"
+#include "../classes/AppController.hpp"
+#include "../classes/TetriminoController.hpp"
 
 using namespace std;
 
@@ -59,24 +61,25 @@ int testGravityAndPassingCellsToEnvironment(){
 
     
 
-    GravityCycle tetCycle;
-    tetCycle.setController(&tc);
+    GravityCycle gravityCycle;
+    gravityCycle.setController(&tc);
     
-    al.registerGameDaemon(&tetCycle);
-    KeyboardListener::getInstance()->startListening();
-    //for(int i = 0; i < 5; i++){
+    al.registerGameDaemon(&gravityCycle);
+    // KeyboardListener::getInstance()->startListening();
+    for(int i = 0; i < 5; i++){
         tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
         tetrimino->show();
-        //getch();
+        // getch();
         tc.setControllable(tetrimino);
         
-        tetCycle.setDelay(500);
-        tetCycle.startAutoThread();
+        gravityCycle.setDelay(100);
+        gravityCycle.startAutoThread();
 
 
-        tetCycle.waitOnAutoThread();
-    //}
-    KeyboardListener::getInstance()->waitOnListener();
+        gravityCycle.waitOnAutoThread();
+        gravityCycle.cleanUpThread();
+    }
+    // KeyboardListener::getInstance()->waitOnListener();
     
     // delete tetrimino;
     

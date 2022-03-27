@@ -8,7 +8,7 @@
 #include "IControllable.hpp"
 #include "../classes/GameDaemon.hpp"
 
-class AppLogic : public IControllable{
+class AppLogic : public IControllableThree{
 public:
     AppLogic() = default;
     AppLogic(const AppLogic& rhs) = default;
@@ -17,6 +17,8 @@ public:
     bool unregisterGameDaemon(GameDaemon* gameDaemon);
     bool sendStopSignal();
     bool virtual actionOne();
+    bool virtual actionTwo();
+    bool virtual actionThree();
 private:
     std::vector<GameDaemon*> gameDaemons;
 };
@@ -38,22 +40,28 @@ bool AppLogic::unregisterGameDaemon(GameDaemon* gameDaemon){
             return true;
         }
     }
-    //Didn't find registered UserControlller
+    //Didn't find registered GameDaemon
     return false;
 }
 bool AppLogic::sendStopSignal(){
     std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
         e->processEventSignal(APP_QUIT);
     } );
-
-    // for(unsigned int i = 0; i < this->gameDaemons.size(); i++){
-    //     gameDaemons[i].processEventSignal(APP_QUIT);
-    // }
     KeyboardListener::getInstance()->stopListening();
     return true;
+    
 }
 bool AppLogic::actionOne(){
     return this->sendStopSignal();
 }
-
+bool AppLogic::actionTwo(){
+    std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
+        e->processEventSignal(START_THREAD);
+    } );
+}
+bool AppLogic::actionThree(){
+    std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
+        e->processEventSignal(STOP_THREAD);
+    } );
+}
 #endif

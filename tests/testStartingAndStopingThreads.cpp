@@ -27,11 +27,11 @@
 
 using namespace std;
 
-/*
-    Have the UserController listening for button presses
-    while another module is controlling a Tetrimino.
-*/
-int testUserController(){
+
+
+
+
+int testStartingAndStopingThreads(){
     initscr();
     start_color();
     cbreak();
@@ -49,8 +49,9 @@ int testUserController(){
     vector<unsigned int> initialX = {19,20,20,21};
     vector<unsigned int> initialY = {10,9,10,10};
     
-    
-    
+    tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+    tetrimino->setActive(true); 
+    tetrimino->show();
     
     KeyboardListener* KeyboardListener = KeyboardListener::getInstance();
 
@@ -60,28 +61,39 @@ int testUserController(){
     ac.setControllable(&al);
 
     TetriminoController tc;
-   
+    tc.setControllable(tetrimino);
 
 
     KeyboardListener::getInstance()->registerController(&ac);
     KeyboardListener::getInstance()->registerController(&tc);
 
-    TetriminoCycle tetCycle;
-    tetCycle.setController(&tc);
-    al.registerGameDaemon(&tetCycle);
-    tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
-    tetrimino->show();
-     tc.setControllable(tetrimino);
-    tetCycle.setDelay(20);
-    // tetCycle.startAutoThread();
+    
+
+    GravityCycle gravityCycle;
+    gravityCycle.setController(&tc);
+    
+    al.registerGameDaemon(&gravityCycle);
+
+    gravityCycle.setDelay(100);
+    gravityCycle.startAutoThread();
+
 
     KeyboardListener::getInstance()->startListening();
-    
+    // for(int i = 0; i < 5; i++){
+        
+        // getch();
+        
+        
+        
 
-    // tetCycle.waitOnAutoThread();
+
+        //  gravityCycle.waitOnAutoThread();
+        //  gravityCycle.cleanUpThread();
+    // }
+     
+    // KeyboardListener::getInstance()->stopListening();
     KeyboardListener::getInstance()->waitOnListener();
-    
-    delete tetrimino;
+    // delete tetrimino;
     
     endwin();
 

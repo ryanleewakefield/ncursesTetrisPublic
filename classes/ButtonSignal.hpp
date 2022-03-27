@@ -10,7 +10,9 @@ enum ButtonSignal{
     BButton,
     StartButton,
     SelectButton,
-    QuitButton
+    QuitButton,
+    StartThread,
+    StopThread,
 };
 
 

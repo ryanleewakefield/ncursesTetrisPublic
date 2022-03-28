@@ -77,11 +77,14 @@ bool Tetrimino::actionSix(){
 bool Tetrimino::sendEvent(EventSignal est){
     switch(est){
         case GRAVITY_THREAD_STOPPED:{
-            if(this->active){
-                this->passCellsToEnvironment();
-                this->active = false;
-                return true;
+            
+        }
+        case DETECT_COLLISION:{
+            if(!this->moveDown()){
+                this->setActive(false);
+                return false; //Tell caller move failed
             }
+            return true;
         }
     }
 }

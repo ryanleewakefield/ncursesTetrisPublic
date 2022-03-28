@@ -7,12 +7,10 @@
 #include "EventSignal.hpp"
 #include "IControllable.hpp"
 #include "../classes/GameDaemon.hpp"
-
+typedef std::mutex* mutexPtr;
 class AppLogic : public IControllableThree{
 public:
-    AppLogic() = default;
-    AppLogic(const AppLogic& rhs) = default;
-    ~AppLogic() = default;
+    static AppLogic* getInstance();
     bool registerGameDaemon(GameDaemon* gameDaemon);
     bool unregisterGameDaemon(GameDaemon* gameDaemon);
     bool sendStopSignal();
@@ -20,8 +18,26 @@ public:
     bool virtual actionTwo();
     bool virtual actionThree();
 private:
+    static AppLogic* uniqueInstance;
+    AppLogic() = default;
+    AppLogic(const AppLogic& rhs) = default;
+    ~AppLogic();
     std::vector<GameDaemon*> gameDaemons;
 };
+
+AppLogic* AppLogic::uniqueInstance = nullptr;
+AppLogic::~AppLogic(){
+    if(uniqueInstance != nullptr){
+            delete uniqueInstance;
+        }
+}
+AppLogic* AppLogic::getInstance(){
+    if(uniqueInstance == nullptr){
+        uniqueInstance = new AppLogic();
+    }
+    return uniqueInstance;
+}
+
 bool AppLogic::registerGameDaemon(GameDaemon* gameDaemon){
     //Check if already registered
     for(unsigned int i = 0; i < this->gameDaemons.size(); i++){

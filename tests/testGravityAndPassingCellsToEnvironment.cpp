@@ -24,6 +24,7 @@
 #include "../classes/GameDaemon.hpp"
 #include "../classes/AppController.hpp"
 #include "../classes/TetriminoController.hpp"
+#include "../classes/GameEventListener.hpp"
 
 using namespace std;
 
@@ -45,41 +46,52 @@ int testGravityAndPassingCellsToEnvironment(){
     vector<unsigned int> initialX = {9,10,10,11};
     vector<unsigned int> initialY = {5,4,5,5};
     
-    
-    
-    KeyboardListener* KeyboardListener = KeyboardListener::getInstance();
-
 
     AppController ac;
-    AppLogic al;
-    ac.setControllable(&al);
+    
+    ac.setControllable(AppLogic::getInstance());
 
     TetriminoController tc;
     
     KeyboardListener::getInstance()->registerController(&ac);
-    // KeyboardListener::getInstance()->registerController(&tc);
+    KeyboardListener::getInstance()->registerController(&tc);
 
     
 
     GravityCycle gravityCycle;
     gravityCycle.setController(&tc);
     
-    al.registerGameDaemon(&gravityCycle);
-    // KeyboardListener::getInstance()->startListening();
+    AppLogic::getInstance()->registerGameDaemon(&gravityCycle);
+    KeyboardListener::getInstance()->startListening();
+    GameEventListener* ref = GameEventListener::getInstance();
+
+    tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
+    tetrimino->show();
+    // getch();
+    tc.setControllable(tetrimino);
+    
+    gravityCycle.setDelay(500);
+    gravityCycle.startAutoThread();
     for(int i = 0; i < 5; i++){
-        tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
-        tetrimino->show();
-        // getch();
-        tc.setControllable(tetrimino);
         
-        gravityCycle.setDelay(100);
-        gravityCycle.startAutoThread();
-
-
-        gravityCycle.waitOnAutoThread();
-        gravityCycle.cleanUpThread();
+        std::unique_lock<std::mutex> lck(ref->mux1);
+        ref->waitForNextCollision.wait(lck, [ref]{
+            return ref->detectedCollision;
+        });
+        ref->detectedCollision = false;
+        //put code to setup next tetrimino here...
+        tetrimino->passCellsToEnvironment();
+        delete tetrimino;
+        tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+        tetrimino->show();
+        tc.setControllable(tetrimino);
+        ref->readyForGravity = true;
+        ref->waitForNextTetrimino.notify_one();
+        
+        
+        
     }
-    // KeyboardListener::getInstance()->waitOnListener();
+    KeyboardListener::getInstance()->waitOnListener();
     
     // delete tetrimino;
     

@@ -5,11 +5,12 @@
 #include <chrono>
 #include <mutex>
 
+#include "GameEventListener.hpp"
 #include "IControllable.hpp"
 #include "UserController.hpp"
 #include "EventSignal.hpp"
 #include "ButtonSignal.hpp"
-#include "../classes/TetriminoController.hpp"
+#include "TetriminoController.hpp"
 
 class GameDaemon{
 public:
@@ -74,6 +75,7 @@ int GameDaemon::runThread(bool* stop){
     // Need to find a way to make this static method
     // a pure virtual function i.e. ensure that a subclass
     // writes a function for this.
+    
 }
 
 /*
@@ -161,6 +163,8 @@ int TetriminoCycle::runThread(TetriminoController* controller, bool* stop, int* 
     }
     
 }
+
+
 class GravityCycle : public GameDaemon{
 public:
     bool virtual processEventSignal(EventSignal est);
@@ -195,12 +199,20 @@ void GravityCycle::setDelay(int delay){
     this->delay = delay;
 }
 int GravityCycle::runThread(TetriminoController* controller, bool* stop, int* delay){
+    GameEventListener* ref = GameEventListener::getInstance();
     while(!(*stop)){
+
         std::this_thread::sleep_for(std::chrono::milliseconds(*delay));
-        bool fail = !controller->processInputSignal(DownButton);
+        bool fail = !controller->processInputSignal(DownButton_Conditional);
         if(fail){
-            controller->processEventSignal(GRAVITY_THREAD_STOPPED);
-            *stop = true;
+            
+            std::unique_lock<std::mutex> lck(ref->mux1);
+            
+            ref->detectedCollision = true;
+            ref->waitForNextCollision.notify_one();
+            ref->waitForNextTetrimino.wait(lck, [&] 
+                {return ref->readyForGravity;});
+            ref->readyForGravity = false;
         }
     }  
 }

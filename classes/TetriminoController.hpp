@@ -1,6 +1,7 @@
 #ifndef __TETRIMINOCONTROLLER_HPP__
 #define __TETRIMINOCONTROLLER_HPP__
 
+#include "AppLogic.hpp"
 #include "IControllable.hpp"
 #include "ButtonSignal.hpp"
 #include "EventSignal.hpp"
@@ -19,13 +20,7 @@ protected:
 bool TetriminoController::processEventSignal(EventSignal est){
     if(controllable != nullptr){
         switch(est){
-            case GRAVITY_THREAD_STOPPED:{
-                // The Tetrimino should get destroyed
-                std::unique_lock<std::mutex> lck{*(controllable->getMutex())};
-                controllable->sendEvent(GRAVITY_THREAD_STOPPED);
-                delete controllable;
-                controllable = nullptr;
-            }
+            
         }
     }
 }
@@ -50,6 +45,9 @@ bool TetriminoController::processInputSignal(ButtonSignal bst){
             }
             case AButton :{
                 return controllable->actionSix(); 
+            }
+            case DownButton_Conditional :{
+                return controllable->sendEvent(DETECT_COLLISION);
             }
         }
     }

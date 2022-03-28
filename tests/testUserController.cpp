@@ -56,19 +56,19 @@ int testUserController(){
 
 
     AppController ac;
-    AppLogic al;
-    ac.setControllable(&al);
+    
+    ac.setControllable(AppLogic::getInstance());
 
     TetriminoController tc;
    
-
+    AppLogic* ref = nullptr;
 
     KeyboardListener::getInstance()->registerController(&ac);
     KeyboardListener::getInstance()->registerController(&tc);
 
     TetriminoCycle tetCycle;
     tetCycle.setController(&tc);
-    al.registerGameDaemon(&tetCycle);
+    AppLogic::getInstance()->registerGameDaemon(&tetCycle);
     tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
     tetrimino->show();
      tc.setControllable(tetrimino);

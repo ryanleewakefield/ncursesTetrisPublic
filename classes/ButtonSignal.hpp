@@ -13,6 +13,9 @@ enum ButtonSignal{
     QuitButton,
     StartThread,
     StopThread,
+    // Used as a normal DownButton but with a conditional
+    // that can be handled under the same mutex holding epoch.
+    DownButton_Conditional, 
 };
 
 

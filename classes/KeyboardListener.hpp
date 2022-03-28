@@ -76,6 +76,9 @@ KeyboardListener::KeyboardListener(){
 }
 KeyboardListener::~KeyboardListener(){
     delwin(entryPoint);
+    if(uniqueInstance != nullptr){
+            delete uniqueInstance;
+        }
 }
 bool KeyboardListener::registerController(UserController* userController){
     //Check if already registered

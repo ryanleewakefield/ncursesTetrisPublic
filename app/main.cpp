@@ -28,7 +28,7 @@
 #include "../tests/testCell.cpp"
 #include "../tests/testUserController.cpp"
 #include "../tests/testGravityAndPassingCellsToEnvironment.cpp"
-#include "../tests/testStartingAndStopingThreads.cpp"
+
 
 using namespace std;
 
@@ -37,11 +37,10 @@ int runApp();
 
 int main(int argc, char* argv[]){
 
-    return testUserController();
+    // return testUserController();
 
-    // return testGravityAndPassingCellsToEnvironment();
+    return testGravityAndPassingCellsToEnvironment();
     
-    // return testStartingAndStopingThreads();
 }
 
 int runApp(){

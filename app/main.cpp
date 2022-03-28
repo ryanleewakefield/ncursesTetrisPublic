@@ -28,7 +28,7 @@
 #include "../tests/testCell.cpp"
 #include "../tests/testUserController.cpp"
 #include "../tests/testGravityAndPassingCellsToEnvironment.cpp"
-
+#include "../tests/testGenerationAlgorithm.cpp"
 
 using namespace std;
 
@@ -39,8 +39,9 @@ int main(int argc, char* argv[]){
 
     // return testUserController();
 
-    return testGravityAndPassingCellsToEnvironment();
+    // return testGravityAndPassingCellsToEnvironment();
     
+    return testGenerationAlgorithm();
 }
 
 int runApp(){

@@ -62,7 +62,7 @@ int testGravityAndPassingCellsToEnvironment(){
     gravityCycle.setController(&tc);
     
     AppLogic::getInstance()->registerGameDaemon(&gravityCycle);
-    KeyboardListener::getInstance()->startListening();
+   
     GameEventListener* ref = GameEventListener::getInstance();
 
     tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY); 
@@ -71,6 +71,7 @@ int testGravityAndPassingCellsToEnvironment(){
     tc.setControllable(tetrimino);
     
     gravityCycle.setDelay(500);
+    KeyboardListener::getInstance()->startListening();
     gravityCycle.startAutoThread();
     for(int i = 0; i < 5; i++){
         

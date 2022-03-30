@@ -39,9 +39,9 @@ int main(int argc, char* argv[]){
 
     // return testUserController();
 
-    // return testGravityAndPassingCellsToEnvironment();
+    return testGravityAndPassingCellsToEnvironment();
     
-    return testGenerationAlgorithm();
+    // return testGenerationAlgorithm();
 }
 
 int runApp(){

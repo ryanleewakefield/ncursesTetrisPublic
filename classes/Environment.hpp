@@ -28,6 +28,7 @@ private:
     const static unsigned int xOffsetEnd = 31;
     const static unsigned int yOffsetEnd = 31;
     WINDOW* boundaryElement;
+    unsigned int boundaryColor = COLOR_WHITE;
     std::vector<bool> spaces;
     std::vector<std::unique_ptr<Cell>> cells;
     Environment();
@@ -68,8 +69,8 @@ Environment::~Environment(){
     delwin(boundaryElement);
 }
 void Environment::paintBoundary(){
-    init_pair(1, COLOR_WHITE, COLOR_WHITE);
-    wattron(boundaryElement, COLOR_PAIR(1));
+    init_pair(this->boundaryColor, COLOR_WHITE, COLOR_WHITE);
+    wattron(boundaryElement, COLOR_PAIR(this->boundaryColor));
     //Vertical Sides
     for(int i = 0; i < (yOffsetEnd - yOffsetStart) + 1; i++){
         mvwaddch(boundaryElement, i, 0, ' ');
@@ -78,7 +79,7 @@ void Environment::paintBoundary(){
     for(int i = 0; i < 2*(xOffsetEnd - xOffsetStart) + 1; i++){
         mvwaddch(boundaryElement, (yOffsetEnd - yOffsetStart), i, ' ');
     }
-    wattroff(boundaryElement, COLOR_PAIR(1));
+    wattroff(boundaryElement, COLOR_PAIR(this->boundaryColor));
     wrefresh(boundaryElement);
 }
 bool Environment::legalMove(std::vector<unsigned int>& Xs, std::vector<unsigned int>& Ys){

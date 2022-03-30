@@ -29,6 +29,7 @@
 #include "../tests/testUserController.cpp"
 #include "../tests/testGravityAndPassingCellsToEnvironment.cpp"
 #include "../tests/testGenerationAlgorithm.cpp"
+#include "../tests/testTetriminoFactory.cpp"
 
 using namespace std;
 
@@ -39,9 +40,11 @@ int main(int argc, char* argv[]){
 
     // return testUserController();
 
-    return testGravityAndPassingCellsToEnvironment();
+    // return testGravityAndPassingCellsToEnvironment();
     
     // return testGenerationAlgorithm();
+
+    return testTetriminoFactory();
 }
 
 int runApp(){

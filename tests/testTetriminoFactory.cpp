@@ -25,10 +25,12 @@
 #include "../classes/AppController.hpp"
 #include "../classes/TetriminoController.hpp"
 #include "../classes/GameEventListener.hpp"
+#include "../classes/TetriminoFactory.hpp"
+#include "../classes/GenerationAlgorithm.hpp"
 
 using namespace std;
 
-int testGravityAndPassingCellsToEnvironment(){
+int testTetriminoFactory(){
     initscr();
     start_color();
     cbreak();
@@ -65,7 +67,10 @@ int testGravityAndPassingCellsToEnvironment(){
    
     GameEventListener* ref = GameEventListener::getInstance();
 
-    tetrimino = new LongPiece(mainEnv, COLOR_WHITE, initialX, initialY); 
+    TetriminoFactory tf(new UniformGeneration());
+    
+
+    tetrimino = tf.getNextTetrimino();
     tetrimino->show();
     // getch();
     tc.setControllable(tetrimino);
@@ -83,7 +88,7 @@ int testGravityAndPassingCellsToEnvironment(){
         //put code to setup next tetrimino here...
         tetrimino->passCellsToEnvironment();
         delete tetrimino;
-        tetrimino = new TPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+        tetrimino = tf.getNextTetrimino();
         tetrimino->show();
         tc.setControllable(tetrimino);
         ref->readyForGravity = true;

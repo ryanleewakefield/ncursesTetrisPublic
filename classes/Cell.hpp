@@ -55,11 +55,10 @@ unsigned int Cell::getx(){
 unsigned int Cell::gety(){
     return y;
 }
+//erase, move, and paint must be called in batches for Tetriminos
 void Cell::move(unsigned int px, unsigned int py){
-    //this->erase();
     this->x = px;
     this->y = py;
-    //this->paint();
 }
 void Cell::paint(){
     mvwin(this->win, this->y + this->yOffset, (this->x + this->xOffset)*2);

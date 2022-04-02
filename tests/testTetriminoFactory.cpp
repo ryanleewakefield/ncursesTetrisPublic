@@ -44,9 +44,8 @@ int testTetriminoFactory(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {11,11,11,11};
-    vector<unsigned int> initialY = {0,1,2,3};
+    
+   
     
 
     AppController ac;
@@ -69,7 +68,7 @@ int testTetriminoFactory(){
 
     TetriminoFactory tf(new UniformGeneration());
     
-
+    Tetrimino* tetrimino = nullptr;
     tetrimino = tf.getNextTetrimino();
     tetrimino->show();
     // getch();

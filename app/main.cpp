@@ -30,6 +30,9 @@
 #include "../tests/testGravityAndPassingCellsToEnvironment.cpp"
 #include "../tests/testGenerationAlgorithm.cpp"
 #include "../tests/testTetriminoFactory.cpp"
+#include "../tests/testPaintingSpacesInEnvironment.cpp"
+#include "../tests/testCCDAlgorithm.cpp"
+#include "../tests/testFullGame.cpp"
 
 using namespace std;
 
@@ -44,7 +47,13 @@ int main(int argc, char* argv[]){
     
     // return testGenerationAlgorithm();
 
-    return testTetriminoFactory();
+    // return testTetriminoFactory();
+
+    // return testPaintingSpacesInEnvironment();
+
+    // return testCCDAlgorithm();
+
+    return testFullGame();
 }
 
 int runApp(){
@@ -64,7 +73,7 @@ int runApp(){
 
 
 void writeToLine(WINDOW* win, int line, string data){
-	wmove(win, line, 0);
+	wmove(win, line, 5);
 	wclrtoeol(win);
 	wrefresh(win);
 	waddstr(win, data.c_str());

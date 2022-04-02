@@ -28,7 +28,7 @@
 
 using namespace std;
 
-int testGravityAndPassingCellsToEnvironment(){
+int testCCDAlgorithm(){
     initscr();
     start_color();
     cbreak();
@@ -42,7 +42,8 @@ int testGravityAndPassingCellsToEnvironment(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Tetrimino* tetrimino = nullptr;
+
+    
     vector<unsigned int> initialX = {11,11,11,11};
     vector<unsigned int> initialY = {0,1,2,3};
     
@@ -64,8 +65,8 @@ int testGravityAndPassingCellsToEnvironment(){
     AppLogic::getInstance()->registerGameDaemon(&gravityCycle);
    
     GameEventListener* ref = GameEventListener::getInstance();
-
-    tetrimino = new LongPiece(mainEnv, COLOR_WHITE, initialX, initialY); 
+    Tetrimino* tetrimino = nullptr;
+    tetrimino = new LongPiece(mainEnv, COLOR_GREEN, initialX, initialY); 
     tetrimino->show();
     // getch();
     tc.setControllable(tetrimino);
@@ -73,7 +74,7 @@ int testGravityAndPassingCellsToEnvironment(){
     gravityCycle.setDelay(500);
     KeyboardListener::getInstance()->startListening();
     gravityCycle.startAutoThread();
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 50; i++){
         
         std::unique_lock<std::mutex> lck(ref->mux1);
         ref->waitForNextCollision.wait(lck, [ref]{
@@ -83,18 +84,19 @@ int testGravityAndPassingCellsToEnvironment(){
         //put code to setup next tetrimino here...
         tetrimino->passCellsToEnvironment();
         delete tetrimino;
-        tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+        //put code to check, clear, and drop lines here...
+        mainEnv->checkClearDropLines();
+        tetrimino = new LongPiece(mainEnv, COLOR_GREEN, initialX, initialY);
         tetrimino->show();
         tc.setControllable(tetrimino);
         ref->readyForGravity = true;
         ref->waitForNextTetrimino.notify_one();
-        
-        
-        
+               
     }
     KeyboardListener::getInstance()->waitOnListener();
     
     // delete tetrimino;
+
     
     endwin();
 

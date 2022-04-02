@@ -25,10 +25,13 @@
 #include "../classes/AppController.hpp"
 #include "../classes/TetriminoController.hpp"
 #include "../classes/GameEventListener.hpp"
+#include "../classes/TetriminoFactory.hpp"
+#include "../classes/GenerationAlgorithm.hpp"
 
 using namespace std;
+void writeToLine(WINDOW* win, int line, string data);
 
-int testGravityAndPassingCellsToEnvironment(){
+int testFullGame(){
     initscr();
     start_color();
     cbreak();
@@ -42,9 +45,8 @@ int testGravityAndPassingCellsToEnvironment(){
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
-    Tetrimino* tetrimino = nullptr;
-    vector<unsigned int> initialX = {11,11,11,11};
-    vector<unsigned int> initialY = {0,1,2,3};
+    
+   
     
 
     AppController ac;
@@ -65,7 +67,10 @@ int testGravityAndPassingCellsToEnvironment(){
    
     GameEventListener* ref = GameEventListener::getInstance();
 
-    tetrimino = new LongPiece(mainEnv, COLOR_WHITE, initialX, initialY); 
+    TetriminoFactory tf(new UniformGeneration());
+    
+    Tetrimino* tetrimino = nullptr;
+    tetrimino = tf.getNextTetrimino();
     tetrimino->show();
     // getch();
     tc.setControllable(tetrimino);
@@ -73,8 +78,8 @@ int testGravityAndPassingCellsToEnvironment(){
     gravityCycle.setDelay(500);
     KeyboardListener::getInstance()->startListening();
     gravityCycle.startAutoThread();
-    for(int i = 0; i < 5; i++){
-        
+    for(int i = 0; i < 50; i++){
+        writeToLine(stdscr, 35, string("Tetrimino num: " + to_string(i + 1)));
         std::unique_lock<std::mutex> lck(ref->mux1);
         ref->waitForNextCollision.wait(lck, [ref]{
             return ref->detectedCollision;
@@ -83,7 +88,9 @@ int testGravityAndPassingCellsToEnvironment(){
         //put code to setup next tetrimino here...
         tetrimino->passCellsToEnvironment();
         delete tetrimino;
-        tetrimino = new LongPiece(mainEnv, COLOR_MAGENTA, initialX, initialY);
+        //put code to check, clear, and drop lines here...
+        mainEnv->checkClearDropLines();
+        tetrimino = tf.getNextTetrimino();
         tetrimino->show();
         tc.setControllable(tetrimino);
         ref->readyForGravity = true;
@@ -100,3 +107,10 @@ int testGravityAndPassingCellsToEnvironment(){
 
     return 0;
 }
+// void writeToLine(WINDOW* win, int line, string data){
+// 	wmove(win, line, 0);
+// 	wclrtoeol(win);
+// 	wrefresh(win);
+// 	waddstr(win, data.c_str());
+// 	wrefresh(win);
+// }

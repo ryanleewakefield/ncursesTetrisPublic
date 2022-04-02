@@ -13,6 +13,7 @@ public:
     // upon construction.
     unsigned int getx();
     unsigned int gety();
+    int getColor();
     void move(unsigned int px, unsigned int py);
     void paint();
     void erase();
@@ -55,6 +56,9 @@ unsigned int Cell::getx(){
 unsigned int Cell::gety(){
     return y;
 }
+int Cell::getColor(){
+    return color;
+}
 //erase, move, and paint must be called in batches for Tetriminos
 void Cell::move(unsigned int px, unsigned int py){
     this->x = px;
@@ -64,10 +68,6 @@ void Cell::paint(){
     mvwin(this->win, this->y + this->yOffset, (this->x + this->xOffset)*2);
     init_pair(this->color, COLOR_WHITE, this->color);
     wattron(win, COLOR_PAIR(this->color));
-    // wmove(win, 0, 0);
-    // waddch(win, ' ');
-    // wmove(win, 0, 1);
-    // waddch(win, 'A');
     mvwaddch(win, 0, 0, letter);
     mvwaddch(win, 0, 1, ' ');
     wattroff(win, COLOR_PAIR(this->color));

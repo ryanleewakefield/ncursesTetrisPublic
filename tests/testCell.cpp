@@ -39,10 +39,10 @@ int testCell(){
     //Create Cell that appear near center of screen
     
 
-    vector<Cell> cells = {Cell(30, 20, 0,0, COLOR_YELLOW, 'A'),
-                        Cell(30, 21, 0,0, COLOR_YELLOW, 'B'),
-                        Cell(30, 22, 0,0, COLOR_YELLOW, 'C'),
-                        Cell(30, 23, 0,0, COLOR_YELLOW, 'D')};
+    vector<Cell> cells = {Cell(30, 20, 0,0, COLOR_YELLOW, ' ', ' '),
+                        Cell(30, 21, 0,0, COLOR_YELLOW, ' ', ' '),
+                        Cell(30, 22, 0,0, COLOR_YELLOW, ' ', ' '),
+                        Cell(30, 23, 0,0, COLOR_YELLOW, ' ', ' ')};
 
     for(unsigned int i = 0; i < cells.size(); i++){
             cells[i].paint();

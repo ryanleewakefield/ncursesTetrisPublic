@@ -54,6 +54,8 @@ int main(int argc, char* argv[]){
     // return testCCDAlgorithm();
 
     return testFullGame();
+
+    // return runApp();
 }
 
 int runApp(){
@@ -64,6 +66,7 @@ int runApp(){
     noecho();
     keypad(stdscr, true);
     refresh();
+    cout << can_change_color << endl;
     getch();
 
     endwin();

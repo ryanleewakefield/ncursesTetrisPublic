@@ -15,6 +15,7 @@
 
 #include "TetriminoType.hpp"
 #include "GenerationAlgorithm.hpp"
+#include "StartingPositions.hpp"
 
 class TetriminoFactory{
 public:
@@ -28,20 +29,6 @@ private:
     Tetrimino* next;
     Tetrimino* onDeck;
     GenerationAlgorithm* algo;
-    std::vector<unsigned int> LongPieceInitialX{11,11,11,11};
-    std::vector<unsigned int> LongPieceInitialY{0,1,2,3};
-    std::vector<unsigned int> LeftLInitialX{11,11,11,12};
-    std::vector<unsigned int> LeftLInitialY{0,1,2,2};
-    std::vector<unsigned int> RightLInitialX{11,11,11,10};
-    std::vector<unsigned int> RightLInitialY{0,1,2,2};
-    std::vector<unsigned int> LeftSInitialX{10,11,11,12};
-    std::vector<unsigned int> LeftSInitialY{1,1,0,0};
-    std::vector<unsigned int> RightSInitialX{10,11,11,12};
-    std::vector<unsigned int> RightSInitialY{0,0,1,1};
-    std::vector<unsigned int> TPieceInitialX{10,11,11,12};
-    std::vector<unsigned int> TPieceInitialY{1,0,1,1};
-    std::vector<unsigned int> SquareInitialX{10,11,10,11};
-    std::vector<unsigned int> SquareInitialY{0,0,1,1};
 };
 TetriminoFactory::TetriminoFactory(GenerationAlgorithm* ga){
     algo = ga;
@@ -58,31 +45,31 @@ Tetrimino* TetriminoFactory::getNextTetrimino(){
     TetriminoType tt = algo->getType();
     switch(tt){
         case LONG_PIECE:{
-            onDeck = new LongPiece(Environment::getInstance(), COLOR_WHITE, LongPieceInitialX, LongPieceInitialY);
+            onDeck = new LongPiece(Environment::getInstance(), COLOR_WHITE, StartingPositions::LongPieceInitialX, StartingPositions::LongPieceInitialY);
             break;
         }
         case LEFT_L:{
-            onDeck = new LeftL(Environment::getInstance(), COLOR_BLUE, LeftLInitialX, LeftLInitialY);
+            onDeck = new LeftL(Environment::getInstance(), COLOR_BLUE, StartingPositions::LeftLInitialX, StartingPositions::LeftLInitialY);
             break;
         }
         case RIGHT_L:{
-            onDeck = new RightL(Environment::getInstance(), COLOR_RED, RightLInitialX, RightLInitialY);
+            onDeck = new RightL(Environment::getInstance(), COLOR_RED, StartingPositions::RightLInitialX, StartingPositions::RightLInitialY);
             break;
         }
         case LEFT_S:{
-            onDeck = new LeftS(Environment::getInstance(), COLOR_CYAN,LeftSInitialX, LeftSInitialY);
+            onDeck = new LeftS(Environment::getInstance(), COLOR_CYAN, StartingPositions::LeftSInitialX, StartingPositions::LeftSInitialY);
             break;
         }
         case RIGHT_S:{
-            onDeck = new RightS(Environment::getInstance(), COLOR_GREEN, RightSInitialX, RightSInitialY);
+            onDeck = new RightS(Environment::getInstance(), COLOR_GREEN, StartingPositions::RightSInitialX, StartingPositions::RightSInitialY);
             break;
         }
         case T_PIECE:{
-            onDeck = new TPiece(Environment::getInstance(), COLOR_MAGENTA, TPieceInitialX, TPieceInitialY);
+            onDeck = new TPiece(Environment::getInstance(), COLOR_MAGENTA, StartingPositions::TPieceInitialX, StartingPositions::TPieceInitialY);
             break;
         }
         case SQUARE:{
-            onDeck = new Square(Environment::getInstance(), COLOR_YELLOW, SquareInitialX, SquareInitialY);
+            onDeck = new Square(Environment::getInstance(), COLOR_YELLOW, StartingPositions::SquareInitialX, StartingPositions::SquareInitialY);
             break;
         }
     }
@@ -92,31 +79,31 @@ Tetrimino* TetriminoFactory::setInitialTetrimino(){
     TetriminoType tt = algo->getType();
     switch(tt){
         case LONG_PIECE:{
-            onDeck = new LongPiece(Environment::getInstance(), COLOR_WHITE, LongPieceInitialX, LongPieceInitialY);
+            onDeck = new LongPiece(Environment::getInstance(), COLOR_WHITE, StartingPositions::LongPieceInitialX, StartingPositions::LongPieceInitialY);
             break;
         }
         case LEFT_L:{
-            onDeck = new LeftL(Environment::getInstance(), COLOR_BLUE, LeftLInitialX, LeftLInitialY);
+            onDeck = new LeftL(Environment::getInstance(), COLOR_BLUE, StartingPositions::LeftLInitialX, StartingPositions::LeftLInitialY);
             break;
         }
         case RIGHT_L:{
-            onDeck = new RightL(Environment::getInstance(), COLOR_RED, RightLInitialX, RightLInitialY);
+            onDeck = new RightL(Environment::getInstance(), COLOR_RED, StartingPositions::RightLInitialX, StartingPositions::RightLInitialY);
             break;
         }
         case LEFT_S:{
-            onDeck = new LeftS(Environment::getInstance(), COLOR_CYAN,LeftSInitialX, LeftSInitialY);
+            onDeck = new LeftS(Environment::getInstance(), COLOR_CYAN, StartingPositions::LeftSInitialX, StartingPositions::LeftSInitialY);
             break;
         }
         case RIGHT_S:{
-            onDeck = new RightS(Environment::getInstance(), COLOR_GREEN, RightSInitialX, RightSInitialY);
+            onDeck = new RightS(Environment::getInstance(), COLOR_GREEN, StartingPositions::RightSInitialX, StartingPositions::RightSInitialY);
             break;
         }
         case T_PIECE:{
-            onDeck = new TPiece(Environment::getInstance(), COLOR_MAGENTA, TPieceInitialX, TPieceInitialY);
+            onDeck = new TPiece(Environment::getInstance(), COLOR_MAGENTA, StartingPositions::TPieceInitialX, StartingPositions::TPieceInitialY);
             break;
         }
         case SQUARE:{
-            onDeck = new Square(Environment::getInstance(), COLOR_YELLOW, SquareInitialX, SquareInitialY);
+            onDeck = new Square(Environment::getInstance(), COLOR_YELLOW, StartingPositions::SquareInitialX, StartingPositions::SquareInitialY);
             break;
         }
     }

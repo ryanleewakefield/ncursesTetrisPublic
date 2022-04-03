@@ -74,7 +74,7 @@ int testFullGame(){
     tetrimino->show();
     // getch();
     tc.setControllable(tetrimino);
-    
+    bool gameOver = false;
     gravityCycle.setDelay(500);
     KeyboardListener::getInstance()->startListening();
     gravityCycle.startAutoThread();
@@ -91,13 +91,21 @@ int testFullGame(){
         //put code to check, clear, and drop lines here...
         mainEnv->checkClearDropLines();
         tetrimino = tf.getNextTetrimino();
+        //put code to test for GameOver here...
         tetrimino->show();
+        std::vector<unsigned int> xs = tetrimino->getXs();
+        std::vector<unsigned int> ys = tetrimino->getYs();
+        if(!mainEnv->legalMove(xs, ys)){
+            gameOver = true;
+            break;
+        }
         tc.setControllable(tetrimino);
         ref->readyForGravity = true;
         ref->waitForNextTetrimino.notify_one();
         
-        
-        
+    }
+    if(gameOver){
+    writeToLine(stdscr, 36, string("Game Over"));
     }
     KeyboardListener::getInstance()->waitOnListener();
     

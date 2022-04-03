@@ -26,6 +26,8 @@ public:
     bool virtual rotateRight() = 0;
     bool isActive();
     void setActive(bool active);
+    std::vector<unsigned int> getXs();
+    std::vector<unsigned int> getYs();
     /*
     *   Copies cells held by Tetrimino to Environment.
     *   Ideally, this method should get called when the
@@ -101,10 +103,10 @@ Tetrimino::Tetrimino(Environment* env, int color, std::vector<unsigned int>& Xs,
     this->orientation = 0;
     int xOff = Environment::getXOffset();
     int yOff = Environment::getYOffset();
-    this->cells = { Cell(Xs[0], Ys[0], xOff, yOff, color, 'A'),
-                    Cell(Xs[1], Ys[1], xOff, yOff, color, 'B'),
-                    Cell(Xs[2], Ys[2], xOff, yOff, color, 'C'),
-                    Cell(Xs[3], Ys[3], xOff, yOff, color, 'D')};
+    this->cells = { Cell(Xs[0], Ys[0], xOff, yOff, color, ' ', ' '),
+                    Cell(Xs[1], Ys[1], xOff, yOff, color, ' ', ' '),
+                    Cell(Xs[2], Ys[2], xOff, yOff, color, ' ', ' '),
+                    Cell(Xs[3], Ys[3], xOff, yOff, color, ' ', ' ')};
 }
 
 void Tetrimino::show(){
@@ -165,5 +167,19 @@ void Tetrimino::setOrientation(int ori){
     if( 0 <= ori && ori <= 3){
         this->orientation = ori;
     }
+}
+std::vector<unsigned int> Tetrimino::getXs(){
+    std::vector<unsigned int> temp;
+    for(auto cell : this->cells){
+        temp.push_back(cell.getx());
+    }
+    return temp;
+}
+std::vector<unsigned int> Tetrimino::getYs(){
+    std::vector<unsigned int> temp;
+    for(auto cell : this->cells){
+        temp.push_back(cell.gety());
+    }
+    return temp;
 }
 #endif

@@ -17,7 +17,7 @@ public:
     void addCell(Cell* cellptr);
     static int getXOffset();
     static int getYOffset();
-    void checkClearDropLines();
+    int checkClearDropLines();
     // void erase(Space& s);
     // void move(Space& s);
     // void paint(Space& s);
@@ -35,6 +35,9 @@ private:
     const static unsigned int yOffsetEnd = yOffsetStart + maxY + 1;
     WINDOW* boundaryElement;
     unsigned int boundaryColor = COLOR_WHITE;
+    unsigned int totalLinesCleared = 0;
+    unsigned int linesLeftForLevel = 10;
+    unsigned int gameSpeedLevel = 0;
     Space spaces[maxX + 1][maxY + 1];
     Environment();
     Environment(const Environment& rhs);
@@ -173,7 +176,7 @@ void Environment::addCell(Cell* cellptr){
         this->spaces[x][y].color = cellptr->getColor();
     }
 }
-void Environment::checkClearDropLines(){  
+int Environment::checkClearDropLines(){  
     bool environmentChanged = false;
     int globalAdjustLevel = 0;
     do{
@@ -192,6 +195,7 @@ void Environment::checkClearDropLines(){
                 }
                 globalAdjustLevel += 1;
                 environmentChanged = true;
+                this->totalLinesCleared += 1;
             }
             else{
                  for(int x = 0; x <= maxX; x++){

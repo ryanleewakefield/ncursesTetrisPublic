@@ -27,6 +27,7 @@
 #include "../classes/GameEventListener.hpp"
 #include "../classes/TetriminoFactory.hpp"
 #include "../classes/GenerationAlgorithm.hpp"
+#include "../classes/TetriminoColors.hpp"
 
 using namespace std;
 void writeToLine(WINDOW* win, int line, string data);
@@ -41,7 +42,7 @@ int testFullGame(){
     refresh();
     int height = 43;
     int width = 80;
-
+    defineInitialColors();
     // Get instance of Environment Singleton object
     // boundaryElement should print to the screen
     Environment* mainEnv = Environment::getInstance();
@@ -78,7 +79,7 @@ int testFullGame(){
     gravityCycle.setDelay(500);
     KeyboardListener::getInstance()->startListening();
     gravityCycle.startAutoThread();
-    for(int i = 0; i < 50; i++){
+    for(int i = 0; ; i++){
         writeToLine(stdscr, 35, string("Tetrimino num: " + to_string(i + 1)));
         std::unique_lock<std::mutex> lck(ref->mux1);
         ref->waitForNextCollision.wait(lck, [ref]{
@@ -88,6 +89,7 @@ int testFullGame(){
         //put code to setup next tetrimino here...
         tetrimino->passCellsToEnvironment();
         delete tetrimino;
+        tetrimino = nullptr;
         //put code to check, clear, and drop lines here...
         mainEnv->checkClearDropLines();
         tetrimino = tf.getNextTetrimino();

@@ -47,7 +47,11 @@ bool TetriminoController::processInputSignal(ButtonSignal bst){
                 return controllable->actionSix(); 
             }
             case DownButton_Conditional :{
-                return controllable->sendEvent(DETECT_COLLISION);
+                bool detectedCollision = controllable->sendEvent(DETECT_COLLISION);
+                if(!detectedCollision){
+                    controllable = nullptr;
+                }
+                return detectedCollision;
             }
         }
     }

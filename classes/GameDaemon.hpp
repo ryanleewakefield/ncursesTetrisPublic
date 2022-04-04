@@ -171,10 +171,14 @@ public:
     void virtual setController(TetriminoController* controller);
     bool virtual startAutoThread() override;
     void setDelay(int delay);
+    void increaseLevel();
+    int getLevel();
 private:
     static int runThread(TetriminoController* controllable, bool* stop, int* delay);
     TetriminoController* controller;
-    int delay;
+    int delay = 500;
+    int level = 0;
+    int levels[16] = {500,450,400,350,325,300,275,250,225,200,180,160,140,120,100,80};
 };
 bool GravityCycle::processEventSignal(EventSignal est){
     switch(est){
@@ -197,6 +201,15 @@ void GravityCycle::setController(TetriminoController* controller){
 }
 void GravityCycle::setDelay(int delay){
     this->delay = delay;
+}
+void GravityCycle::increaseLevel(){
+    if(level < 15){
+        level += 1;
+        setDelay(levels[level]);
+    }
+}
+int GravityCycle::getLevel(){
+    return level;
 }
 int GravityCycle::runThread(TetriminoController* controller, bool* stop, int* delay){
     GameEventListener* ref = GameEventListener::getInstance();

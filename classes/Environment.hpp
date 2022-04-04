@@ -18,6 +18,9 @@ public:
     static int getXOffset();
     static int getYOffset();
     int checkClearDropLines();
+    int getLinesLeft();
+    bool metRequirementForLines();
+    void resetLinesLeftForLevel();
     // void erase(Space& s);
     // void move(Space& s);
     // void paint(Space& s);
@@ -33,11 +36,11 @@ private:
     const static unsigned int yOffsetStart = 7;
     const static unsigned int xOffsetEnd = xOffsetStart + maxX + 1;
     const static unsigned int yOffsetEnd = yOffsetStart + maxY + 1;
+    const static int linesPerLevel = 10;
     WINDOW* boundaryElement;
     unsigned int boundaryColor = COLOR_WHITE;
     unsigned int totalLinesCleared = 0;
-    unsigned int linesLeftForLevel = 10;
-    unsigned int gameSpeedLevel = 0;
+    int linesLeftForLevel = linesPerLevel;
     Space spaces[maxX + 1][maxY + 1];
     Environment();
     Environment(const Environment& rhs);
@@ -196,6 +199,7 @@ int Environment::checkClearDropLines(){
                 globalAdjustLevel += 1;
                 environmentChanged = true;
                 this->totalLinesCleared += 1;
+                linesLeftForLevel--;
             }
             else{
                  for(int x = 0; x <= maxX; x++){
@@ -225,5 +229,14 @@ int Environment::checkClearDropLines(){
             }
         }
     }while(environmentChanged);
+}
+void Environment::resetLinesLeftForLevel(){
+    this->linesLeftForLevel = this->linesLeftForLevel + linesPerLevel;// accounts for extra lines over the requirement
+}
+bool Environment::metRequirementForLines(){
+    return linesLeftForLevel <= 0 ? true : false;
+}
+int Environment::getLinesLeft(){
+    return linesLeftForLevel;
 }
 #endif

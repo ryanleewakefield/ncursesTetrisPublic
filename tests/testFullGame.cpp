@@ -101,6 +101,15 @@ int testFullGame(){
             gameOver = true;
             break;
         }
+        //put code to check for level increase here...
+        if(mainEnv->metRequirementForLines()){
+            mainEnv->resetLinesLeftForLevel();
+            gravityCycle.increaseLevel();
+            shiftColors(gravityCycle.getLevel());
+        }
+        //put code to update HUD data here...
+        writeToLine(stdscr, 33, string("Level: " + to_string(gravityCycle.getLevel())));
+        writeToLine(stdscr, 34, string("Lines until next level: " + to_string(mainEnv->getLinesLeft())));
         tc.setControllable(tetrimino);
         ref->readyForGravity = true;
         ref->waitForNextTetrimino.notify_one();

@@ -36,5 +36,26 @@ void defineInitialColors(){
         init_color(100+i, convert(reds[i]), convert(greens[i]), convert(blues[i]));
     }
 }
-
+void shiftColors(int level){
+    switch(level % 3){
+        case 0: {
+            for(int i = 0; i < 7; i++){
+                init_color(100+i, convert(reds[i]), convert(greens[i]), convert(blues[i]));
+            }
+            break;
+        }
+        case 1: {
+            for(int i = 0; i < 7; i++){
+                init_color(100+i, convert(greens[i]), convert(blues[i]), convert(reds[i]));
+            }
+            break;
+        }
+        case 3: {
+            for(int i = 0; i < 7; i++){
+                init_color(100+i, convert(blues[i]), convert(reds[i]), convert(greens[i]));
+            }
+            break;
+        }
+    }
+}
 #endif

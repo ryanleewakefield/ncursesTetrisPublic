@@ -13,6 +13,7 @@
 #define COLOR_RIGHTS 104
 #define COLOR_TPIECE 105
 #define COLOR_SQUARE 106
+#define COLOR_TEXT 107
 
 // Colors are define by 0 - 255 range
 // Convert them to 0 - 1000 range

@@ -25,10 +25,12 @@ public:
     TetriminoFactory(const TetriminoFactory& rhs);
     ~TetriminoFactory();
     Tetrimino* getNextTetrimino();
+    TetriminoType getOnDeckType();
 private:
     Tetrimino* setInitialTetrimino();
     Tetrimino* next;
     Tetrimino* onDeck;
+    TetriminoType onDeckType;
     GenerationAlgorithm* algo;
 };
 TetriminoFactory::TetriminoFactory(GenerationAlgorithm* ga){
@@ -44,6 +46,7 @@ Tetrimino* TetriminoFactory::getNextTetrimino(){
     next = onDeck;
     //Setup onDeck for new Tetrimino but return next to keep the cycle going
     TetriminoType tt = algo->getType();
+    onDeckType = tt;
     switch(tt){
         case LONG_PIECE:{
             onDeck = new LongPiece(Environment::getInstance(), COLOR_LONGPIECE, StartingPositions::LongPieceInitialX, StartingPositions::LongPieceInitialY);
@@ -78,6 +81,7 @@ Tetrimino* TetriminoFactory::getNextTetrimino(){
 }
 Tetrimino* TetriminoFactory::setInitialTetrimino(){
     TetriminoType tt = algo->getType();
+    onDeckType = tt;
     switch(tt){
         case LONG_PIECE:{
             onDeck = new LongPiece(Environment::getInstance(), COLOR_LONGPIECE, StartingPositions::LongPieceInitialX, StartingPositions::LongPieceInitialY);
@@ -108,5 +112,8 @@ Tetrimino* TetriminoFactory::setInitialTetrimino(){
             break;
         }
     }
+}
+TetriminoType TetriminoFactory::getOnDeckType(){
+    return onDeckType;
 }
 #endif

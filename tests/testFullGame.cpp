@@ -80,7 +80,7 @@ int testFullGame(){
     KeyboardListener::getInstance()->startListening();
     gravityCycle.startAutoThread();
     for(int i = 0; ; i++){
-        writeToLine(stdscr, 35, string("Tetrimino num: " + to_string(i + 1)));
+        writeToLine(stdscr, 3, string("Tetrimino num: " + to_string(i + 1)));
         std::unique_lock<std::mutex> lck(ref->mux1);
         ref->waitForNextCollision.wait(lck, [ref]{
             return ref->detectedCollision;
@@ -108,8 +108,9 @@ int testFullGame(){
             shiftColors(gravityCycle.getLevel());
         }
         //put code to update HUD data here...
-        writeToLine(stdscr, 33, string("Level: " + to_string(gravityCycle.getLevel())));
-        writeToLine(stdscr, 34, string("Lines until next level: " + to_string(mainEnv->getLinesLeft())));
+        mainEnv->paintNextTetrimino(tf.getOnDeckType());
+        writeToLine(stdscr, 1, string("Level: " + to_string(gravityCycle.getLevel())));
+        writeToLine(stdscr, 2, string("Lines until next level: " + to_string(mainEnv->getLinesLeft())));
         tc.setControllable(tetrimino);
         ref->readyForGravity = true;
         ref->waitForNextTetrimino.notify_one();

@@ -6,6 +6,8 @@
 #include <memory>
 #include "Cell.hpp"
 #include "Space.hpp"
+#include "TetriminoType.hpp"
+#include "TetriminoColors.hpp"
 // A shared smart pointer would work well with this class
 class Environment{
 public:
@@ -21,6 +23,7 @@ public:
     int getLinesLeft();
     bool metRequirementForLines();
     void resetLinesLeftForLevel();
+    void paintNextTetrimino(TetriminoType tt);
     // void erase(Space& s);
     // void move(Space& s);
     // void paint(Space& s);
@@ -36,8 +39,11 @@ private:
     const static unsigned int yOffsetStart = 7;
     const static unsigned int xOffsetEnd = xOffsetStart + maxX + 1;
     const static unsigned int yOffsetEnd = yOffsetStart + maxY + 1;
+    const static unsigned int xNextBoxOffset = 24;
+    const static unsigned int yNextBoxOffset = 7;
     const static int linesPerLevel = 10;
     WINDOW* boundaryElement;
+    WINDOW* nextTetriminoBox;
     unsigned int boundaryColor = COLOR_WHITE;
     unsigned int totalLinesCleared = 0;
     int linesLeftForLevel = linesPerLevel;
@@ -46,6 +52,7 @@ private:
     Environment(const Environment& rhs);
     ~Environment();
     void paintBoundary();
+    void paintNextTetriminoBox();
     bool isWithinBounds(unsigned int x, unsigned y);
     void erase(Space* s);
     void move(Space** s);
@@ -75,7 +82,9 @@ int Environment::getYOffset(){return yOffsetStart;}
 
 Environment::Environment(){
     this->boundaryElement = newwin(25,37,7,13);
+    this->nextTetriminoBox = newwin(8, 16, yNextBoxOffset, (xNextBoxOffset)*2);
     paintBoundary();
+    paintNextTetriminoBox();
 }
 Environment::~Environment(){
     delwin(boundaryElement);
@@ -94,6 +103,21 @@ void Environment::paintBoundary(){
     }
     wattroff(boundaryElement, COLOR_PAIR(this->boundaryColor));
     wrefresh(boundaryElement);
+}
+void Environment::paintNextTetriminoBox(){
+    wattron(nextTetriminoBox, COLOR_PAIR(this->boundaryColor));
+    //Vertical Sides
+    for(int i = 0; i < 8; i++){
+        mvwaddch(nextTetriminoBox, i, 0, ' ');
+        mvwaddch(nextTetriminoBox, i, 15, ' ');
+    }
+     //Horizontal Sides
+    for(int i = 0; i < 15; i++){
+        mvwaddch(nextTetriminoBox, 0, i, ' ');
+        mvwaddch(nextTetriminoBox, 7, i, ' ');
+    }
+    wattroff(nextTetriminoBox, COLOR_PAIR(this->boundaryColor));
+    wrefresh(nextTetriminoBox);
 }
 bool Environment::isWithinBounds(unsigned int x, unsigned int y){
     if( (minX <= x && x <= maxX) && (minY <= y && y <= maxY)){
@@ -238,5 +262,128 @@ bool Environment::metRequirementForLines(){
 }
 int Environment::getLinesLeft(){
     return linesLeftForLevel;
+}
+void Environment::paintNextTetrimino(TetriminoType tt){
+    //Paint 'NEXT' label -- extract this to setup method later on
+    init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+    wattron(nextTetriminoBox, COLOR_PAIR(COLOR_TEXT));
+    mvwaddch(nextTetriminoBox, 7, 5, ' ');
+    mvwaddch(nextTetriminoBox, 7, 6, 'N');
+    mvwaddch(nextTetriminoBox, 7, 7, 'E');
+    mvwaddch(nextTetriminoBox, 7, 8, 'X');
+    mvwaddch(nextTetriminoBox, 7, 9, 'T');
+    mvwaddch(nextTetriminoBox, 7, 10, ' ');
+    wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_TEXT));
+
+    //Erase all previous pieces here
+    init_pair(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK);
+    wattron(nextTetriminoBox, COLOR_PAIR(COLOR_BLACK));
+    for(int i = 1; i < 6; i++){
+        for(int j = 1; j < 15; j++){
+            mvwaddch(nextTetriminoBox, i, j, ' ');
+        }
+    }
+    wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_BLACK));
+    switch(tt){
+        case LONG_PIECE:{
+            init_pair(COLOR_LONGPIECE, COLOR_WHITE, COLOR_LONGPIECE);
+            wattron(nextTetriminoBox, COLOR_PAIR(COLOR_LONGPIECE));
+            mvwaddch(nextTetriminoBox, 2, 6, ' ');
+            mvwaddch(nextTetriminoBox, 2, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 5, 6, ' ');
+            mvwaddch(nextTetriminoBox, 5, 6 + 1, ' ');
+            wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_LONGPIECE));
+            break;
+        }
+        case LEFT_L:{
+            init_pair(COLOR_LEFTL, COLOR_WHITE, COLOR_LEFTL);
+            wattron(nextTetriminoBox, COLOR_PAIR(COLOR_LEFTL));
+            mvwaddch(nextTetriminoBox, 2, 6, ' ');
+            mvwaddch(nextTetriminoBox, 2, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 8, ' ');
+            mvwaddch(nextTetriminoBox, 4, 8 + 1, ' ');
+            wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_LEFTL));
+            break;
+        }
+        case RIGHT_L:{
+            init_pair(COLOR_RIGHTL, COLOR_WHITE, COLOR_RIGHTL);
+            wattron(nextTetriminoBox, COLOR_PAIR(COLOR_RIGHTL));
+            mvwaddch(nextTetriminoBox, 2, 6, ' ');
+            mvwaddch(nextTetriminoBox, 2, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 4, ' ');
+            mvwaddch(nextTetriminoBox, 4, 4 + 1, ' ');
+            wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_RIGHTL));
+            break;
+        }
+        case LEFT_S:{
+            init_pair(COLOR_LEFTS, COLOR_WHITE, COLOR_LEFTS);
+            wattron(nextTetriminoBox, COLOR_PAIR(COLOR_LEFTS));
+            mvwaddch(nextTetriminoBox, 3, 10, ' ');
+            mvwaddch(nextTetriminoBox, 3, 10 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 3, 8, ' ');
+            mvwaddch(nextTetriminoBox, 3, 8 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 8, ' ');
+            mvwaddch(nextTetriminoBox, 4, 8 + 1, ' ');
+            wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_LEFTS));
+            break;
+        }
+        case RIGHT_S:{
+            init_pair(COLOR_RIGHTS, COLOR_WHITE, COLOR_RIGHTS);
+            wattron(nextTetriminoBox, COLOR_PAIR(COLOR_RIGHTS));
+            mvwaddch(nextTetriminoBox, 3, 4, ' ');
+            mvwaddch(nextTetriminoBox, 3, 4 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 8, ' ');
+            mvwaddch(nextTetriminoBox, 4, 8 + 1, ' ');
+            wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_RIGHTS));
+            break;
+        }
+        case T_PIECE:{
+            init_pair(COLOR_TPIECE, COLOR_WHITE, COLOR_TPIECE);
+            wattron(nextTetriminoBox, COLOR_PAIR(COLOR_TPIECE));
+            mvwaddch(nextTetriminoBox, 4, 4, ' ');
+            mvwaddch(nextTetriminoBox, 4, 4 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 8, ' ');
+            mvwaddch(nextTetriminoBox, 4, 8 + 1, ' ');
+            wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_TPIECE));
+            break;
+        }
+        case SQUARE:{
+            init_pair(COLOR_SQUARE, COLOR_WHITE, COLOR_SQUARE);
+            wattron(nextTetriminoBox, COLOR_PAIR(COLOR_SQUARE));
+            mvwaddch(nextTetriminoBox, 4, 6, ' ');
+            mvwaddch(nextTetriminoBox, 4, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 4, 8, ' ');
+            mvwaddch(nextTetriminoBox, 4, 8 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6, ' ');
+            mvwaddch(nextTetriminoBox, 3, 6 + 1, ' ');
+            mvwaddch(nextTetriminoBox, 3, 8, ' ');
+            mvwaddch(nextTetriminoBox, 3, 8 + 1, ' ');
+            wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_SQUARE));
+            break;
+        }
+    }
+     wrefresh(nextTetriminoBox);
 }
 #endif

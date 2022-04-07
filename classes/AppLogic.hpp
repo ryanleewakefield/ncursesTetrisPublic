@@ -7,12 +7,14 @@
 #include "EventSignal.hpp"
 #include "IControllable.hpp"
 #include "../classes/GameDaemon.hpp"
+#include "TetriminoController.hpp"
 typedef std::mutex* mutexPtr;
 class AppLogic : public IControllableThree{
 public:
     static AppLogic* getInstance();
     bool registerGameDaemon(GameDaemon* gameDaemon);
     bool unregisterGameDaemon(GameDaemon* gameDaemon);
+    void setTetriminoController(TetriminoController* tcPtr);
     bool sendStopSignal();
     bool virtual actionOne();
     bool virtual actionTwo();
@@ -23,6 +25,8 @@ private:
     AppLogic(const AppLogic& rhs) = default;
     ~AppLogic();
     std::vector<GameDaemon*> gameDaemons;
+    bool paused = false;
+    TetriminoController* tcPtr = nullptr;
 };
 
 AppLogic* AppLogic::uniqueInstance = nullptr;
@@ -59,6 +63,9 @@ bool AppLogic::unregisterGameDaemon(GameDaemon* gameDaemon){
     //Didn't find registered GameDaemon
     return false;
 }
+void AppLogic::setTetriminoController(TetriminoController* tcPtr){
+    this->tcPtr = tcPtr;
+}
 bool AppLogic::sendStopSignal(){
     std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
         e->processEventSignal(APP_QUIT);
@@ -71,13 +78,28 @@ bool AppLogic::actionOne(){
     return this->sendStopSignal();
 }
 bool AppLogic::actionTwo(){
-    std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
-        e->processEventSignal(START_THREAD);
-    } );
+    if(!paused){
+        //First, unregister tc from keyboardListener...
+        KeyboardListener::getInstance()->unRegisterController(tcPtr);
+        //Then, stop all GameDaemon threads
+        std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
+            e->processEventSignal(STOP_THREAD);
+        } );
+        paused = true;
+    }
+    else{
+        //First, register tc from keyboardListener...
+        KeyboardListener::getInstance()->registerController(tcPtr);
+        //Then, start all GameDaemon threads
+        std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
+            e->processEventSignal(START_THREAD);
+        } );
+        paused = false;
+    }
 }
 bool AppLogic::actionThree(){
-    std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
-        e->processEventSignal(STOP_THREAD);
-    } );
+    // std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
+    //     e->processEventSignal(STOP_THREAD);
+    // } );
 }
 #endif

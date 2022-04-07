@@ -183,6 +183,19 @@ private:
 bool GravityCycle::processEventSignal(EventSignal est){
     switch(est){
         case APP_QUIT: this->stopAutoThread(); return true;
+        case START_THREAD:{
+            if(!running){
+                this->startAutoThread();
+                
+            }
+        }return true;
+        case STOP_THREAD:{
+            if(running){
+            this->stopAutoThread();
+            this->waitOnAutoThread();
+            this->cleanUpThread();
+            }
+        }return true;
     }
 }
 bool GravityCycle::startAutoThread(){

@@ -24,11 +24,8 @@ bool AppController::processInputSignal(ButtonSignal bst){
         case QuitButton:
             controllable->actionOne(); 
             break;
-        case StartThread: 
-            controllable->actionTwo(); 
-            break;
-        case StopThread: 
-            controllable->actionThree(); 
+        case PauseButton:
+            controllable->actionTwo();
             break;
     }
 }

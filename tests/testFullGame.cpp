@@ -59,7 +59,7 @@ int testFullGame(){
     KeyboardListener::getInstance()->registerController(&ac);
     KeyboardListener::getInstance()->registerController(&tc);
 
-    
+    AppLogic::getInstance()->setTetriminoController(&tc);
 
     GravityCycle gravityCycle;
     gravityCycle.setController(&tc);

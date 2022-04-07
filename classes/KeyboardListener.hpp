@@ -58,6 +58,7 @@ int KeyboardListener::runThread(bool* stop, WINDOW* ep){
             case 'q': KeyboardListener::getInstance()->notify(QuitButton); break;
             case 't': KeyboardListener::getInstance()->notify(StartThread); break;
             case 'y': KeyboardListener::getInstance()->notify(StopThread); break;
+            case 'p': KeyboardListener::getInstance()->notify(PauseButton); break;
         }
     }
 }

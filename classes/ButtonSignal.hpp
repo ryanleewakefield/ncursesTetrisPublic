@@ -16,6 +16,7 @@ enum ButtonSignal{
     // Used as a normal DownButton but with a conditional
     // that can be handled under the same mutex holding epoch.
     DownButton_Conditional, 
+    PauseButton,
 };
 
 

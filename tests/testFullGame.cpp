@@ -65,6 +65,8 @@ int testFullGame(){
     GravityCycle gravityCycle;
     gravityCycle.setController(&tc);
     
+    GameTimer gt;
+    AppLogic::getInstance()->registerGameDaemon(&gt);
     AppLogic::getInstance()->registerGameDaemon(&gravityCycle);
    
     GameEventListener* ref = GameEventListener::getInstance();
@@ -86,8 +88,9 @@ int testFullGame(){
     gravityCycle.setDelay(500);
     KeyboardListener::getInstance()->startListening();
     gravityCycle.startAutoThread();
+    gt.startAutoThread();
     for(int i = 0; ; i++){
-        writeToLine(stdscr, 3, string("Tetrimino num: " + to_string(i + 1)));
+        // writeToLine(stdscr, 3, string("Tetrimino num: " + to_string(i + 1)));
         std::unique_lock<std::mutex> lck(ref->mux1);
         ref->waitForNextCollision.wait(lck, [ref, &appQuit]{
             appQuit = ref->appShouldQuit;

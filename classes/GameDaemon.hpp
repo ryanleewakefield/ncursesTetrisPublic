@@ -11,6 +11,7 @@
 #include "EventSignal.hpp"
 #include "ButtonSignal.hpp"
 #include "TetriminoController.hpp"
+#include "Formatting.hpp"
 
 class GameDaemon{
 public:
@@ -240,6 +241,52 @@ int GravityCycle::runThread(TetriminoController* controller, bool* stop, int* de
                 {return ref->readyForGravity;});
             ref->readyForGravity = false;
         }
+    }  
+}
+
+class GameTimer : public GameDaemon{
+public:
+    bool virtual processEventSignal(EventSignal est);
+    bool virtual startAutoThread() override;
+private:
+    static int runThread(bool* stop, int* seconds);
+    int elapsedSeconds = 0;
+};
+bool GameTimer::processEventSignal(EventSignal est){
+    switch(est){
+        case START_THREAD:{
+            if(!running){
+                this->startAutoThread();
+                
+            }
+        }break;
+        case APP_QUIT:
+        case STOP_THREAD:{
+            if(running){
+            this->stopAutoThread();
+            this->waitOnAutoThread();
+            this->cleanUpThread();
+            }
+        }break;
+    }
+}
+bool GameTimer::startAutoThread(){
+    if(running == false){
+        stop = false;
+        autoThread =  new std::thread(GameTimer::runThread, &stop, &elapsedSeconds);
+        running = true;
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+int GameTimer::runThread(bool* stop, int* seconds){
+    Environment * mainEnv = Environment::getInstance();
+    while(!(*stop)){
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        *seconds += 1;
+        mainEnv->paintTime(formatSecondsToTime(*seconds));
     }  
 }
 #endif

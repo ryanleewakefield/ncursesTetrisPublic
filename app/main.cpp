@@ -79,6 +79,6 @@ void writeToLine(WINDOW* win, int line, string data){
 	wmove(win, line, 5);
 	wclrtoeol(win);
 	wrefresh(win);
-	waddstr(win, data.c_str());
+	waddnstr(win, data.c_str(), data.length());
 	wrefresh(win);
 }

@@ -173,7 +173,7 @@ void Environment::paintLevel(std::string lv){
     // thus, no erasing is needed prior to painting
     init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
     wattron(HUDBox, COLOR_PAIR(COLOR_TEXT));
-    mvwaddstr(HUDBox, 2, 10, lv.c_str());
+    mvwaddnstr(HUDBox, 2, 10, lv.c_str(), lv.length());
     wattroff(HUDBox, COLOR_PAIR(COLOR_TEXT));
     wrefresh(HUDBox);
 }
@@ -184,7 +184,7 @@ void Environment::paintLevel(std::string lv){
 void Environment::paintLines(std::string ln){
     init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
     wattron(HUDBox, COLOR_PAIR(COLOR_TEXT));
-    mvwaddstr(HUDBox, 4, 10, ln.c_str());
+    mvwaddnstr(HUDBox, 4, 10, ln.c_str(), ln.length());
     wattroff(HUDBox, COLOR_PAIR(COLOR_TEXT));
     wrefresh(HUDBox);
 }
@@ -194,7 +194,7 @@ void Environment::paintLines(std::string ln){
 void Environment::paintTime(std::string time){
     init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
     wattron(HUDBox, COLOR_PAIR(COLOR_TEXT));
-    mvwaddstr(HUDBox, 6, 9, time.c_str());
+    mvwaddnstr(HUDBox, 6, 9, time.c_str(), time.length());
     wattroff(HUDBox, COLOR_PAIR(COLOR_TEXT));
     wrefresh(HUDBox);
 }

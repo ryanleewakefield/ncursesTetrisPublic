@@ -8,6 +8,7 @@
 #include "IControllable.hpp"
 #include "../classes/GameDaemon.hpp"
 #include "TetriminoController.hpp"
+#include "GameEventListener.hpp"
 typedef std::mutex* mutexPtr;
 class AppLogic : public IControllableThree{
 public:
@@ -70,6 +71,8 @@ bool AppLogic::sendStopSignal(){
     std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
         e->processEventSignal(APP_QUIT);
     } );
+    GameEventListener::getInstance()->appShouldQuit = true;
+    GameEventListener::getInstance()->waitForNextCollision.notify_one();
     KeyboardListener::getInstance()->stopListening();
     return true;
     
@@ -86,6 +89,7 @@ bool AppLogic::actionTwo(){
             e->processEventSignal(STOP_THREAD);
         } );
         paused = true;
+        return true;
     }
     else{
         //First, register tc from keyboardListener...
@@ -95,11 +99,11 @@ bool AppLogic::actionTwo(){
             e->processEventSignal(START_THREAD);
         } );
         paused = false;
+        return true;
     }
+    return false;
 }
 bool AppLogic::actionThree(){
-    // std::for_each(gameDaemons.begin(), gameDaemons.end(), [](auto e){
-    //     e->processEventSignal(STOP_THREAD);
-    // } );
+    return true;// do nothing for now...
 }
 #endif

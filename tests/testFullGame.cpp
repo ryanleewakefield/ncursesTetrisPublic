@@ -28,6 +28,7 @@
 #include "../classes/TetriminoFactory.hpp"
 #include "../classes/GenerationAlgorithm.hpp"
 #include "../classes/TetriminoColors.hpp"
+#include "../classes/Formatting.hpp"
 
 using namespace std;
 void writeToLine(WINDOW* win, int line, string data);
@@ -75,16 +76,26 @@ int testFullGame(){
     tetrimino->show();
     // getch();
     tc.setControllable(tetrimino);
+
+    mainEnv->paintLevel(" 0");
+    mainEnv->paintLines("10");
+    mainEnv->paintTime("00:00");
+
     bool gameOver = false;
+    bool appQuit = false;
     gravityCycle.setDelay(500);
     KeyboardListener::getInstance()->startListening();
     gravityCycle.startAutoThread();
     for(int i = 0; ; i++){
         writeToLine(stdscr, 3, string("Tetrimino num: " + to_string(i + 1)));
         std::unique_lock<std::mutex> lck(ref->mux1);
-        ref->waitForNextCollision.wait(lck, [ref]{
-            return ref->detectedCollision;
+        ref->waitForNextCollision.wait(lck, [ref, &appQuit]{
+            appQuit = ref->appShouldQuit;
+            return ref->detectedCollision | appQuit;
         });
+        if(appQuit){
+            break;
+        }
         ref->detectedCollision = false;
         //put code to setup next tetrimino here...
         tetrimino->passCellsToEnvironment();
@@ -109,8 +120,8 @@ int testFullGame(){
         }
         //put code to update HUD data here...
         mainEnv->paintNextTetrimino(tf.getOnDeckType());
-        writeToLine(stdscr, 1, string("Level: " + to_string(gravityCycle.getLevel())));
-        writeToLine(stdscr, 2, string("Lines until next level: " + to_string(mainEnv->getLinesLeft())));
+        mainEnv->paintLevel(formatLevelAndLines(gravityCycle.getLevel()));
+        mainEnv->paintLines(formatLevelAndLines(mainEnv->getLinesLeft()));
         tc.setControllable(tetrimino);
         ref->readyForGravity = true;
         ref->waitForNextTetrimino.notify_one();

@@ -4,6 +4,7 @@
 #include <ncurses.h>
 #include <vector>
 #include <memory>
+#include <string>
 #include "Cell.hpp"
 #include "Space.hpp"
 #include "TetriminoType.hpp"
@@ -24,6 +25,9 @@ public:
     bool metRequirementForLines();
     void resetLinesLeftForLevel();
     void paintNextTetrimino(TetriminoType tt);
+    void paintLevel(std::string lv);
+    void paintLines(std::string ln);
+    void paintTime(std::string time);
     // void erase(Space& s);
     // void move(Space& s);
     // void paint(Space& s);
@@ -41,9 +45,17 @@ private:
     const static unsigned int yOffsetEnd = yOffsetStart + maxY + 1;
     const static unsigned int xNextBoxOffset = 24;
     const static unsigned int yNextBoxOffset = 7;
+    const static unsigned int nextBoxHeight = 8;
+    const static unsigned int nextBoxWidth = 16;
+    const static unsigned int xHUDBoxOffset = 24;
+    const static unsigned int yHUDBoxOffset = 16;
+    const static unsigned int HUDBoxHeight = 9;
+    const static unsigned int HUDBoxWidth = 16;
     const static int linesPerLevel = 10;
     WINDOW* boundaryElement;
     WINDOW* nextTetriminoBox;
+    WINDOW* HUDBox;
+    WINDOW* tetriminoStatsBox;
     unsigned int boundaryColor = COLOR_WHITE;
     unsigned int totalLinesCleared = 0;
     int linesLeftForLevel = linesPerLevel;
@@ -53,6 +65,7 @@ private:
     ~Environment();
     void paintBoundary();
     void paintNextTetriminoBox();
+    void paintHUDBox();
     bool isWithinBounds(unsigned int x, unsigned y);
     void erase(Space* s);
     void move(Space** s);
@@ -83,8 +96,13 @@ int Environment::getYOffset(){return yOffsetStart;}
 Environment::Environment(){
     this->boundaryElement = newwin(25,37,7,13);
     this->nextTetriminoBox = newwin(8, 16, yNextBoxOffset, (xNextBoxOffset)*2);
+    this->HUDBox = newwin(HUDBoxHeight,
+                                    HUDBoxWidth,
+                                    yHUDBoxOffset,
+                                    xHUDBoxOffset*2);
     paintBoundary();
     paintNextTetriminoBox();
+    paintHUDBox();
 }
 Environment::~Environment(){
     delwin(boundaryElement);
@@ -109,15 +127,76 @@ void Environment::paintNextTetriminoBox(){
     //Vertical Sides
     for(int i = 0; i < 8; i++){
         mvwaddch(nextTetriminoBox, i, 0, ' ');
-        mvwaddch(nextTetriminoBox, i, 15, ' ');
+        mvwaddch(nextTetriminoBox, i, nextBoxWidth - 1, ' ');
     }
      //Horizontal Sides
     for(int i = 0; i < 15; i++){
         mvwaddch(nextTetriminoBox, 0, i, ' ');
-        mvwaddch(nextTetriminoBox, 7, i, ' ');
+        mvwaddch(nextTetriminoBox, nextBoxHeight - 1 , i, ' ');
     }
     wattroff(nextTetriminoBox, COLOR_PAIR(this->boundaryColor));
+    init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+    wattron(nextTetriminoBox, COLOR_PAIR(COLOR_TEXT));
+    mvwaddstr(nextTetriminoBox, 7, 5, " NEXT ");
+    wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_TEXT));
     wrefresh(nextTetriminoBox);
+}
+void Environment::paintHUDBox(){
+    wattron(HUDBox, COLOR_PAIR(this->boundaryColor));
+    //Vertical Sides
+    for(int i = 0; i < 9; i++){
+        mvwaddch(HUDBox, i, 0, ' ');
+        mvwaddch(HUDBox, i, HUDBoxWidth - 1, ' ');
+    }
+     //Horizontal Sides
+    for(int i = 0; i < 15; i++){
+        mvwaddch(HUDBox, 0, i, ' ');
+        mvwaddch(HUDBox, HUDBoxHeight - 1 , i, ' ');
+    }
+    wattroff(HUDBox, COLOR_PAIR(this->boundaryColor));
+
+    //Write headings to screen
+    init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+    wattron(HUDBox, COLOR_PAIR(COLOR_TEXT));
+    mvwaddstr(HUDBox, 2, 2, "LEVEL: ");
+    mvwaddstr(HUDBox, 4, 2, "LINES: ");
+    mvwaddstr(HUDBox, 6, 2, "TIME: ");
+    wattroff(HUDBox, COLOR_PAIR(COLOR_TEXT));
+    wrefresh(HUDBox);
+}
+/*
+    std::string lv must be in the format "XY" where
+    X could be blank
+*/
+void Environment::paintLevel(std::string lv){
+    // lv is guaranteed to be in the format "XY" where X could be blank
+    // thus, no erasing is needed prior to painting
+    init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+    wattron(HUDBox, COLOR_PAIR(COLOR_TEXT));
+    mvwaddstr(HUDBox, 2, 10, lv.c_str());
+    wattroff(HUDBox, COLOR_PAIR(COLOR_TEXT));
+    wrefresh(HUDBox);
+}
+/*
+    std::string ln must be in the format "XY" where
+    X could be blank
+*/
+void Environment::paintLines(std::string ln){
+    init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+    wattron(HUDBox, COLOR_PAIR(COLOR_TEXT));
+    mvwaddstr(HUDBox, 4, 10, ln.c_str());
+    wattroff(HUDBox, COLOR_PAIR(COLOR_TEXT));
+    wrefresh(HUDBox);
+}
+/*
+    std::string time must be in the format "00:00"
+*/
+void Environment::paintTime(std::string time){
+    init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+    wattron(HUDBox, COLOR_PAIR(COLOR_TEXT));
+    mvwaddstr(HUDBox, 6, 9, time.c_str());
+    wattroff(HUDBox, COLOR_PAIR(COLOR_TEXT));
+    wrefresh(HUDBox);
 }
 bool Environment::isWithinBounds(unsigned int x, unsigned int y){
     if( (minX <= x && x <= maxX) && (minY <= y && y <= maxY)){
@@ -264,17 +343,6 @@ int Environment::getLinesLeft(){
     return linesLeftForLevel;
 }
 void Environment::paintNextTetrimino(TetriminoType tt){
-    //Paint 'NEXT' label -- extract this to setup method later on
-    init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
-    wattron(nextTetriminoBox, COLOR_PAIR(COLOR_TEXT));
-    mvwaddch(nextTetriminoBox, 7, 5, ' ');
-    mvwaddch(nextTetriminoBox, 7, 6, 'N');
-    mvwaddch(nextTetriminoBox, 7, 7, 'E');
-    mvwaddch(nextTetriminoBox, 7, 8, 'X');
-    mvwaddch(nextTetriminoBox, 7, 9, 'T');
-    mvwaddch(nextTetriminoBox, 7, 10, ' ');
-    wattroff(nextTetriminoBox, COLOR_PAIR(COLOR_TEXT));
-
     //Erase all previous pieces here
     init_pair(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK);
     wattron(nextTetriminoBox, COLOR_PAIR(COLOR_BLACK));

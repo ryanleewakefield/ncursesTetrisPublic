@@ -124,7 +124,7 @@ bool KeyboardListener::stopListening(){
         // It will just get lost anyway to the Listener
         // i.e. it won't be mapped to an application signal or
         // event.
-        ungetch('p');
+        ungetch('0');
         running = false;
         return true;
     }

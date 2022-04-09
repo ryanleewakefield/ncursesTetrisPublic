@@ -2,6 +2,8 @@
 #define __CELL_HPP__
 
 #include <ncurses.h>
+#include <mutex>
+#include "ResourceManager.hpp"
 class Cell{
 public:
     Cell(unsigned int px, unsigned int py, unsigned int xOff, unsigned int yOff, int color, char letter, char letter2);
@@ -68,6 +70,7 @@ void Cell::move(unsigned int px, unsigned int py){
     this->y = py;
 }
 void Cell::paint(){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     mvwin(this->win, this->y + this->yOffset, (this->x + this->xOffset)*2);
     init_pair(this->color, COLOR_WHITE, this->color);
     wattron(win, COLOR_PAIR(this->color));
@@ -77,6 +80,7 @@ void Cell::paint(){
     wrefresh(win);
 }
 void Cell::erase(){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     init_pair(COLOR_BLACK, COLOR_WHITE, COLOR_BLACK);
     wattron(win, COLOR_PAIR(COLOR_BLACK));
     mvwaddch(this->win, 0, 0, ' ');

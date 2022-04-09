@@ -13,7 +13,6 @@ public:
     std::atomic<bool> appShouldQuit{false};
     std::mutex mux1;
     std::mutex mux2;
-    // std::mutex mux3;
     std::condition_variable waitForNextCollision;
     std::condition_variable waitForNextTetrimino;
     // std::condition_variable waitForMux3;

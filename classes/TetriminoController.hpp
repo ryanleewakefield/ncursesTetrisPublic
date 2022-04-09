@@ -1,13 +1,14 @@
 #ifndef __TETRIMINOCONTROLLER_HPP__
 #define __TETRIMINOCONTROLLER_HPP__
 
+#include <mutex>
+#include <thread>
+
 #include "AppLogic.hpp"
 #include "IControllable.hpp"
 #include "ButtonSignal.hpp"
 #include "EventSignal.hpp"
 #include "UserController.hpp"
-#include <mutex>
-#include <thread>
 
 class TetriminoController : public UserController{
 public:

@@ -9,6 +9,7 @@
 #include "Space.hpp"
 #include "TetriminoType.hpp"
 #include "TetriminoColors.hpp"
+#include "ResourceManager.hpp"
 // A shared smart pointer would work well with this class
 class Environment{
 public:
@@ -108,6 +109,7 @@ Environment::~Environment(){
     delwin(boundaryElement);
 }
 void Environment::paintBoundary(){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     init_pair(this->boundaryColor, COLOR_WHITE, COLOR_WHITE);
     wattron(boundaryElement, COLOR_PAIR(this->boundaryColor));
     //Vertical Sides
@@ -123,6 +125,7 @@ void Environment::paintBoundary(){
     wrefresh(boundaryElement);
 }
 void Environment::paintNextTetriminoBox(){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     wattron(nextTetriminoBox, COLOR_PAIR(this->boundaryColor));
     //Vertical Sides
     for(int i = 0; i < 8; i++){
@@ -142,6 +145,7 @@ void Environment::paintNextTetriminoBox(){
     wrefresh(nextTetriminoBox);
 }
 void Environment::paintHUDBox(){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     wattron(HUDBox, COLOR_PAIR(this->boundaryColor));
     //Vertical Sides
     for(int i = 0; i < 9; i++){
@@ -171,6 +175,7 @@ void Environment::paintHUDBox(){
 void Environment::paintLevel(std::string lv){
     // lv is guaranteed to be in the format "XY" where X could be blank
     // thus, no erasing is needed prior to painting
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
     wattron(HUDBox, COLOR_PAIR(COLOR_TEXT));
     mvwaddnstr(HUDBox, 2, 10, lv.c_str(), lv.length());
@@ -182,6 +187,7 @@ void Environment::paintLevel(std::string lv){
     X could be blank
 */
 void Environment::paintLines(std::string ln){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
     wattron(HUDBox, COLOR_PAIR(COLOR_TEXT));
     mvwaddnstr(HUDBox, 4, 10, ln.c_str(), ln.length());
@@ -192,6 +198,7 @@ void Environment::paintLines(std::string ln){
     std::string time must be in the format "00:00"
 */
 void Environment::paintTime(std::string time){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
     wattron(HUDBox, COLOR_PAIR(COLOR_TEXT));
     mvwaddnstr(HUDBox, 6, 9, time.c_str(), time.length());
@@ -207,6 +214,7 @@ bool Environment::isWithinBounds(unsigned int x, unsigned int y){
     }
 }
 void Environment::erase(Space* s){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     init_pair(COLOR_BLACK, COLOR_WHITE, COLOR_BLACK);
     wattron(boundaryElement, COLOR_PAIR(COLOR_BLACK));
     mvwaddch(boundaryElement, s->y, (s->x)*2 + 1, ' ');
@@ -229,6 +237,7 @@ void Environment::move(Space** s){
     *s = &spaces[oldX][newY];
 }
 void Environment::paint(Space* s){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     init_pair(s->color, COLOR_WHITE, s->color);
     wattron(boundaryElement, COLOR_PAIR(s->color));
     mvwaddch(boundaryElement, s->y, (s->x)*2 + 1, ' ');
@@ -343,6 +352,7 @@ int Environment::getLinesLeft(){
     return linesLeftForLevel;
 }
 void Environment::paintNextTetrimino(TetriminoType tt){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
     //Erase all previous pieces here
     init_pair(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK);
     wattron(nextTetriminoBox, COLOR_PAIR(COLOR_BLACK));

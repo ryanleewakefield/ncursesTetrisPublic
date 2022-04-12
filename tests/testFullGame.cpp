@@ -82,7 +82,8 @@ int testFullGame(){
     mainEnv->paintLevel(" 0");
     mainEnv->paintLines("10");
     mainEnv->paintTime("00:00");
-
+    mainEnv->paintIncStat(tf.getNextType());
+    mainEnv->paintNextTetrimino(tf.getOnDeckType());
     bool gameOver = false;
     bool appQuit = false;
     gravityCycle.setDelay(500);
@@ -126,6 +127,7 @@ int testFullGame(){
         mainEnv->paintLevel(formatLevelAndLines(gravityCycle.getLevel()));
         mainEnv->paintLines(formatLevelAndLines(mainEnv->getLinesLeft()));
         tc.setControllable(tetrimino);
+        mainEnv->paintIncStat(tf.getNextType());
         ref->readyForGravity = true;
         ref->waitForNextTetrimino.notify_one();
         

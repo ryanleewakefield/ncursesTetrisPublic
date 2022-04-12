@@ -10,6 +10,7 @@
 #include "TetriminoType.hpp"
 #include "TetriminoColors.hpp"
 #include "ResourceManager.hpp"
+#include "Formatting.hpp"
 // A shared smart pointer would work well with this class
 class Environment{
 public:
@@ -29,6 +30,7 @@ public:
     void paintLevel(std::string lv);
     void paintLines(std::string ln);
     void paintTime(std::string time);
+    void paintIncStat(TetriminoType tt);
     // void erase(Space& s);
     // void move(Space& s);
     // void paint(Space& s);
@@ -56,17 +58,26 @@ private:
     WINDOW* boundaryElement;
     WINDOW* nextTetriminoBox;
     WINDOW* HUDBox;
+    //May not actually use a box for this one...
     WINDOW* tetriminoStatsBox;
     unsigned int boundaryColor = COLOR_WHITE;
     unsigned int totalLinesCleared = 0;
     int linesLeftForLevel = linesPerLevel;
     Space spaces[maxX + 1][maxY + 1];
+    int longPieceStat = 0;
+    int leftLStat = 0;
+    int rightLStat = 0;
+    int leftSStat = 0;
+    int rightSStat = 0;
+    int tPieceStat = 0;
+    int squareStat = 0;
     Environment();
     Environment(const Environment& rhs);
     ~Environment();
     void paintBoundary();
     void paintNextTetriminoBox();
     void paintHUDBox();
+    void paintTetriminoStatsBox();
     bool isWithinBounds(unsigned int x, unsigned y);
     void erase(Space* s);
     void move(Space** s);
@@ -101,9 +112,12 @@ Environment::Environment(){
                                     HUDBoxWidth,
                                     yHUDBoxOffset,
                                     xHUDBoxOffset*2);
+    this->tetriminoStatsBox = newwin(33, 6, 0, 4);
+
     paintBoundary();
     paintNextTetriminoBox();
     paintHUDBox();
+    paintTetriminoStatsBox();
 }
 Environment::~Environment(){
     delwin(boundaryElement);
@@ -168,6 +182,106 @@ void Environment::paintHUDBox(){
     wattroff(HUDBox, COLOR_PAIR(COLOR_TEXT));
     wrefresh(HUDBox);
 }
+void Environment::paintTetriminoStatsBox(){
+    std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
+    init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+    wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT));
+    mvwaddstr(tetriminoStatsBox, 0, 0, "STATS");
+    mvwaddstr(tetriminoStatsBox, 6, 1, "000");
+    mvwaddstr(tetriminoStatsBox, 11, 1, "000");
+    mvwaddstr(tetriminoStatsBox, 16, 1, "000");
+    mvwaddstr(tetriminoStatsBox, 20, 1, "000");
+    mvwaddstr(tetriminoStatsBox, 24, 1, "000");
+    mvwaddstr(tetriminoStatsBox, 28, 1, "000");
+    mvwaddstr(tetriminoStatsBox, 32, 1, "000");
+    wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT));
+
+    init_pair(COLOR_LONGPIECE, COLOR_WHITE, COLOR_LONGPIECE);
+    wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_LONGPIECE));
+    mvwaddch(tetriminoStatsBox, 2, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 2, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 3, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 3, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 4, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 4, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 5, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 5, 2 + 1, ' ');
+    wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_LONGPIECE));
+
+    init_pair(COLOR_LEFTL, COLOR_WHITE, COLOR_LEFTL);
+    wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_LEFTL));
+    mvwaddch(tetriminoStatsBox, 8, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 8, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 9, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 9, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 10, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 10, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 10, 4, ' ');
+    mvwaddch(tetriminoStatsBox, 10, 4 + 1, ' ');
+    wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_LEFTL));
+
+    init_pair(COLOR_RIGHTL, COLOR_WHITE, COLOR_RIGHTL);
+    wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_RIGHTL));
+    mvwaddch(tetriminoStatsBox, 13, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 13, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 14, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 14, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 15, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 15, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 15, 0, ' ');
+    mvwaddch(tetriminoStatsBox, 15, 0 + 1, ' ');
+    wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_RIGHTL));
+
+    init_pair(COLOR_LEFTS, COLOR_WHITE, COLOR_LEFTS);
+    wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_LEFTS));
+    mvwaddch(tetriminoStatsBox, 18, 4, ' ');
+    mvwaddch(tetriminoStatsBox, 18, 4 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 18, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 18, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 19, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 19, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 19, 0, ' ');
+    mvwaddch(tetriminoStatsBox, 19, 0 + 1, ' ');
+    wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_LEFTS));
+
+    init_pair(COLOR_RIGHTS, COLOR_WHITE, COLOR_RIGHTS);
+    wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_RIGHTS));
+    mvwaddch(tetriminoStatsBox, 22, 0, ' ');
+    mvwaddch(tetriminoStatsBox, 22, 0 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 22, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 22, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 23, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 23, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 23, 4, ' ');
+    mvwaddch(tetriminoStatsBox, 23, 4 + 1, ' ');
+    wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_RIGHTS));
+
+    init_pair(COLOR_TPIECE, COLOR_WHITE, COLOR_TPIECE);
+    wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_TPIECE));
+    mvwaddch(tetriminoStatsBox, 27, 0, ' ');
+    mvwaddch(tetriminoStatsBox, 27, 0 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 27, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 27, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 26, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 26, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 27, 4, ' ');
+    mvwaddch(tetriminoStatsBox, 27, 4 + 1, ' ');
+    wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_TPIECE));
+
+    init_pair(COLOR_SQUARE, COLOR_WHITE, COLOR_SQUARE);
+    wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_SQUARE));
+    mvwaddch(tetriminoStatsBox, 31, 0, ' ');
+    mvwaddch(tetriminoStatsBox, 31, 0 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 31, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 31, 2 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 30, 0, ' ');
+    mvwaddch(tetriminoStatsBox, 30, 0 + 1, ' ');
+    mvwaddch(tetriminoStatsBox, 30, 2, ' ');
+    mvwaddch(tetriminoStatsBox, 30, 2 + 1, ' ');
+    wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_SQUARE));
+
+    wrefresh(tetriminoStatsBox);
+}
 /*
     std::string lv must be in the format "XY" where
     X could be blank
@@ -204,6 +318,87 @@ void Environment::paintTime(std::string time){
     mvwaddnstr(HUDBox, 6, 9, time.c_str(), time.length());
     wattroff(HUDBox, COLOR_PAIR(COLOR_TEXT));
     wrefresh(HUDBox);
+}
+void Environment::paintIncStat(TetriminoType tt){
+    switch(tt){
+        case LONG_PIECE:{
+            int newStat = longPieceStat += 1;
+            longPieceStat = newStat;
+            std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
+            init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+            wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT));
+            mvwaddstr(tetriminoStatsBox, 6, 1, formatStat(newStat).c_str());
+            wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT)); 
+            wrefresh(tetriminoStatsBox);
+            break;
+        }
+        case LEFT_L:{
+            int newStat = leftLStat += 1;
+            leftLStat = newStat;
+            std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
+            init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+            wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT));
+            mvwaddstr(tetriminoStatsBox, 11, 1, formatStat(newStat).c_str());
+            wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT)); 
+            wrefresh(tetriminoStatsBox);
+            break;
+        }
+        case RIGHT_L:{
+            int newStat = rightLStat += 1;
+            rightLStat = newStat;
+            std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
+            init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+            wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT));
+            mvwaddstr(tetriminoStatsBox, 16, 1, formatStat(newStat).c_str());
+            wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT)); 
+            wrefresh(tetriminoStatsBox);
+            break;
+        }
+        case LEFT_S:{
+            int newStat = leftSStat += 1;
+            leftSStat = newStat;
+            std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
+            init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+            wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT));
+            mvwaddstr(tetriminoStatsBox, 20, 1, formatStat(newStat).c_str());
+            wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT)); 
+            wrefresh(tetriminoStatsBox);
+            break;
+        }
+        case RIGHT_S:{
+            int newStat = rightSStat += 1;
+            rightSStat = newStat;
+            std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
+            init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+            wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT));
+            mvwaddstr(tetriminoStatsBox, 24, 1, formatStat(newStat).c_str());
+            wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT)); 
+            wrefresh(tetriminoStatsBox);
+            break;
+        }
+        case T_PIECE:{
+            int newStat = tPieceStat += 1;
+            tPieceStat = newStat;
+            std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
+            init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+            wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT));
+            mvwaddstr(tetriminoStatsBox, 28, 1, formatStat(newStat).c_str());
+            wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT)); 
+            wrefresh(tetriminoStatsBox);
+            break;
+        }
+        case SQUARE:{
+            int newStat = squareStat += 1;
+            squareStat = newStat;
+            std::unique_lock<std::mutex> lck {ResourceManager::getInstance()->screenMux};
+            init_pair(COLOR_TEXT, COLOR_WHITE, COLOR_BLACK);
+            wattron(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT));
+            mvwaddstr(tetriminoStatsBox, 32, 1, formatStat(newStat).c_str());
+            wattroff(tetriminoStatsBox, COLOR_PAIR(COLOR_TEXT)); 
+            wrefresh(tetriminoStatsBox);
+            break;
+        }
+    }
 }
 bool Environment::isWithinBounds(unsigned int x, unsigned int y){
     if( (minX <= x && x <= maxX) && (minY <= y && y <= maxY)){

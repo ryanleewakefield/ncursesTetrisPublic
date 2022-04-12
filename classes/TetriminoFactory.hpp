@@ -26,10 +26,12 @@ public:
     ~TetriminoFactory();
     Tetrimino* getNextTetrimino();
     TetriminoType getOnDeckType();
+    TetriminoType getNextType();
 private:
     Tetrimino* setInitialTetrimino();
     Tetrimino* next;
     Tetrimino* onDeck;
+    TetriminoType nextType;
     TetriminoType onDeckType;
     GenerationAlgorithm* algo;
 };
@@ -44,6 +46,7 @@ TetriminoFactory::~TetriminoFactory(){
 }
 Tetrimino* TetriminoFactory::getNextTetrimino(){
     next = onDeck;
+    nextType = onDeckType;
     //Setup onDeck for new Tetrimino but return next to keep the cycle going
     TetriminoType tt = algo->getType();
     onDeckType = tt;
@@ -115,5 +118,8 @@ Tetrimino* TetriminoFactory::setInitialTetrimino(){
 }
 TetriminoType TetriminoFactory::getOnDeckType(){
     return onDeckType;
+}
+TetriminoType TetriminoFactory::getNextType(){
+    return nextType;
 }
 #endif

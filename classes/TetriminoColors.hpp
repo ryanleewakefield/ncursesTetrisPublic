@@ -51,7 +51,7 @@ void shiftColors(int level){
             }
             break;
         }
-        case 3: {
+        case 2: {
             for(int i = 0; i < 7; i++){
                 init_color(100+i, convert(blues[i]), convert(reds[i]), convert(greens[i]));
             }
